@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'converters.dart';
 import 'enums.dart';
 
 part 'profile_entity.freezed.dart';
