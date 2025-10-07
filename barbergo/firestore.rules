@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Bloqueia tudo por padrão
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // /Users/{userId} – apenas o dono pode ler e escrever
+    match /Users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // /Profiles/{profileId} – qualquer autenticado pode ler; apenas o dono pode escrever
+    match /Profiles/{profileId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == profileId;
+    }
+
+    // /ContactDetails/{userId} – acesso bloqueado para apps cliente
+    match /ContactDetails/{userId} {
+      allow read, write: if false;
+    }
+
+    // /Vacancies/{vacancyId} – leitura liberada para autenticados;
+    // criação somente pelo barbershopId informado; atualização/exclusão somente pelo barbershopId do documento
+    match /Vacancies/{vacancyId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.barbershopId == request.auth.uid;
+      allow update, delete: if request.auth != null
+                    && resource.data.barbershopId == request.auth.uid;
+    }
+
+    // /Matches/{matchId} – leitura e escrita permitidas somente se o usuário estiver na lista de participantes
+    match /Matches/{matchId} {
+      allow read, write: if request.auth != null
+                          && (request.auth.uid in resource.data.participants);
+    }
+  }
+}

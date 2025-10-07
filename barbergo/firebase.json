@@ -1,0 +1,18 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "barbergo-38c21",
+          "configurations": {
+            "android": "1:872973233743:android:9e9afc289da1698cfe843a",
+            "ios": "1:872973233743:ios:78d3098295f61c12fe843a"
+          }
+        }
+      }
+    }
+  }
+}

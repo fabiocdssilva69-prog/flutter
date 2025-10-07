@@ -1,0 +1,36 @@
+# Flutter build outputs and intermediate artifacts
+build/
+.dart_tool/
+.packages
+.pubspec.lock
+
+# iOS and macOS build dependencies
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+macos/Flutter/Flutter.framework
+macos/.symlinks/
+
+# Android build dependencies
+android/.gradle/
+android/app/build/
+android/local.properties
+
+# Plugin registrant (generated)
+.generated_plugin_registrant.dart
+
+# IDE settings and project files
+.idea/
+.vscode/
+*.iml
+
+# Firebase configuration files often contain sensitive information and should not be committed:contentReference[oaicite:0]{index=0}
+firebase_options.dart
+google-services.json
+GoogleService-Info.plist
+firebase_app_id_file.json
+
+# Miscellaneous
+*.log
+.DS_Store

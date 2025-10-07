@@ -1,0 +1,10 @@
+services:
+  fakevscodeinstallfortests:
+    image: fakevscodeinstallfortests
+    build:
+      context: flutter/packages/flutter_tools/test/data/vscode_linux/application/resources/app
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
