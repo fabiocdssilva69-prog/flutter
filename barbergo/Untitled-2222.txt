@@ -1,0 +1,11 @@
+// Validação de tipo de vaga
+if (_selectedType == null) {
+  showSnackBar("Selecione o tipo de vaga.");
+}
+
+// Validação de comissão (apenas para tipo commission)
+if (_selectedType == VacancyType.commission) {
+  if (commission == null || commission <= 0 || commission > 100) {
+    showSnackBar("Informe uma porcentagem válida entre 1 e 100.");
+  }
+}

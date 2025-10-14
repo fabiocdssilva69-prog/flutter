@@ -1,0 +1,13 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        options:
+          check: false
+          map_factory: true
+          equal: true
+          to_string: true
+      freezed|freezed:
+        enabled: true
+        options:
+          line_length: 80

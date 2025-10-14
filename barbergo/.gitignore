@@ -34,3 +34,12 @@ firebase_app_id_file.json
 # Miscellaneous
 *.log
 .DS_Store
+
+.fake
+
+# Environment variables and API keys
+.env
+.env.local
+.env.*.local
+# Biome binary
+biome.exe

@@ -31,9 +31,9 @@ class AppTheme {
       ),
       // TextTheme moderno e limpo, aplicando a cor de texto principal.
       textTheme: ThemeData.dark().textTheme.apply(
-            bodyColor: AppColors.textPrimary,
-            displayColor: AppColors.textPrimary,
-          ),
+        bodyColor: AppColors.textPrimary,
+        displayColor: AppColors.textPrimary,
+      ),
     );
   }
 }

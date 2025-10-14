@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'converters.dart';
 
@@ -14,9 +13,8 @@ class ReviewEntity with _$ReviewEntity {
     required String targetId,
     required int rating,
     String? comment,
-    @DateTimeTimestampConverter() required DateTime createdAt,
+    @TimestampConverter() required DateTime createdAt,
   }) = _ReviewEntity;
 
-  factory ReviewEntity.fromJson(Map<String, dynamic> json) =>
-      _$ReviewEntityFromJson(json);
+  factory ReviewEntity.fromJson(Map<String, dynamic> json) => _$ReviewEntityFromJson(json);
 }

@@ -1,0 +1,5 @@
+def get_barbers():
+    return [
+        {"id": "1", "name": "John Doe", "rating": 4.5},
+        {"id": "2", "name": "Jane Smith", "rating": 4.8},
+    ]

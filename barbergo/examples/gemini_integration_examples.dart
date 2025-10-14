@@ -9,6 +9,8 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:barbergo/src/domain/entities/profile_entity.dart';
+
 part 'bio_generator_provider.g.dart';
 
 @riverpod
@@ -66,6 +68,8 @@ Requisitos:
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'dart:convert';
+import 'package:barbergo/src/domain/entities/profile_entity.dart';
+import 'package:barbergo/src/domain/entities/vacancy_entity.dart';
 
 part 'smart_matching_provider.g.dart';
 

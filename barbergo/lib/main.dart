@@ -1,20 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'firebase_options.dart';
+import 'src/app.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+void main() async {
+  // Garante que o Flutter esteja inicializado
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  // Carrega as variáveis de ambiente do arquivo .env
+  await dotenv.load(fileName: '.env');
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  // Inicializa o Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  runApp(
+    // ProviderScope é essencial para o Riverpod funcionar
+    const ProviderScope(child: BarberGoApp()),
+  );
 }

@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-/// Conversor para lidar com DateTime e Timestamp do Firestore.
-class DateTimeTimestampConverter
-    implements JsonConverter<DateTime, Timestamp> {
-  const DateTimeTimestampConverter();
+// Conversor Global para DateTime <-> Firestore Timestamp
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampConverter();
 
   @override
-  DateTime fromJson(Timestamp json) => json.toDate();
+  DateTime fromJson(Timestamp timestamp) => timestamp.toDate();
 
   @override
-  Timestamp toJson(DateTime object) => Timestamp.fromDate(object);
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }

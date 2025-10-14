@@ -1,0 +1,32 @@
+# Node modules
+node_modules/
+
+# Flutter/Dart build artifacts
+build/
+.dart_tool/
+
+# Generated files
+**/*.g.dart
+**/*.freezed.dart
+
+# Flutter SDK - IGNORAR COMPLETAMENTE
+flutter/
+
+# Exemplos
+examples/
+
+# Lock files
+pubspec.lock
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+*.snap

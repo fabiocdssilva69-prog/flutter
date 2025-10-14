@@ -1,0 +1,158 @@
+# Script para verificar qual método de Biome está disponível
+# Uso: .\check_biome_available.ps1
+
+Write-Host "🔍 Verificando métodos disponíveis para usar Biome..." -ForegroundColor Cyan
+Write-Host ""
+
+$methods = @()
+
+# Verifica npm
+Write-Host "1️⃣ Verificando npm/npx..." -ForegroundColor Yellow
+try {
+  $npmVersion = npm --version 2>$null
+  if ($npmVersion) {
+    Write-Host "   ✅ npm instalado (v$npmVersion)" -ForegroundColor Green
+        
+    # Verifica se @biomejs/biome está instalado
+    $biomePath = "node_modules/@biomejs/biome/bin/biome.js"
+    if (Test-Path $biomePath) {
+      Write-Host "   ✅ @biomejs/biome instalado localmente" -ForegroundColor Green
+      try {
+        $biomeVersion = (npx @biomejs/biome --version 2>$null) -replace "Version: ", ""
+        Write-Host "   ✅ Versão: $biomeVersion" -ForegroundColor Green
+        $methods += @{
+          Name    = "npm"
+          Status  = "✅ Disponível"
+          Version = $biomeVersion
+          Command = "npm run check"
+        }
+      }
+      catch {
+        Write-Host "   ⚠️ Erro ao verificar versão" -ForegroundColor Yellow
+      }
+    }
+    else {
+      Write-Host "   ⚠️ @biomejs/biome NÃO instalado (execute: npm install)" -ForegroundColor Yellow
+      $methods += @{
+        Name    = "npm"
+        Status  = "⚠️ Requer instalação"
+        Version = "N/A"
+        Command = "npm install && npm run check"
+      }
+    }
+  }
+}
+catch {
+  Write-Host "   ❌ npm não encontrado" -ForegroundColor Red
+  $methods += @{
+    Name    = "npm"
+    Status  = "❌ Não disponível"
+    Version = "N/A"
+    Command = "N/A"
+  }
+}
+
+Write-Host ""
+
+# Verifica Docker
+Write-Host "2️⃣ Verificando Docker..." -ForegroundColor Yellow
+try {
+  $dockerVersion = docker --version 2>$null
+  if ($dockerVersion) {
+    Write-Host "   ✅ Docker instalado ($dockerVersion)" -ForegroundColor Green
+        
+    # Verifica se Docker está rodando
+    try {
+      docker info 2>&1 | Out-Null
+      if ($LASTEXITCODE -eq 0) {
+        Write-Host "   ✅ Docker daemon está ativo" -ForegroundColor Green
+        $methods += @{
+          Name    = "Docker"
+          Status  = "✅ Disponível"
+          Version = "2.2.5 (ghcr.io/biomejs/biome)"
+          Command = ".\biome_check.ps1"
+        }
+      }
+      else {
+        Write-Host "   ⚠️ Docker daemon NÃO está rodando" -ForegroundColor Yellow
+        Write-Host "   💡 Inicie o Docker Desktop e tente novamente" -ForegroundColor Cyan
+        $methods += @{
+          Name    = "Docker"
+          Status  = "⚠️ Daemon não está rodando"
+          Version = "2.2.5 (ghcr.io/biomejs/biome)"
+          Command = "Inicie Docker Desktop primeiro"
+        }
+      }
+    }
+    catch {
+      Write-Host "   ⚠️ Não foi possível verificar status do daemon" -ForegroundColor Yellow
+    }
+  }
+}
+catch {
+  Write-Host "   ❌ Docker não encontrado" -ForegroundColor Red
+  $methods += @{
+    Name    = "Docker"
+    Status  = "❌ Não disponível"
+    Version = "N/A"
+    Command = "N/A"
+  }
+}
+
+Write-Host ""
+Write-Host "═══════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host "📊 RESUMO DOS MÉTODOS DISPONÍVEIS" -ForegroundColor White
+Write-Host "═══════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host ""
+
+foreach ($method in $methods) {
+  Write-Host "Método: $($method.Name)" -ForegroundColor White
+  Write-Host "Status: $($method.Status)" -NoNewline
+  if ($method.Status -like "*Disponível*") {
+    Write-Host " (RECOMENDADO)" -ForegroundColor Green
+  }
+  else {
+    Write-Host ""
+  }
+  Write-Host "Versão: $($method.Version)" -ForegroundColor Gray
+  Write-Host "Comando: $($method.Command)" -ForegroundColor Cyan
+  Write-Host ""
+}
+
+Write-Host "═══════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host "💡 RECOMENDAÇÕES" -ForegroundColor Yellow
+Write-Host "═══════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host ""
+
+$npmAvailable = $methods | Where-Object { $_.Name -eq "npm" -and $_.Status -like "*Disponível*" }
+$dockerAvailable = $methods | Where-Object { $_.Name -eq "Docker" -and $_.Status -like "*Disponível*" }
+
+if ($npmAvailable) {
+  Write-Host "✅ Use npm para melhor performance:" -ForegroundColor Green
+  Write-Host "   npm run check   # Check completo" -ForegroundColor White
+  Write-Host "   npm run format  # Apenas formatar" -ForegroundColor White
+  Write-Host "   npm run lint    # Apenas lint" -ForegroundColor White
+  Write-Host ""
+}
+
+if ($dockerAvailable) {
+  Write-Host "✅ Use Docker para isolamento:" -ForegroundColor Green
+  Write-Host "   .\biome_check.ps1   # Check completo" -ForegroundColor White
+  Write-Host "   .\biome_format.ps1  # Apenas formatar" -ForegroundColor White
+  Write-Host "   .\biome_lint.ps1    # Apenas lint" -ForegroundColor White
+  Write-Host ""
+}
+
+if (-not $npmAvailable -and -not $dockerAvailable) {
+  Write-Host "⚠️ NENHUM MÉTODO DISPONÍVEL!" -ForegroundColor Red
+  Write-Host ""
+  Write-Host "Opções:" -ForegroundColor Yellow
+  Write-Host "1. Instale Node.js e execute: npm install" -ForegroundColor White
+  Write-Host "2. Instale Docker Desktop e inicie o serviço" -ForegroundColor White
+}
+
+Write-Host ""
+Write-Host "📚 Para mais informações, veja:" -ForegroundColor Cyan
+Write-Host "   - BIOME_USAGE.md (Guia rápido)" -ForegroundColor White
+Write-Host "   - BIOME_DOCKER.md (Documentação Docker)" -ForegroundColor White
+Write-Host ""

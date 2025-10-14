@@ -1,0 +1,24 @@
+{
+  "name": "barbergo",
+  "version": "1.0.0",
+  "description": "BarberGO - Flutter Application",
+  "private": true,
+  "scripts": {
+    "format": "biome format --write .",
+    "lint": "biome lint --write .",
+    "check": "biome check --write .",
+    "format:docker": "pwsh -File biome_format.ps1 .",
+    "lint:docker": "pwsh -File biome_lint.ps1 .",
+    "check:docker": "pwsh -File biome_check.ps1 ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.5"
+  },
+  "keywords": [
+    "flutter",
+    "dart",
+    "barbergo"
+  ],
+  "author": "Maestro Fábio",
+  "license": "MIT"
+}
