@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/entities/application_entity.dart';
-import '../../../domain/entities/enums.dart';
 import '../../core/core_data_controller.dart';
 import '../controllers/vacancy_controller.dart';
 import '../../../core/theme/app_colors.dart';
 
 class ApplicationTile extends ConsumerWidget {
-  const ApplicationTile({super.key, required this.application});
+  const ApplicationTile({
+    super.key,
+    required this.application,
+  });
 
   final ApplicationEntity application;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final barberAsync = ref.watch(userDetailsProvider(application.barberId));
+    final barberProfileAsync = ref.watch(
+      userProfileProvider(application.barberId),
+    );
+    final barberUserAsync = ref.watch(
+      userDetailsProvider(application.barberId),
+    );
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -23,44 +30,47 @@ class ApplicationTile extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Informações do barbeiro
-            barberAsync.when(
-              data: (barber) {
-                if (barber == null)
-                  return const Text('Barbeiro não encontrado');
+            barberProfileAsync.when(
+              data: (profile) {
+                if (profile == null) return const Text('Barbeiro não encontrado');
 
-                return Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: AppColors.primary,
-                      child: Text(
-                        barber.name[0].toUpperCase(),
-                        style: const TextStyle(color: Colors.white),
+                return barberUserAsync.when(
+                  data: (user) => Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: AppColors.primary,
+                        child: Text(
+                          profile.name[0].toUpperCase(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            barber.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              profile.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          Text(
-                            barber.email,
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                        ],
+                            Text(
+                              user?.email ?? '',
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  loading: () => const CircularProgressIndicator(),
+                  error: (_, __) => const Text('Erro ao carregar dados'),
                 );
               },
               loading: () => const CircularProgressIndicator(),
-              error: (_, __) => const Text('Erro ao carregar dados'),
+              error: (_, __) => const Text('Erro ao carregar perfil'),
             ),
 
             const SizedBox(height: 12),
@@ -92,7 +102,9 @@ class ApplicationTile extends ConsumerWidget {
                 onPressed: () => _handleReject(ref),
                 icon: const Icon(Icons.close),
                 label: const Text('Rejeitar'),
-                style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.red,
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -166,7 +178,7 @@ class ApplicationTile extends ConsumerWidget {
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.info_outline, color: Colors.grey),
+              Icon(Icons.remove_circle_outline, color: Colors.grey),
               SizedBox(width: 8),
               Text(
                 'Candidatura retirada',
@@ -184,19 +196,13 @@ class ApplicationTile extends ConsumerWidget {
   void _handleAccept(WidgetRef ref) async {
     await ref
         .read(managementControllerProvider.notifier)
-        .updateApplicationStatus(
-          application.applicationId,
-          ApplicationStatus.accepted,
-        );
+        .updateApplicationStatus(application.applicationId, ApplicationStatus.accepted);
   }
 
   void _handleReject(WidgetRef ref) async {
     await ref
         .read(managementControllerProvider.notifier)
-        .updateApplicationStatus(
-          application.applicationId,
-          ApplicationStatus.rejected,
-        );
+        .updateApplicationStatus(application.applicationId, ApplicationStatus.rejected);
   }
 
   String _formatDate(DateTime date) {

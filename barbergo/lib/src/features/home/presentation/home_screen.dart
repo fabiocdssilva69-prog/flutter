@@ -6,8 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../discovery/controllers/discovery_controller.dart';
 import '../../discovery/controllers/application_controller.dart';
 import '../../discovery/widgets/vacancy_card.dart';
-import '../../barber/controllers/barber_controller.dart';
-import '../../management/controllers/vacancy_controller.dart';
 import '../../../data/repositories/user_repository.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../core/theme/app_colors.dart';
@@ -24,40 +22,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final accountTypeAsync = ref.watch(currentAccountTypeProvider);
+    final accountType = ref.watch(currentAccountTypeProvider);
 
-    return accountTypeAsync.when(
-      data: (accountType) {
-        if (accountType == null) {
-          return const Scaffold(
-            body: Center(child: Text('Tipo de conta não definido')),
-          );
-        }
+    if (accountType == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
-        final screens = _getScreensForAccountType(accountType);
-        final navItems = _getNavItemsForAccountType(accountType);
+    final screens = _getScreensForAccountType(accountType);
+    final navItems = _getNavItemsForAccountType(accountType);
 
-        return Scaffold(
-          body: IndexedStack(index: _currentIndex, children: screens),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) => setState(() => _currentIndex = index),
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: AppColors.primary,
-            items: navItems,
-          ),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () => context.push('/ai-test'),
-            backgroundColor: Colors.deepPurple,
-            icon: const Icon(Icons.smart_toy),
-            label: const Text('Testar IA'),
-          ),
-        );
-      },
-      loading: () =>
-          const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (error, stackTrace) =>
-          Scaffold(body: Center(child: Text('Erro: $error'))),
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) => setState(() => _currentIndex = index),
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppColors.primary,
+        items: navItems,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push('/ai-test'),
+        backgroundColor: Colors.deepPurple,
+        icon: const Icon(Icons.smart_toy),
+        label: const Text('Testar IA'),
+      ),
     );
   }
 
@@ -69,25 +62,36 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         _BarberProfileView(),
       ];
     } else {
-      return const [_BarbershopVacanciesView(), _BarbershopSettingsView()];
+      return const [
+        _BarbershopVacanciesView(),
+        _BarbershopSettingsView(),
+      ];
     }
   }
 
   List<BottomNavigationBarItem> _getNavItemsForAccountType(
-    AccountType accountType,
-  ) {
+      AccountType accountType) {
     if (accountType == AccountType.barber) {
       return const [
-        BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Descobrir'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.explore),
+          label: 'Descobrir',
+        ),
         BottomNavigationBarItem(
           icon: Icon(Icons.history),
           label: 'Candidaturas',
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Perfil',
+        ),
       ];
     } else {
       return const [
-        BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Vagas'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.work),
+          label: 'Vagas',
+        ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
           label: 'Configurações',
@@ -107,7 +111,10 @@ class _BarberDiscoveryView extends ConsumerWidget {
     final vacanciesAsync = ref.watch(activeVacanciesStreamProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Descobrir Vagas'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('Descobrir Vagas'),
+        centerTitle: true,
+      ),
       body: vacanciesAsync.when(
         data: (vacancies) {
           if (vacancies.isEmpty) {
@@ -132,17 +139,15 @@ class _BarberDiscoveryView extends ConsumerWidget {
                         .read(applicationControllerProvider.notifier)
                         .applyForVacancy(vacancy)
                         .then((_) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Candidatura enviada com sucesso!'),
-                            ),
-                          );
-                        })
-                        .catchError((error) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Erro: $error')),
-                          );
-                        });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Candidatura enviada com sucesso!')),
+                      );
+                    }).catchError((error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Erro: $error')),
+                      );
+                    });
                   }
                   return true;
                 },
@@ -151,8 +156,9 @@ class _BarberDiscoveryView extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) =>
-            Center(child: Text('Erro ao carregar vagas: $error')),
+        error: (error, stackTrace) => Center(
+          child: Text('Erro ao carregar vagas: $error'),
+        ),
       ),
     );
   }
@@ -176,8 +182,12 @@ class _BarberProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Meu Perfil')),
-      body: const Center(child: Text('Perfil do barbeiro (Em breve)')),
+      appBar: AppBar(
+        title: const Text('Meu Perfil'),
+      ),
+      body: const Center(
+        child: Text('Perfil do barbeiro (Em breve)'),
+      ),
     );
   }
 }
@@ -202,8 +212,12 @@ class _BarbershopSettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Configurações')),
-      body: const Center(child: Text('Configurações (Em breve)')),
+      appBar: AppBar(
+        title: const Text('Configurações'),
+      ),
+      body: const Center(
+        child: Text('Configurações (Em breve)'),
+      ),
     );
   }
 }

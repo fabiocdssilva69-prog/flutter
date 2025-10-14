@@ -33,12 +33,12 @@ class MatchScore {
   }
 
   Map<String, dynamic> toJson() => {
-    'vacancyId': vacancyId,
-    'score': score,
-    'reason': reason,
-    'pros': pros,
-    'cons': cons,
-  };
+        'vacancyId': vacancyId,
+        'score': score,
+        'reason': reason,
+        'pros': pros,
+        'cons': cons,
+      };
 }
 
 /// Controller de Matching Inteligente usando GPT-4
@@ -93,25 +93,25 @@ class SmartMatching extends _$SmartMatching {
     List<VacancyEntity> vacancies,
     int topN,
   ) {
-    final vacanciesJson = vacancies
-        .map(
-          (v) => {
-            'id': v.vacancyId,
-            'title': v.title,
-            'type': v.type.name,
-            'workHours': v.workHours,
-            'commission': v.commissionPercentage,
-          },
-        )
-        .toList();
+    final vacanciesJson = vacancies.map((v) => {
+          'id': v.vacancyId,
+          'title': v.title,
+          'type': v.type.name,
+          'workHours': v.workHours,
+          'commission': v.commissionPercentage,
+        }).toList();
 
     return '''
 Você é um especialista em matching de profissionais. Analise o perfil do barbeiro e sugira as $topN melhores vagas.
 
 PERFIL DO BARBEIRO:
-${jsonEncode({'name': barber.name, 'bio': barber.bio, 'city': barber.city, 'neighborhood': barber.neighborhood, 'experienceLevel': barber.experienceLevel?.name, 'specialties': barber.specialties})}
-
-VAGAS DISPONÍVEIS:
+        ${jsonEncode({
+          'name': barber.name,
+          'bio': barber.bio,
+          'city': barber.city,
+          'neighborhood': barber.neighborhood,
+          'specialties': barber.specialties,
+        })}VAGAS DISPONÍVEIS:
 ${jsonEncode(vacanciesJson)}
 
 CRITÉRIOS DE ANÁLISE:
@@ -148,15 +148,24 @@ Retorne APENAS o JSON, sem markdown ou explicações.
     try {
       final gptService = ref.read(gPTServiceProvider.notifier);
 
-      final prompt =
-          '''
+      final prompt = '''
 Analise a compatibilidade entre este barbeiro e esta vaga:
 
 BARBEIRO:
-${jsonEncode({'name': barberProfile.name, 'bio': barberProfile.bio, 'city': barberProfile.city, 'specialties': barberProfile.specialties})}
+${jsonEncode({
+            'name': barberProfile.name,
+            'bio': barberProfile.bio,
+            'city': barberProfile.city,
+            'specialties': barberProfile.specialties,
+          })}
 
 VAGA:
-${jsonEncode({'id': vacancy.vacancyId, 'title': vacancy.title, 'type': vacancy.type.name, 'workHours': vacancy.workHours})}
+${jsonEncode({
+            'id': vacancy.vacancyId,
+            'title': vacancy.title,
+            'type': vacancy.type.name,
+            'workHours': vacancy.workHours,
+          })}
 
 Retorne JSON no formato:
 {
@@ -191,8 +200,7 @@ Retorne JSON no formato:
     try {
       final gptService = ref.read(gPTServiceProvider.notifier);
 
-      final prompt =
-          '''
+      final prompt = '''
 Explique em 2-3 parágrafos, de forma amigável e motivadora, porque esta vaga é compatível com o perfil do barbeiro:
 
 MATCH SCORE: ${match.score}/100
@@ -213,7 +221,7 @@ Máximo: 300 palavras.
         prompt: prompt,
         temperature: 0.8, // Mais criativo para texto motivacional
       );
-    } catch (e, st) {
+    } catch (e) {
       return match.reason; // Fallback para reason curto
     }
   }
