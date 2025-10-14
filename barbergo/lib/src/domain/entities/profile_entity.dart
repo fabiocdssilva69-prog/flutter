@@ -8,9 +8,7 @@ part 'profile_entity.freezed.dart';
 part 'profile_entity.g.dart';
 
 @freezed
-class ProfileEntity with _$ProfileEntity {
-  // explicitToJson é crucial quando usamos conversores customizados (TimestampConverter)
-  @JsonSerializable(explicitToJson: true)
+abstract class ProfileEntity with _$ProfileEntity {
   const factory ProfileEntity({
     required String userId,
     required AccountType accountType,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'converters.dart';
@@ -6,7 +7,7 @@ part 'review_entity.freezed.dart';
 part 'review_entity.g.dart';
 
 @freezed
-class ReviewEntity with _$ReviewEntity {
+abstract class ReviewEntity with _$ReviewEntity {
   const factory ReviewEntity({
     required String reviewId,
     required String reviewerId,
