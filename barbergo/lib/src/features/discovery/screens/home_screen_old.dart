@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../auth/controllers/auth_controller.dart';
-import '../../auth/application/account_type_provider.dart';
-import '../../vacancies/data/vacancy_repository.dart';
-import '../../profiles/data/profile_repository.dart';
-import '../../applications/application/application_providers.dart';
 import '../../../domain/entities/enums.dart';
+import '../../auth/application/account_type_provider.dart';
+import '../../auth/controllers/auth_controller.dart';
+import '../../home/application/home_providers.dart';
+import '../../profiles/data/profile_repository.dart';
+import '../../vacancies/data/vacancy_repository.dart';
 
 // Mude de StatelessWidget para ConsumerWidget
 class HomeScreen extends ConsumerWidget {
@@ -376,9 +376,7 @@ class HomeScreen extends ConsumerWidget {
     WidgetRef ref,
     String barbershopId,
   ) {
-    final applicationsAsync = ref.watch(
-      barbershopApplicationsProvider(barbershopId),
-    );
+    final applicationsAsync = ref.watch(barbershopApplicationsProvider);
 
     return applicationsAsync.when(
       // Estado de carregamento
@@ -404,7 +402,7 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                ref.invalidate(barbershopApplicationsProvider(barbershopId));
+                ref.invalidate(barbershopApplicationsProvider);
               },
               child: const Text('Tentar novamente'),
             ),
@@ -437,7 +435,7 @@ class HomeScreen extends ConsumerWidget {
 
         return RefreshIndicator(
           onRefresh: () async {
-            ref.invalidate(barbershopApplicationsProvider(barbershopId));
+            ref.invalidate(barbershopApplicationsProvider);
           },
           child: ListView.builder(
             itemCount: applications.length,

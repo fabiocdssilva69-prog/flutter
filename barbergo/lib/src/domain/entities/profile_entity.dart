@@ -9,6 +9,8 @@ part 'profile_entity.g.dart';
 
 @freezed
 abstract class ProfileEntity with _$ProfileEntity {
+  const ProfileEntity._(); // Private constructor for computed properties
+
   const factory ProfileEntity({
     required String userId,
     required AccountType accountType,
@@ -17,6 +19,9 @@ abstract class ProfileEntity with _$ProfileEntity {
 
     @Default('') String bio,
     @Default('') String location,
+    @Default('') String city,
+    @Default('') String neighborhood,
+    @Default([]) List<String> specialties,
     @Default('') String contactPhone,
 
     String? fcmToken,
@@ -26,4 +31,7 @@ abstract class ProfileEntity with _$ProfileEntity {
   }) = _ProfileEntity;
 
   factory ProfileEntity.fromJson(Map<String, dynamic> json) => _$ProfileEntityFromJson(json);
+
+  // Computed property for displayName
+  String get displayName => name;
 }

@@ -1,6 +1,6 @@
+import 'package:barbergo_app/src/domain/entities/enums.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:barbergo_app/src/domain/entities/enums.dart';
 import '../../profiles/data/profile_repository.dart';
 import '../controllers/auth_controller.dart';
 
@@ -14,7 +14,7 @@ final currentAccountTypeProvider = Provider<AccountType?>((ref) {
   return userProfileAsync.when(
     data: (profile) => profile?.accountType,
     loading: () => null,
-    error: (_, __) => null,
+    error: (error, stackTrace) => null,
   );
 });
 
@@ -28,6 +28,6 @@ final currentUserIdProvider = Provider<String?>((ref) {
   return authState.when(
     data: (user) => user?.uid,
     loading: () => null,
-    error: (_, __) => null,
+    error: (error, stackTrace) => null,
   );
 });

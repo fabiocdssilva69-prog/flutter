@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+
 import '../../../domain/entities/ai/chat_message.dart';
 import '../controllers/artistic_chat_controller.dart';
 
@@ -158,7 +159,9 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                color: Theme.of(
+                  context,
+                ).primaryColor.withValues(alpha: 0.1 * 255),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -332,7 +335,7 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05 * 255),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),

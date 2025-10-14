@@ -53,7 +53,7 @@ final class AIServiceProvider extends $AsyncNotifierProvider<AIService, void> {
   AIService create() => AIService();
 }
 
-String _$aIServiceHash() => r'd25a28eb1c5ee7836b9eeb12243810f9b81e9788';
+String _$aIServiceHash() => r'60798d820d41fc3aea9ac92dd3aec727e87be8a0';
 
 /// Serviço de IA usando exclusivamente OpenAI GPT-4
 ///

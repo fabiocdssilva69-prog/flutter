@@ -19,7 +19,7 @@ class ApplicationController extends _$ApplicationController {
   Future<void> applyForVacancy(VacancyEntity vacancy) async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
+    try {
       // Obter o ID do usuário atual
       final authUser = ref.read(authStateChangesProvider).value;
       if (authUser == null) {
@@ -41,6 +41,11 @@ class ApplicationController extends _$ApplicationController {
 
       // Salvar no Firestore
       await repository.createApplication(application);
-    });
+
+      state = const AsyncData(null);
+    } catch (e, st) {
+      state = AsyncError(e, st);
+      rethrow;
+    }
   }
 }

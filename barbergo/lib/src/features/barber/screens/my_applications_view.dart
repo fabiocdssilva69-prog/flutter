@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/entities/application_entity.dart';
+import '../../../domain/entities/enums.dart';
 import '../../core/core_data_controller.dart';
 import '../controllers/barber_controller.dart';
 
@@ -23,9 +23,15 @@ class MyApplicationsView extends ConsumerWidget {
                 children: [
                   Icon(Icons.history, size: 72, color: Colors.grey),
                   SizedBox(height: 16),
-                  Text('Nenhuma candidatura ainda', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text(
+                    'Nenhuma candidatura ainda',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(height: 8),
-                  Text('Deslize para a direita nas vagas para se candidatar', textAlign: TextAlign.center),
+                  Text(
+                    'Deslize para a direita nas vagas para se candidatar',
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             );
@@ -36,7 +42,9 @@ class MyApplicationsView extends ConsumerWidget {
             itemCount: applications.length,
             itemBuilder: (context, index) {
               final application = applications[index];
-              final barbershopAsync = ref.watch(userDetailsProvider(application.barbershopId));
+              final barbershopAsync = ref.watch(
+                userDetailsProvider(application.barbershopId),
+              );
 
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
@@ -49,11 +57,19 @@ class MyApplicationsView extends ConsumerWidget {
                       barbershopAsync.when(
                         data: (barbershop) {
                           // TODO: Buscar ProfileEntity para obter o nome completo
-                          final displayName = barbershop?.email.split('@').first ?? 'Barbearia';
-                          return Text(displayName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16));
+                          final displayName =
+                              barbershop?.email.split('@').first ?? 'Barbearia';
+                          return Text(
+                            displayName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          );
                         },
                         loading: () => const Text('Carregando...'),
-                        error: (_, __) => const Text('Erro ao carregar'),
+                        error: (error, stackTrace) =>
+                            const Text('Erro ao carregar'),
                       ),
 
                       const SizedBox(height: 8),
@@ -68,14 +84,21 @@ class MyApplicationsView extends ConsumerWidget {
 
                       // Status
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: _getStatusColor(application.status),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           _getStatusText(application.status),
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ],
@@ -89,7 +112,11 @@ class MyApplicationsView extends ConsumerWidget {
         error: (error, stackTrace) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [const Icon(Icons.error_outline, size: 48), const SizedBox(height: 16), Text('Erro: $error')],
+            children: [
+              const Icon(Icons.error_outline, size: 48),
+              const SizedBox(height: 16),
+              Text('Erro: $error'),
+            ],
           ),
         ),
       ),

@@ -36,7 +36,7 @@ final class BioGeneratorProvider
   BioGenerator create() => BioGenerator();
 }
 
-String _$bioGeneratorHash() => r'a19ab4ab28abfde46aa94bde8104cdd0d4602831';
+String _$bioGeneratorHash() => r'3e8591de494823dd42e03b5e08345685f1b7845f';
 
 /// Controller para geração automática de Bio profissional usando IA
 

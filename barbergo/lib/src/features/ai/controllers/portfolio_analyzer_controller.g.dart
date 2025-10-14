@@ -36,7 +36,7 @@ final class PortfolioAnalyzerProvider
   PortfolioAnalyzer create() => PortfolioAnalyzer();
 }
 
-String _$portfolioAnalyzerHash() => r'7dadea879a42595bf230f7af38f588a11a88af0c';
+String _$portfolioAnalyzerHash() => r'a7ed12fbebafac003c1f2e2f7cd230489c387683';
 
 /// Controller para análise de portfólio usando Gemini Pro Vision
 

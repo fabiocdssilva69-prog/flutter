@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/theme/app_colors.dart';
-import '../../../domain/entities/vacancy_entity.dart';
 import '../../../domain/entities/enums.dart';
+import '../../../domain/entities/vacancy_entity.dart';
 
 class VacancyCard extends StatelessWidget {
   const VacancyCard({super.key, required this.vacancy});
@@ -27,7 +28,7 @@ class VacancyCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1 * 255),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -63,10 +64,7 @@ class VacancyCard extends StatelessWidget {
             // Detalhes da vaga
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: const Icon(
-                Icons.schedule,
-                color: AppColors.primary,
-              ),
+              leading: const Icon(Icons.schedule, color: AppColors.primary),
               title: const Text('Horário'),
               subtitle: Text(vacancy.workHours),
             ),

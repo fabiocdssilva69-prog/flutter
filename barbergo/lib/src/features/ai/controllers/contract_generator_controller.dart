@@ -1,7 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/entities/vacancy_entity.dart';
-import '../providers/multi_ai_provider.dart';
+import '../providers/claude_service.dart';
 
 part 'contract_generator_controller.g.dart';
 

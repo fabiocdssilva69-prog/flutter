@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../providers/ai_service.dart';
 
 part 'bio_generator_controller.g.dart';
@@ -10,7 +11,7 @@ class BioGenerator extends _$BioGenerator {
   FutureOr<String?> build() => null;
 
   /// Gera uma bio profissional baseada nas informações do barbeiro
-  Future<String> generate({
+  Future<String> generateBio({
     required String name,
     required List<String> specialties,
     int? experienceYears,
@@ -19,7 +20,7 @@ class BioGenerator extends _$BioGenerator {
     state = const AsyncLoading();
 
     try {
-      final aiService = ref.read(aiServiceProvider.notifier);
+      final aiService = ref.read(aIServiceProvider.notifier);
 
       final specialtiesText = specialties.isNotEmpty
           ? specialties.join(', ')
@@ -84,7 +85,7 @@ Gere APENAS a bio, sem explicações adicionais.
     state = const AsyncLoading();
 
     try {
-      final aiService = ref.read(aiServiceProvider.notifier);
+      final aiService = ref.read(aIServiceProvider.notifier);
 
       final specialtiesText = specialties.isNotEmpty
           ? specialties.join(', ')
@@ -157,7 +158,7 @@ Retorne APENAS as bios, uma por linha, numeradas:
     state = const AsyncLoading();
 
     try {
-      final aiService = ref.read(aiServiceProvider.notifier);
+      final aiService = ref.read(aIServiceProvider.notifier);
 
       final prompt =
           '''

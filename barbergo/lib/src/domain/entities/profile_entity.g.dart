@@ -14,6 +14,13 @@ _ProfileEntity _$ProfileEntityFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String,
       bio: json['bio'] as String? ?? '',
       location: json['location'] as String? ?? '',
+      city: json['city'] as String? ?? '',
+      neighborhood: json['neighborhood'] as String? ?? '',
+      specialties:
+          (json['specialties'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       contactPhone: json['contactPhone'] as String? ?? '',
       fcmToken: json['fcmToken'] as String?,
       createdAt: const TimestampConverter().fromJson(
@@ -33,6 +40,9 @@ Map<String, dynamic> _$ProfileEntityToJson(_ProfileEntity instance) =>
       'email': instance.email,
       'bio': instance.bio,
       'location': instance.location,
+      'city': instance.city,
+      'neighborhood': instance.neighborhood,
+      'specialties': instance.specialties,
       'contactPhone': instance.contactPhone,
       'fcmToken': instance.fcmToken,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),

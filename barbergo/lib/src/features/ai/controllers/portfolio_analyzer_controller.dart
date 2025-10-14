@@ -1,5 +1,7 @@
 import 'dart:typed_data';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../providers/ai_service.dart';
 
 part 'portfolio_analyzer_controller.g.dart';
@@ -55,7 +57,7 @@ class PortfolioAnalyzer extends _$PortfolioAnalyzer {
     required Uint8List imageData,
     required String imageId,
   }) async {
-    final aiService = ref.read(aiServiceProvider.notifier);
+    final aiService = ref.read(aIServiceProvider.notifier);
 
     final prompt = '''
 Você é um especialista em cortes de cabelo e barbearia. Analise esta imagem de portfólio profissional.
@@ -98,7 +100,7 @@ Retorne APENAS um JSON válido:
 ''';
 
     final response = await aiService.analyzeImage(
-      imageData: imageData,
+      imageBytes: imageData,
       prompt: prompt,
     );
 
@@ -310,7 +312,7 @@ Retorne APENAS um JSON válido:
     required String barber1Name,
     required String barber2Name,
   }) async {
-    final aiService = ref.read(aiServiceProvider.notifier);
+    final aiService = ref.read(aIServiceProvider.notifier);
 
     final prompt =
         '''

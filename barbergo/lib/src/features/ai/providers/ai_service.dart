@@ -1,5 +1,8 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'dart:convert';
+
 import 'package:openai_dart/openai_dart.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import 'multi_ai_provider.dart';
 
 part 'ai_service.g.dart';
@@ -133,15 +136,19 @@ class AIService extends _$AIService {
   /// Analisa uma imagem usando GPT-4 Vision
   ///
   /// Ideal para: análise de cortes, avaliação de qualidade
-  /// Nota: imageUrl deve ser URL pública ou data URI (base64)
+  /// Nota: imageBytes deve ser bytes de imagem (JPEG, PNG)
   Future<String> analyzeImage({
-    required String imageUrl,
+    required List<int> imageBytes,
     required String prompt,
   }) async {
     state = const AsyncLoading();
 
     try {
       final client = ref.read(openAIClientProvider);
+
+      // Converter bytes para base64 data URL
+      final base64Image = base64Encode(imageBytes);
+      final dataUrl = 'data:image/jpeg;base64,$base64Image';
 
       final response = await client.createChatCompletion(
         request: CreateChatCompletionRequest(
@@ -155,7 +162,7 @@ class AIService extends _$AIService {
               content: ChatCompletionUserMessageContent.parts([
                 ChatCompletionMessageContentPart.text(text: prompt),
                 ChatCompletionMessageContentPart.image(
-                  imageUrl: ChatCompletionMessageImageUrl(url: imageUrl),
+                  imageUrl: ChatCompletionMessageImageUrl(url: dataUrl),
                 ),
               ]),
             ),

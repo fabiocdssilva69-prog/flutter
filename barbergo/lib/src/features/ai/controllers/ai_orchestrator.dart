@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../providers/ai_service.dart';
+import '../providers/claude_service.dart';
 import '../providers/multi_ai_provider.dart';
 
 part 'ai_orchestrator.g.dart';
@@ -110,7 +112,7 @@ class AIOrchestrator extends _$AIOrchestrator {
   ) async {
     switch (model) {
       case AIModel.gemini:
-        final service = ref.read(aiServiceProvider.notifier);
+        final service = ref.read(aIServiceProvider.notifier);
         return await service.generateText(prompt: prompt);
 
       case AIModel.gpt4:
@@ -177,7 +179,7 @@ class AIOrchestrator extends _$AIOrchestrator {
     final stopwatch = Stopwatch()..start();
 
     try {
-      final service = ref.read(aiServiceProvider.notifier);
+      final service = ref.read(aIServiceProvider.notifier);
       final result = await service.analyzeImage(
         imageBytes: imageBytes,
         prompt: prompt,

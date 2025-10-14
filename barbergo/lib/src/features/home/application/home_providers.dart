@@ -7,7 +7,9 @@ import 'package:barbergo_app/src/features/auth/providers/auth_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-final barbershopApplicationsProvider = StreamProvider<List<ApplicationEntity>>((ref) {
+final barbershopApplicationsProvider = StreamProvider<List<ApplicationEntity>>((
+  ref,
+) {
   final userIdAsync = ref.watch(currentUserIdProvider);
   return userIdAsync.when(
     data: (userId) {
@@ -18,12 +20,17 @@ final barbershopApplicationsProvider = StreamProvider<List<ApplicationEntity>>((
       return applicationsRepository.watchApplicationsForBarbershop(userId);
     },
     loading: () => const Stream<List<ApplicationEntity>>.empty(),
-    error: (error, stackTrace) => Stream<List<ApplicationEntity>>.error(error, stackTrace),
+    error: (error, stackTrace) =>
+        Stream<List<ApplicationEntity>>.error(error, stackTrace),
   );
 });
 
 class ApplicationDetails {
-  ApplicationDetails({required this.application, required this.barberProfile, required this.vacancy});
+  ApplicationDetails({
+    required this.application,
+    required this.barberProfile,
+    required this.vacancy,
+  });
 
   final ApplicationEntity application;
   final ProfileEntity? barberProfile;
@@ -39,20 +46,32 @@ class ApplicationDetails {
   }
 }
 
-final applicationDetailsProvider = FutureProvider.family<ApplicationDetails, ApplicationEntity>((
-  ref,
-  application,
-) async {
-  final profileRepository = ref.watch(profileRepositoryProvider);
-  final vacancyRepository = ref.watch(vacancyRepositoryProvider);
+final applicationDetailsProvider =
+    FutureProvider.family<ApplicationDetails, ApplicationEntity>((
+      ref,
+      application,
+    ) async {
+      final profileRepository = ref.watch(profileRepositoryProvider);
+      final vacancyRepository = ref.watch(vacancyRepositoryProvider);
 
-  final barberProfile = await profileRepository.getProfileByUserId(application.barberId);
-  final vacancy = await vacancyRepository.getVacancyById(application.vacancyId);
+      final barberProfile = await profileRepository.getProfileByUserId(
+        application.barberId,
+      );
+      final vacancy = await vacancyRepository.getVacancyById(
+        application.vacancyId,
+      );
 
-  return ApplicationDetails(application: application, barberProfile: barberProfile, vacancy: vacancy);
-});
+      return ApplicationDetails(
+        application: application,
+        barberProfile: barberProfile,
+        vacancy: vacancy,
+      );
+    });
 
 final isBarbershopAccountProvider = Provider<bool>((ref) {
-  final accountType = ref.watch(currentAccountTypeProvider);
-  return accountType == AccountType.barbershop;
+  final accountTypeAsync = ref.watch(currentAccountTypeProvider);
+  return accountTypeAsync.maybeWhen(
+    data: (accountType) => accountType == AccountType.barbershop,
+    orElse: () => false,
+  );
 });

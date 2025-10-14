@@ -60,7 +60,7 @@ final class ArtisticChatControllerProvider
 }
 
 String _$artisticChatControllerHash() =>
-    r'3a6157725dc8714c55c276f30c887ceb34c19780';
+    r'9150b12d40f365f65abdde4b143162c697713cc9';
 
 /// Controller de chat para o Chatbot Artístico
 ///

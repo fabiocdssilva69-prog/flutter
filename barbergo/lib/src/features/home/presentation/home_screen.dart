@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../discovery/controllers/discovery_controller.dart';
-import '../../discovery/controllers/application_controller.dart';
-import '../../discovery/widgets/vacancy_card.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../data/repositories/user_repository.dart';
 import '../../../domain/entities/enums.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../discovery/controllers/application_controller.dart';
+import '../../discovery/controllers/discovery_controller.dart';
+import '../../discovery/widgets/vacancy_card.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -25,19 +25,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final accountType = ref.watch(currentAccountTypeProvider);
 
     if (accountType == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     final screens = _getScreensForAccountType(accountType);
     final navItems = _getNavItemsForAccountType(accountType);
 
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: screens,
-      ),
+      body: IndexedStack(index: _currentIndex, children: screens),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
@@ -62,36 +57,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         _BarberProfileView(),
       ];
     } else {
-      return const [
-        _BarbershopVacanciesView(),
-        _BarbershopSettingsView(),
-      ];
+      return const [_BarbershopVacanciesView(), _BarbershopSettingsView()];
     }
   }
 
   List<BottomNavigationBarItem> _getNavItemsForAccountType(
-      AccountType accountType) {
+    AccountType accountType,
+  ) {
     if (accountType == AccountType.barber) {
       return const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.explore),
-          label: 'Descobrir',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Descobrir'),
         BottomNavigationBarItem(
           icon: Icon(Icons.history),
           label: 'Candidaturas',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Perfil',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
       ];
     } else {
       return const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.work),
-          label: 'Vagas',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Vagas'),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
           label: 'Configurações',
@@ -111,10 +95,7 @@ class _BarberDiscoveryView extends ConsumerWidget {
     final vacanciesAsync = ref.watch(activeVacanciesStreamProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Descobrir Vagas'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Descobrir Vagas'), centerTitle: true),
       body: vacanciesAsync.when(
         data: (vacancies) {
           if (vacancies.isEmpty) {
@@ -128,26 +109,32 @@ class _BarberDiscoveryView extends ConsumerWidget {
               padding: const EdgeInsets.all(16),
               child: CardSwiper(
                 cardsCount: vacancies.length,
-                cardBuilder: (context, index, _, __) {
-                  return VacancyCard(vacancy: vacancies[index]);
-                },
-                onSwipe: (previousIndex, currentIndex, direction) {
+                cardBuilder:
+                    (context, index, percentThresholdX, percentThresholdY) {
+                      return VacancyCard(vacancy: vacancies[index]);
+                    },
+                onSwipe: (previousIndex, currentIndex, direction) async {
                   // Swipe para a direita = candidatar
                   if (direction == CardSwiperDirection.right) {
                     final vacancy = vacancies[previousIndex];
-                    ref
-                        .read(applicationControllerProvider.notifier)
-                        .applyForVacancy(vacancy)
-                        .then((_) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Candidatura enviada com sucesso!')),
-                      );
-                    }).catchError((error) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Erro: $error')),
-                      );
-                    });
+                    try {
+                      await ref
+                          .read(applicationControllerProvider.notifier)
+                          .applyForVacancy(vacancy);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Candidatura enviada com sucesso!'),
+                          ),
+                        );
+                      }
+                    } catch (error) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text('Erro: $error')));
+                      }
+                    }
                   }
                   return true;
                 },
@@ -156,9 +143,8 @@ class _BarberDiscoveryView extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Text('Erro ao carregar vagas: $error'),
-        ),
+        error: (error, stackTrace) =>
+            Center(child: Text('Erro ao carregar vagas: $error')),
       ),
     );
   }
@@ -182,12 +168,8 @@ class _BarberProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Meu Perfil'),
-      ),
-      body: const Center(
-        child: Text('Perfil do barbeiro (Em breve)'),
-      ),
+      appBar: AppBar(title: const Text('Meu Perfil')),
+      body: const Center(child: Text('Perfil do barbeiro (Em breve)')),
     );
   }
 }
@@ -212,12 +194,8 @@ class _BarbershopSettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Configurações'),
-      ),
-      body: const Center(
-        child: Text('Configurações (Em breve)'),
-      ),
+      appBar: AppBar(title: const Text('Configurações')),
+      body: const Center(child: Text('Configurações (Em breve)')),
     );
   }
 }

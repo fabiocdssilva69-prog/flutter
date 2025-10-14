@@ -37,7 +37,7 @@ final class CVGeneratorControllerProvider
 }
 
 String _$cVGeneratorControllerHash() =>
-    r'f2cb99addd2700cfd7a04f1943f1f2a9556b7e25';
+    r'122a90d87fd2708579480926687a8bc46483e8ee';
 
 /// Controller para geração de currículos profissionais para barbeiros
 

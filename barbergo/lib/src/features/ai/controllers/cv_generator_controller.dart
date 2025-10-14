@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../providers/ai_service.dart';
 
 part 'cv_generator_controller.g.dart';
@@ -148,9 +149,9 @@ Melhore:
 Retorne o currículo MELHORADO completo.
 ''';
 
-      final improved = await aiService.correctSpelling(
-        text: currentCV,
-        improveWriting: true,
+      final improved = await aiService.generateText(
+        prompt: prompt,
+        temperature: 0.7,
       );
 
       state = const AsyncData(null);

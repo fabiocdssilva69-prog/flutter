@@ -1,11 +1,12 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../../../domain/entities/ai/chat_message.dart';
 import 'barber_chatbot_controller.dart';
 
 part 'artistic_chat_controller.g.dart';
 
 /// Controller de chat para o Chatbot Artístico
-/// 
+///
 /// Gerencia o histórico de conversação local e integra com o BarberChatbotController
 /// para obter respostas da IA sobre técnicas, tendências e arte da barbearia.
 @riverpod
@@ -32,12 +33,12 @@ class ArtisticChatController extends _$ArtisticChatController {
 
     try {
       // Converter histórico para formato do AIService
-      final conversationHistory = current
-          .map((msg) => msg.toMap())
-          .toList();
+      final conversationHistory = current.map((msg) => msg.toMap()).toList();
 
       // Obter resposta da IA
-      final chatbotController = ref.read(barberChatbotControllerProvider.notifier);
+      final chatbotController = ref.read(
+        barberChatbotControllerProvider.notifier,
+      );
       final response = await chatbotController.sendMessage(
         message: content,
         conversationHistory: conversationHistory,
@@ -68,6 +69,6 @@ class ArtisticChatController extends _$ArtisticChatController {
   bool get isAwaitingResponse => state.when(
     loading: () => true,
     data: (_) => false,
-    error: (_, __) => false,
+    error: (error, stackTrace) => false,
   );
 }

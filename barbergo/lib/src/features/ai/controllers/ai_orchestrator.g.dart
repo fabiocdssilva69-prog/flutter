@@ -36,7 +36,7 @@ final class AIOrchestratorProvider
   AIOrchestrator create() => AIOrchestrator();
 }
 
-String _$aIOrchestratorHash() => r'56647ded9cd540a49aadcf5f36628e6cdfb6d237';
+String _$aIOrchestratorHash() => r'c792d011a4b551b5f65838ed041de3bf304908dc';
 
 /// Orquestrador inteligente que decide qual modelo usar
 

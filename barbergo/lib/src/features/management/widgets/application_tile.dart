@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/theme/app_colors.dart';
 import '../../../domain/entities/application_entity.dart';
+import '../../../domain/entities/enums.dart';
 import '../../core/core_data_controller.dart';
 import '../controllers/vacancy_controller.dart';
-import '../../../core/theme/app_colors.dart';
 
 class ApplicationTile extends ConsumerWidget {
-  const ApplicationTile({
-    super.key,
-    required this.application,
-  });
+  const ApplicationTile({super.key, required this.application});
 
   final ApplicationEntity application;
 
@@ -32,7 +31,9 @@ class ApplicationTile extends ConsumerWidget {
             // Informações do barbeiro
             barberProfileAsync.when(
               data: (profile) {
-                if (profile == null) return const Text('Barbeiro não encontrado');
+                if (profile == null) {
+                  return const Text('Barbeiro não encontrado');
+                }
 
                 return barberUserAsync.when(
                   data: (user) => Row(
@@ -66,11 +67,13 @@ class ApplicationTile extends ConsumerWidget {
                     ],
                   ),
                   loading: () => const CircularProgressIndicator(),
-                  error: (_, __) => const Text('Erro ao carregar dados'),
+                  error: (error, stackTrace) =>
+                      const Text('Erro ao carregar dados'),
                 );
               },
               loading: () => const CircularProgressIndicator(),
-              error: (_, __) => const Text('Erro ao carregar perfil'),
+              error: (error, stackTrace) =>
+                  const Text('Erro ao carregar perfil'),
             ),
 
             const SizedBox(height: 12),
@@ -102,9 +105,7 @@ class ApplicationTile extends ConsumerWidget {
                 onPressed: () => _handleReject(ref),
                 icon: const Icon(Icons.close),
                 label: const Text('Rejeitar'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.red,
-                ),
+                style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
               ),
             ),
             const SizedBox(width: 12),
@@ -126,7 +127,7 @@ class ApplicationTile extends ConsumerWidget {
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.green.withOpacity(0.1),
+            color: Colors.green.withValues(alpha: 0.1 * 255),
             borderRadius: BorderRadius.circular(8),
           ),
           child: const Row(
@@ -149,7 +150,7 @@ class ApplicationTile extends ConsumerWidget {
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.red.withOpacity(0.1),
+            color: Colors.red.withValues(alpha: 0.1 * 255),
             borderRadius: BorderRadius.circular(8),
           ),
           child: const Row(
@@ -172,7 +173,7 @@ class ApplicationTile extends ConsumerWidget {
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1 * 255),
             borderRadius: BorderRadius.circular(8),
           ),
           child: const Row(
@@ -196,13 +197,19 @@ class ApplicationTile extends ConsumerWidget {
   void _handleAccept(WidgetRef ref) async {
     await ref
         .read(managementControllerProvider.notifier)
-        .updateApplicationStatus(application.applicationId, ApplicationStatus.accepted);
+        .updateApplicationStatus(
+          application.applicationId,
+          ApplicationStatus.accepted,
+        );
   }
 
   void _handleReject(WidgetRef ref) async {
     await ref
         .read(managementControllerProvider.notifier)
-        .updateApplicationStatus(application.applicationId, ApplicationStatus.rejected);
+        .updateApplicationStatus(
+          application.applicationId,
+          ApplicationStatus.rejected,
+        );
   }
 
   String _formatDate(DateTime date) {
