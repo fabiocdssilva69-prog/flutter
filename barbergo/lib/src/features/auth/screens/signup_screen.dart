@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/async_value_ui.dart';
+import '../../../services/firebase_service.dart';
 import '../controllers/auth_controller.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
@@ -20,6 +22,15 @@ class _SignUpScreenState extends ConsumerState {
   bool _isPasswordObscured = true;
 
   @override
+  void initState() {
+    super.initState();
+    // Log Analytics: Usuário visualizou tela de cadastro
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(firebaseAnalyticsServiceProvider).logScreenView('signup_screen');
+    });
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -34,6 +45,11 @@ class _SignUpScreenState extends ConsumerState {
           .read(authControllerProvider.notifier)
           .signUp(_emailController.text, _passwordController.text);
 
+      // Log Analytics: Usuário criou conta com sucesso
+      if (success) {
+        await ref.read(firebaseAnalyticsServiceProvider).logEvent('sign_up', parameters: {'method': 'email'});
+      }
+
       // Se sucesso, navegamos explicitamente para o onboarding.
       // O GoRouter automático nos levaria para a Home, mas queremos forçar o onboarding após o registro.
       if (success && mounted) {
@@ -45,10 +61,7 @@ class _SignUpScreenState extends ConsumerState {
   @override
   Widget build(BuildContext context) {
     // Observa erros e mostra o AlertDialog
-    ref.listen(
-      authControllerProvider,
-      (_, state) => state.showAlertDialogOnError(context),
-    );
+    ref.listen(authControllerProvider, (_, state) => state.showAlertDialogOnError(context));
 
     final state = ref.watch(authControllerProvider);
     final isLoading = state.isLoading;
@@ -77,9 +90,7 @@ class _SignUpScreenState extends ConsumerState {
                 ),
                 keyboardType: TextInputType.emailAddress,
                 enabled: !isLoading,
-                validator: (value) => (value == null || !value.contains('@'))
-                    ? 'E-mail inválido'
-                    : null,
+                validator: (value) => (value == null || !value.contains('@')) ? 'E-mail inválido' : null,
               ),
               const SizedBox(height: 16),
               // Senha
@@ -90,11 +101,7 @@ class _SignUpScreenState extends ConsumerState {
                   border: const OutlineInputBorder(),
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordObscured
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
+                    icon: Icon(_isPasswordObscured ? Icons.visibility_off : Icons.visibility),
                     onPressed: () {
                       setState(() {
                         _isPasswordObscured = !_isPasswordObscured;
@@ -104,9 +111,7 @@ class _SignUpScreenState extends ConsumerState {
                 ),
                 obscureText: _isPasswordObscured,
                 enabled: !isLoading,
-                validator: (value) => (value == null || value.length < 6)
-                    ? 'Mínimo 6 caracteres'
-                    : null,
+                validator: (value) => (value == null || value.length < 6) ? 'Mínimo 6 caracteres' : null,
               ),
               const SizedBox(height: 16),
               // Confirmar Senha
@@ -136,9 +141,7 @@ class _SignUpScreenState extends ConsumerState {
                   foregroundColor: AppColors.background,
                 ),
                 child: isLoading
-                    ? const CircularProgressIndicator(
-                        color: AppColors.background,
-                      )
+                    ? const CircularProgressIndicator(color: AppColors.background)
                     : const Text("CADASTRAR"),
               ),
               const SizedBox(height: 16),

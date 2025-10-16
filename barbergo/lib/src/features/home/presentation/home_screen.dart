@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../data/repositories/user_repository.dart';
 import '../../../domain/entities/enums.dart';
+import '../../../services/firebase_service.dart';
 import '../../discovery/controllers/application_controller.dart';
 import '../../discovery/controllers/discovery_controller.dart';
 import '../../discovery/widgets/vacancy_card.dart';
@@ -19,6 +20,23 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Log Analytics: Usuário visualizou tela principal
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final accountType = ref.read(currentAccountTypeProvider);
+      ref
+          .read(firebaseAnalyticsServiceProvider)
+          .logScreenView(accountType == AccountType.barber ? 'home_barber' : 'home_barbershop');
+
+      // Define propriedades do usuário
+      ref
+          .read(firebaseAnalyticsServiceProvider)
+          .setUserProperties(userType: accountType == AccountType.barber ? 'barber' : 'barbershop');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,35 +69,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   List<Widget> _getScreensForAccountType(AccountType accountType) {
     if (accountType == AccountType.barber) {
-      return const [
-        _BarberDiscoveryView(),
-        _BarberApplicationsView(),
-        _BarberProfileView(),
-      ];
+      return const [_BarberDiscoveryView(), _BarberApplicationsView(), _BarberProfileView()];
     } else {
       return const [_BarbershopVacanciesView(), _BarbershopSettingsView()];
     }
   }
 
-  List<BottomNavigationBarItem> _getNavItemsForAccountType(
-    AccountType accountType,
-  ) {
+  List<BottomNavigationBarItem> _getNavItemsForAccountType(AccountType accountType) {
     if (accountType == AccountType.barber) {
       return const [
         BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Descobrir'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.history),
-          label: 'Candidaturas',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Candidaturas'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
       ];
     } else {
       return const [
         BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Vagas'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Configurações',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configurações'),
       ];
     }
   }
@@ -99,9 +105,7 @@ class _BarberDiscoveryView extends ConsumerWidget {
       body: vacanciesAsync.when(
         data: (vacancies) {
           if (vacancies.isEmpty) {
-            return const Center(
-              child: Text('Nenhuma vaga disponível no momento'),
-            );
+            return const Center(child: Text('Nenhuma vaga disponível no momento'));
           }
 
           return SafeArea(
@@ -109,30 +113,23 @@ class _BarberDiscoveryView extends ConsumerWidget {
               padding: const EdgeInsets.all(16),
               child: CardSwiper(
                 cardsCount: vacancies.length,
-                cardBuilder:
-                    (context, index, percentThresholdX, percentThresholdY) {
-                      return VacancyCard(vacancy: vacancies[index]);
-                    },
+                cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
+                  return VacancyCard(vacancy: vacancies[index]);
+                },
                 onSwipe: (previousIndex, currentIndex, direction) async {
                   // Swipe para a direita = candidatar
                   if (direction == CardSwiperDirection.right) {
                     final vacancy = vacancies[previousIndex];
                     try {
-                      await ref
-                          .read(applicationControllerProvider.notifier)
-                          .applyForVacancy(vacancy);
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Candidatura enviada com sucesso!'),
-                          ),
-                        );
-                      }
-                    } catch (error) {
+                      await ref.read(applicationControllerProvider.notifier).applyForVacancy(vacancy);
                       if (context.mounted) {
                         ScaffoldMessenger.of(
                           context,
-                        ).showSnackBar(SnackBar(content: Text('Erro: $error')));
+                        ).showSnackBar(const SnackBar(content: Text('Candidatura enviada com sucesso!')));
+                      }
+                    } catch (error) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro: $error')));
                       }
                     }
                   }
@@ -143,8 +140,7 @@ class _BarberDiscoveryView extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) =>
-            Center(child: Text('Erro ao carregar vagas: $error')),
+        error: (error, stackTrace) => Center(child: Text('Erro ao carregar vagas: $error')),
       ),
     );
   }
@@ -156,9 +152,7 @@ class _BarberApplicationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Importa a view real do barber
-    return const Center(
-      child: Text('Candidaturas placeholder - integrar com MyApplicationsView'),
-    );
+    return const Center(child: Text('Candidaturas placeholder - integrar com MyApplicationsView'));
   }
 }
 
@@ -182,9 +176,7 @@ class _BarbershopVacanciesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Importa a view real de vagas
-    return const Center(
-      child: Text('Vagas placeholder - integrar com MyVacanciesView'),
-    );
+    return const Center(child: Text('Vagas placeholder - integrar com MyVacanciesView'));
   }
 }
 

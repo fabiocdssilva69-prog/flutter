@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../domain/entities/ai/chat_message.dart';
+import '../../../services/firebase_service.dart';
 import '../controllers/artistic_chat_controller.dart';
 
 /// Tela de chat com IA sobre o mundo artístico de cabelos e barbas
@@ -24,6 +25,15 @@ class ArtisticChatScreen extends ConsumerStatefulWidget {
 class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Log Analytics: Usuário abriu chat artístico AI
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(firebaseAnalyticsServiceProvider).logScreenView('ai_artistic_chat');
+    });
+  }
 
   @override
   void dispose() {
@@ -52,6 +62,11 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
     final content = _messageController.text.trim();
     if (content.isEmpty) return;
 
+    // Log Analytics: Usuário enviou mensagem no chat AI
+    ref
+        .read(firebaseAnalyticsServiceProvider)
+        .logEvent('ai_message_sent', parameters: {'message_length': content.length});
+
     ref.read(artisticChatControllerProvider.notifier).sendMessage(content);
     _messageController.clear();
     _scrollToBottom();
@@ -59,6 +74,9 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
 
   /// Envia uma pergunta sugerida
   void _sendSuggestedPrompt(String prompt) {
+    // Log Analytics: Usuário usou pergunta sugerida
+    ref.read(firebaseAnalyticsServiceProvider).logEvent('ai_suggested_prompt_used', parameters: {'prompt': prompt});
+
     ref.read(artisticChatControllerProvider.notifier).sendMessage(prompt);
     _scrollToBottom();
   }
@@ -74,14 +92,8 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '💬 Chat Artístico',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Converse sobre técnicas e arte',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
-            ),
+            Text('💬 Chat Artístico', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text('Converse sobre técnicas e arte', style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
           ],
         ),
         actions: [
@@ -94,19 +106,12 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text('Limpar Chat'),
-                        content: const Text(
-                          'Deseja limpar todo o histórico de conversa?',
-                        ),
+                        content: const Text('Deseja limpar todo o histórico de conversa?'),
                         actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancelar'),
-                          ),
+                          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
                           FilledButton(
                             onPressed: () {
-                              ref
-                                  .read(artisticChatControllerProvider.notifier)
-                                  .clearChat();
+                              ref.read(artisticChatControllerProvider.notifier).clearChat();
                               Navigator.pop(context);
                             },
                             child: const Text('Limpar'),
@@ -122,11 +127,7 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
       body: Column(
         children: [
           // Área de mensagens
-          Expanded(
-            child: messages.isEmpty
-                ? _buildEmptyState()
-                : _buildMessageList(messages),
-          ),
+          Expanded(child: messages.isEmpty ? _buildEmptyState() : _buildMessageList(messages)),
 
           // Indicador de "digitando..." quando IA está processando
           if (isLoading && messages.isNotEmpty) _buildTypingIndicator(),
@@ -159,31 +160,21 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Theme.of(
-                  context,
-                ).primaryColor.withValues(alpha: 0.1 * 255),
+                color: Theme.of(context).primaryColor.withValues(alpha: 0.1 * 255),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.auto_awesome,
-                size: 64,
-                color: Theme.of(context).primaryColor,
-              ),
+              child: Icon(Icons.auto_awesome, size: 64, color: Theme.of(context).primaryColor),
             ),
             const SizedBox(height: 24),
             Text(
               'Seu Mentor Artístico',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               'Converse sobre técnicas, tendências e o mundo artístico da barbearia',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
@@ -191,9 +182,7 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
             // Sugestões
             Text(
               'Perguntas sugeridas:',
-              style: Theme.of(
-                context,
-              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Wrap(
@@ -236,13 +225,9 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
-        ),
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
         child: Column(
-          crossAxisAlignment: isUser
-              ? CrossAxisAlignment.end
-              : CrossAxisAlignment.start,
+          crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             // Bubble
             Container(
@@ -259,21 +244,12 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
                 ),
               ),
               child: isUser
-                  ? Text(
-                      message.content,
-                      style: const TextStyle(color: Colors.white, fontSize: 15),
-                    )
+                  ? Text(message.content, style: const TextStyle(color: Colors.white, fontSize: 15))
                   : MarkdownBody(
                       data: message.content,
                       styleSheet: MarkdownStyleSheet(
-                        p: TextStyle(
-                          color: isError ? Colors.red[900] : Colors.black87,
-                          fontSize: 15,
-                        ),
-                        code: TextStyle(
-                          backgroundColor: Colors.grey[300],
-                          color: Colors.black87,
-                        ),
+                        p: TextStyle(color: isError ? Colors.red[900] : Colors.black87, fontSize: 15),
+                        code: TextStyle(backgroundColor: Colors.grey[300], color: Colors.black87),
                       ),
                     ),
             ),
@@ -299,10 +275,7 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
         children: [
           Container(
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(12),
-            ),
+            decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(12)),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -315,10 +288,7 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text(
-                  'IA está pensando...',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                ),
+                Text('IA está pensando...', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
               ],
             ),
           ),
@@ -350,14 +320,8 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
                 hintText: 'Digite sua pergunta...',
                 filled: true,
                 fillColor: Colors.grey[100],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
               maxLines: null,
               textInputAction: TextInputAction.send,
@@ -365,11 +329,7 @@ class _ArtisticChatScreenState extends ConsumerState<ArtisticChatScreen> {
             ),
           ),
           const SizedBox(width: 8),
-          FloatingActionButton(
-            onPressed: _sendMessage,
-            mini: true,
-            child: const Icon(Icons.send),
-          ),
+          FloatingActionButton(onPressed: _sendMessage, mini: true, child: const Icon(Icons.send)),
         ],
       ),
     );

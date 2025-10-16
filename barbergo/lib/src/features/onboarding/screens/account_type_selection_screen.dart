@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/async_value_ui.dart';
 import '../../../domain/entities/enums.dart';
+import '../../../services/firebase_service.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../controllers/onboarding_controller.dart';
 
@@ -22,6 +23,15 @@ class _AccountTypeSelectionScreenState extends ConsumerState<AccountTypeSelectio
   AccountType? _selectedAccountType;
 
   @override
+  void initState() {
+    super.initState();
+    // Log Analytics: Usuário visualizou tela de seleção de tipo de conta
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(firebaseAnalyticsServiceProvider).logScreenView('onboarding_account_type');
+    });
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     _cityController.dispose();
@@ -34,6 +44,17 @@ class _AccountTypeSelectionScreenState extends ConsumerState<AccountTypeSelectio
       return;
     }
     if (_formKey.currentState!.validate()) {
+      // Log Analytics: Usuário completou onboarding
+      await ref
+          .read(firebaseAnalyticsServiceProvider)
+          .logEvent(
+            'onboarding_completed',
+            parameters: {
+              'account_type': _selectedAccountType == AccountType.barber ? 'barber' : 'barbershop',
+              'location': _cityController.text,
+            },
+          );
+
       await ref
           .read(onboardingControllerProvider.notifier)
           .completeOnboarding(
