@@ -1,15 +1,15 @@
 import 'package:barbergo_app/src/domain/entities/enums.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../profiles/data/profile_repository.dart';
+import '../../profile/controllers/profile_controller.dart';
 import '../controllers/auth_controller.dart';
 
 /// Provider que expõe o tipo de conta do usuário autenticado.
 ///
-/// Integrado com nosso sistema de perfis existente para obter o AccountType
-/// do usuário logado através do userProfileProvider.
+/// ✅ CORRIGIDO: Agora usa currentUserProfileProvider (Stream com timeout otimizado)
+/// ao invés de userProfileProvider (Future sem timeout que causava loading infinito)
 final currentAccountTypeProvider = Provider<AccountType?>((ref) {
-  final userProfileAsync = ref.watch(userProfileProvider);
+  final userProfileAsync = ref.watch(currentUserProfileProvider);
 
   return userProfileAsync.when(
     data: (profile) => profile?.accountType,
