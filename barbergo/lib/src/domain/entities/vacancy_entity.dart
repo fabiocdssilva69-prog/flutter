@@ -1,91 +1,71 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Para GeoPoint
+import 'package:dart_mappable/dart_mappable.dart';
+import 'package:geoflutterfire_plus/geoflutterfire_plus.dart'; // NOVO: Sprint 24
 
+import '../../core/infrastructure/mappable_hooks.dart';
 import 'enums.dart';
 
-class VacancyEntity {
-  const VacancyEntity({
-    required this.vacancyId,
-    required this.barbershopId,
-    required this.barbershopName,
-    required this.title,
-    required this.type,
-    this.commissionPercentage,
-    required this.workHours,
-    required this.locationCityState,
-    required this.isActive,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+part 'vacancy_entity.mapper.dart';
 
+@MappableClass()
+class VacancyEntity with VacancyEntityMappable {
   final String vacancyId;
   final String barbershopId;
   final String barbershopName;
+  final String locationCityState;
+
+  // NOVO (GEO - Sprint 24): Localização Exata (Chave para a busca por raio)
+  // Armazenado como Map para compatibilidade com dart_mappable
+  @MappableField(hook: GeoFirePointHook())
+  final Map<String, dynamic>? preciseLocation; // OPCIONAL para compatibilidade
+
   final String title;
   final VacancyType type;
   final double? commissionPercentage;
   final String workHours;
-  final String locationCityState;
+  final String? requirements;
+  final List<String>? benefits;
+
   final bool isActive;
+
+  @MappableField(hook: TimestampHook())
   final DateTime createdAt;
-  final DateTime updatedAt;
+  @MappableField(hook: TimestampHook())
+  final DateTime? updatedAt;
 
-  factory VacancyEntity.fromJson(Map<String, dynamic> json) {
-    return VacancyEntity(
-      vacancyId: json['vacancyId'] as String,
-      barbershopId: json['barbershopId'] as String,
-      barbershopName: json['barbershopName'] as String,
-      title: json['title'] as String,
-      type: VacancyType.values.firstWhere((e) => e.toString().split('.').last == json['type']),
-      commissionPercentage: (json['commissionPercentage'] as num?)?.toDouble(),
-      workHours: json['workHours'] as String,
-      locationCityState: json['locationCityState'] as String,
-      isActive: json['isActive'] as bool,
-      createdAt: (json['createdAt'] as Timestamp).toDate(),
-      updatedAt: (json['updatedAt'] as Timestamp).toDate(),
-    );
+  VacancyEntity({
+    required this.vacancyId,
+    required this.barbershopId,
+    required this.barbershopName,
+    required this.locationCityState,
+    this.preciseLocation, // OPCIONAL (Sprint 24)
+    required this.title,
+    required this.type,
+    required this.workHours,
+    required this.isActive,
+    required this.createdAt,
+    this.commissionPercentage,
+    this.requirements,
+    this.benefits,
+    this.updatedAt,
+  });
+
+  // Getter para converter preciseLocation de Map para GeoFirePoint
+  GeoFirePoint get geoLocation {
+    if (preciseLocation == null) {
+      return GeoFirePoint(const GeoPoint(0, 0));
+    }
+    try {
+      final geopoint = preciseLocation!['geopoint'];
+      if (geopoint is GeoPoint) {
+        return GeoFirePoint(geopoint);
+      }
+    } catch (e) {
+      // Se falhar, cria um ponto padrão (0,0)
+      return GeoFirePoint(const GeoPoint(0, 0));
+    }
+    return GeoFirePoint(const GeoPoint(0, 0));
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'vacancyId': vacancyId,
-      'barbershopId': barbershopId,
-      'barbershopName': barbershopName,
-      'title': title,
-      'type': type.toString().split('.').last,
-      'commissionPercentage': commissionPercentage,
-      'workHours': workHours,
-      'locationCityState': locationCityState,
-      'isActive': isActive,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'updatedAt': Timestamp.fromDate(updatedAt),
-    };
-  }
-
-  VacancyEntity copyWith({
-    String? vacancyId,
-    String? barbershopId,
-    String? barbershopName,
-    String? title,
-    VacancyType? type,
-    double? commissionPercentage,
-    String? workHours,
-    String? locationCityState,
-    bool? isActive,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) {
-    return VacancyEntity(
-      vacancyId: vacancyId ?? this.vacancyId,
-      barbershopId: barbershopId ?? this.barbershopId,
-      barbershopName: barbershopName ?? this.barbershopName,
-      title: title ?? this.title,
-      type: type ?? this.type,
-      commissionPercentage: commissionPercentage ?? this.commissionPercentage,
-      workHours: workHours ?? this.workHours,
-      locationCityState: locationCityState ?? this.locationCityState,
-      isActive: isActive ?? this.isActive,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-    );
-  }
+  static const fromMap = VacancyEntityMapper.fromMap;
 }

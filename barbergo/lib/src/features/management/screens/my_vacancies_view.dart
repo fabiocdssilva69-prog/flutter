@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../controllers/vacancy_controller.dart';
+
 import '../../../core/theme/app_colors.dart';
+import '../controllers/vacancy_controller.dart';
 
 class MyVacanciesView extends ConsumerWidget {
   const MyVacanciesView({super.key});
@@ -22,15 +23,9 @@ class MyVacanciesView extends ConsumerWidget {
                 children: [
                   Icon(Icons.work_outline, size: 72, color: Colors.grey),
                   SizedBox(height: 16),
-                  Text(
-                    'Nenhuma vaga criada ainda',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
+                  Text('Nenhuma vaga criada ainda', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
-                  Text(
-                    'Clique no botão abaixo para criar sua primeira vaga',
-                    textAlign: TextAlign.center,
-                  ),
+                  Text('Clique no botão abaixo para criar sua primeira vaga', textAlign: TextAlign.center),
                 ],
               ),
             );
@@ -44,27 +39,23 @@ class MyVacanciesView extends ConsumerWidget {
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
                 child: ListTile(
-                  title: Text(
-                    vacancy.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                  title: Text(vacancy.title, style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Text(vacancy.workHours),
                   trailing: Icon(
                     vacancy.isActive ? Icons.check_circle : Icons.pause_circle,
                     color: vacancy.isActive ? Colors.green : Colors.orange,
                   ),
-                  onTap: () =>
-                      context.push('/vacancy-details/${vacancy.vacancyId}'),
+                  onTap: () => context.push('/vacancy-details/${vacancy.vacancyId}'),
                 ),
               );
             },
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) =>
-            Center(child: Text('Erro ao carregar vagas: $error')),
+        error: (error, stackTrace) => Center(child: Text('Erro ao carregar vagas: $error')),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'fab_my_vacancies', // Tag única para evitar conflito
         onPressed: () => context.push('/create-vacancy'),
         icon: const Icon(Icons.add),
         label: const Text('Nova Vaga'),

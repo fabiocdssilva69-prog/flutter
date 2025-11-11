@@ -4,12 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../../../data/repositories/user_repository.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../services/firebase_service.dart';
+import '../../auth/application/account_type_provider.dart';
 import '../../discovery/controllers/application_controller.dart';
 import '../../discovery/controllers/discovery_controller.dart';
 import '../../discovery/widgets/vacancy_card.dart';
+import '../../management/screens/my_vacancies_view.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -59,6 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         items: navItems,
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'fab_home_ai_test', // Tag única para evitar conflito
         onPressed: () => context.push('/ai-test'),
         backgroundColor: Colors.deepPurple,
         icon: const Icon(Icons.smart_toy),
@@ -175,8 +177,8 @@ class _BarbershopVacanciesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Importa a view real de vagas
-    return const Center(child: Text('Vagas placeholder - integrar com MyVacanciesView'));
+    // Integração com a view real de vagas
+    return const MyVacanciesView();
   }
 }
 
