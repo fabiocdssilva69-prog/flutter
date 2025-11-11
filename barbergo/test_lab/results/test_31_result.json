@@ -1,0 +1,14 @@
+{
+  "test": 31,
+  "complexity": "LOW",
+  "features_implemented": 5,
+  "errors": 0,
+  "name": "json_serializable Pure + Manual copyWith",
+  "recommendation": "✅ EXCELENTE! Simplicidade vence!",
+  "success": true,
+  "warnings": 0,
+  "max_score": 125,
+  "maintainability": "HIGH",
+  "score": 90,
+  "duration": 37.2707394
+}

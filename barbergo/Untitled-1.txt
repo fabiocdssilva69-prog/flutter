@@ -1,2 +1,0 @@
-Future<void> updateVacancyStatus(String vacancyId, bool isActive);
-Future<void> deleteVacancy(String vacancyId);

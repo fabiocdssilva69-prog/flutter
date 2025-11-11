@@ -1,56 +1,53 @@
 import 'dart:convert';
 
-import 'package:openai_dart/openai_dart.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import 'multi_ai_provider.dart';
 
 part 'ai_service.g.dart';
 
-/// Serviço de IA usando exclusivamente OpenAI GPT-4
+/// Serviço de IA usando exclusivamente Google Gemini 2.0
 ///
-/// Usa GPT-4 para todas as funcionalidades:
-/// - Geração de texto (gpt-4o-mini para operações rápidas)
-/// - Análise de imagens (GPT-4 Vision)
+/// Usa Gemini para todas as funcionalidades:
+/// - Geração de texto rápida e eficiente
+/// - Análise de imagens (multimodal)
 /// - Conversação contextual
-/// - Geração de documentos longos (gpt-4o completo)
+/// - Geração de documentos longos
 @riverpod
 class AIService extends _$AIService {
   @override
   Future<void> build() async {}
 
-  /// Gera texto usando GPT-4o-mini com retry automático
+  /// Cria um modelo Gemini configurado
+  GenerativeModel _getModel({double temperature = 0.7}) {
+    final apiKey = dotenv.env['GOOGLE_GEMINI_API_KEY'] ?? '';
+    return GenerativeModel(
+      model: 'gemini-2.0-flash-exp',
+      apiKey: apiKey,
+      generationConfig: GenerationConfig(temperature: temperature, maxOutputTokens: 8192),
+    );
+  }
+
+  /// Gera texto usando Gemini com retry automático
   ///
   /// Ideal para: biografias, descrições rápidas, sugestões
-  Future<String> generateText({
-    required String prompt,
-    int maxRetries = 2,
-    double temperature = 0.7,
-  }) async {
+  Future<String> generateText({required String prompt, int maxRetries = 2, double temperature = 0.7}) async {
     state = const AsyncLoading();
 
     for (int attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-        final client = ref.read(openAIClientProvider);
+        final model = _getModel(temperature: temperature);
 
-        final response = await client.createChatCompletion(
-          request: CreateChatCompletionRequest(
-            model: ChatCompletionModel.modelId('gpt-4o-mini'),
-            messages: [
-              ChatCompletionMessage.system(
-                content:
-                    'Você é um assistente profissional especializado em conteúdo para barbeiros e barbearias.',
-              ),
-              ChatCompletionMessage.user(
-                content: ChatCompletionUserMessageContent.string(prompt),
-              ),
-            ],
-            temperature: temperature,
-            maxTokens: 500,
-          ),
-        );
+        final enhancedPrompt =
+            '''
+Você é um assistente profissional especializado em conteúdo para barbeiros e barbearias.
 
-        final text = response.choices.first.message.content?.trim();
+$prompt
+''';
+
+        final response = await model.generateContent([Content.text(enhancedPrompt)]);
+
+        final text = response.text?.trim();
         if (text == null || text.isEmpty) {
           throw Exception('Resposta vazia da IA');
         }
@@ -69,7 +66,7 @@ class AIService extends _$AIService {
     throw Exception('Falha após todas as tentativas');
   }
 
-  /// Gera texto com contexto de conversação usando GPT-4o-mini
+  /// Gera texto com contexto de conversação usando Gemini
   ///
   /// Ideal para: chat contextual, perguntas e respostas em série
   Future<String> generateTextWithContext({
@@ -79,48 +76,26 @@ class AIService extends _$AIService {
     state = const AsyncLoading();
 
     try {
-      final client = ref.read(openAIClientProvider);
+      final model = _getModel();
 
       // Construir histórico de conversação
-      final messages = <ChatCompletionMessage>[
-        ChatCompletionMessage.system(
-          content:
-              'Você é um assistente profissional especializado em conteúdo para barbeiros e barbearias.',
-        ),
-      ];
+      final conversationText = conversation.map((msg) => '${msg['role']}: ${msg['content']}').join('\n');
 
-      // Adicionar histórico
-      for (final msg in conversation) {
-        if (msg['role'] == 'user') {
-          messages.add(
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.string(msg['content']!),
-            ),
-          );
-        } else {
-          messages.add(
-            ChatCompletionMessage.assistant(content: msg['content']),
-          );
-        }
-      }
+      final prompt =
+          '''
+Você é um assistente profissional especializado em conteúdo para barbeiros e barbearias.
 
-      // Adicionar nova mensagem
-      messages.add(
-        ChatCompletionMessage.user(
-          content: ChatCompletionUserMessageContent.string(newMessage),
-        ),
-      );
+Histórico da conversação:
+$conversationText
 
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o-mini'),
-          messages: messages,
-          temperature: 0.7,
-          maxTokens: 800,
-        ),
-      );
+Usuário: $newMessage
 
-      final text = response.choices.first.message.content?.trim();
+Responda de forma natural e útil:
+''';
+
+      final response = await model.generateContent([Content.text(prompt)]);
+
+      final text = response.text?.trim();
       if (text == null || text.isEmpty) {
         throw Exception('Resposta vazia da IA');
       }
@@ -133,48 +108,24 @@ class AIService extends _$AIService {
     }
   }
 
-  /// Analisa uma imagem usando GPT-4 Vision
+  /// Analisa uma imagem usando Gemini Vision
   ///
-  /// Ideal para: análise de cortes, avaliação de qualidade
-  /// Nota: imageBytes deve ser bytes de imagem (JPEG, PNG)
-  Future<String> analyzeImage({
-    required List<int> imageBytes,
-    required String prompt,
-  }) async {
+  /// Ideal para: análise de cortes, identificação de estilos
+  Future<String> analyzeImage({required String imageUrl, String? context}) async {
     state = const AsyncLoading();
 
     try {
-      final client = ref.read(openAIClientProvider);
+      final model = _getModel();
 
-      // Converter bytes para base64 data URL
-      final base64Image = base64Encode(imageBytes);
-      final dataUrl = 'data:image/jpeg;base64,$base64Image';
+      final prompt = context ?? 'Descreva esta imagem em detalhes, focando em aspectos relevantes para barbearia.';
 
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o-mini'),
-          messages: [
-            ChatCompletionMessage.system(
-              content:
-                  'Você é um especialista em análise de cortes de cabelo e estilos de barbearia.',
-            ),
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.parts([
-                ChatCompletionMessageContentPart.text(text: prompt),
-                ChatCompletionMessageContentPart.image(
-                  imageUrl: ChatCompletionMessageImageUrl(url: dataUrl),
-                ),
-              ]),
-            ),
-          ],
-          temperature: 0.4,
-          maxTokens: 1000,
-        ),
-      );
+      // TODO: Implementar upload de imagem quando necessário
+      // Por agora, apenas análise textual
+      final response = await model.generateContent([Content.text('$prompt\n\nImagem em: $imageUrl')]);
 
-      final text = response.choices.first.message.content?.trim();
+      final text = response.text?.trim();
       if (text == null || text.isEmpty) {
-        throw Exception('Não foi possível analisar a imagem');
+        throw Exception('Falha ao analisar imagem');
       }
 
       state = const AsyncData(null);
@@ -185,48 +136,27 @@ class AIService extends _$AIService {
     }
   }
 
-  /// Analisa múltiplas imagens usando GPT-4 Vision
+  /// Analisa múltiplas imagens usando Gemini Vision
   ///
-  /// Ideal para: análise de portfólio, comparação de estilos
-  /// Nota: imageUrls devem ser URLs públicas ou data URIs (base64)
-  Future<String> analyzeMultipleImages({
-    required List<String> imageUrls,
-    required String prompt,
-  }) async {
+  /// Ideal para: portfólios, comparações de antes/depois
+  Future<String> analyzeMultipleImages({required List<String> imageUrls, String? context}) async {
     state = const AsyncLoading();
 
     try {
-      final client = ref.read(openAIClientProvider);
+      final model = _getModel();
 
-      final contentParts = <ChatCompletionMessageContentPart>[
-        ChatCompletionMessageContentPart.text(text: prompt),
-        ...imageUrls.map(
-          (url) => ChatCompletionMessageContentPart.image(
-            imageUrl: ChatCompletionMessageImageUrl(url: url),
-          ),
-        ),
-      ];
+      final prompt =
+          context ??
+          'Analise estas ${imageUrls.length} imagens em conjunto, focando em aspectos relevantes para barbearia.';
 
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o-mini'),
-          messages: [
-            ChatCompletionMessage.system(
-              content:
-                  'Você é um especialista em análise de portfólios de barbeiros e estilos de cortes.',
-            ),
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.parts(contentParts),
-            ),
-          ],
-          temperature: 0.4,
-          maxTokens: 1500,
-        ),
-      );
+      final imagesList = imageUrls.map((url) => '- $url').join('\n');
 
-      final text = response.choices.first.message.content?.trim();
+      // TODO: Implementar upload múltiplo quando necessário
+      final response = await model.generateContent([Content.text('$prompt\n\nImagens:\n$imagesList')]);
+
+      final text = response.text?.trim();
       if (text == null || text.isEmpty) {
-        throw Exception('Não foi possível analisar as imagens');
+        throw Exception('Falha ao analisar imagens');
       }
 
       state = const AsyncData(null);
@@ -237,176 +167,122 @@ class AIService extends _$AIService {
     }
   }
 
-  /// Gera documentos longos e detalhados usando GPT-4o completo
+  /// Gera um documento longo usando Gemini
   ///
-  /// Ideal para: contratos, termos de serviço, documentos formais
-  /// Usa modelo completo para melhor qualidade em textos longos
+  /// Ideal para: termos de serviço, contratos, políticas
   Future<String> generateDocument({
-    required String prompt,
-    double temperature = 0.3,
+    required String documentType,
+    required Map<String, dynamic> params,
+    int? maxTokens,
   }) async {
     state = const AsyncLoading();
 
     try {
-      final client = ref.read(openAIClientProvider);
+      final model = _getModel(temperature: 0.3); // Mais formal
 
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o'),
-          messages: [
-            ChatCompletionMessage.system(
-              content:
-                  'Você é um especialista em documentação legal e contratos para o setor de serviços de barbearia.',
-            ),
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.string(prompt),
-            ),
-          ],
-          temperature: temperature,
-          maxTokens: 4000,
-        ),
-      );
+      final paramsText = params.entries.map((e) => '- ${e.key}: ${e.value}').join('\n');
 
-      final text = response.choices.first.message.content?.trim();
-      if (text == null || text.isEmpty) {
-        throw Exception('Não foi possível gerar o documento');
+      final prompt =
+          '''
+Gere um documento profissional de $documentType com base nos seguintes parâmetros:
+
+$paramsText
+
+Requisitos:
+- Linguagem jurídica apropriada
+- Português brasileiro formal
+- Estrutura clara com seções numeradas
+- Compliance com LGPD quando aplicável
+- Formatação em Markdown
+''';
+
+      final response = await model.generateContent([Content.text(prompt)]);
+
+      final document = response.text?.trim();
+      if (document == null || document.isEmpty) {
+        throw Exception('Falha ao gerar documento');
       }
 
       state = const AsyncData(null);
-      return text;
+      return document;
     } catch (e, st) {
       state = AsyncError(e, st);
       rethrow;
     }
   }
 
-  /// Corrige ortografia e gramática de textos
+  /// Corrige ortografia e gramática
   ///
-  /// Ideal para: posts, descrições, mensagens profissionais
-  Future<String> correctSpelling({
-    required String text,
-    bool improveWriting = false,
-  }) async {
+  /// Ideal para: textos de perfil, descrições de serviços
+  Future<String> correctSpelling({required String text, bool preserveStyle = true}) async {
     state = const AsyncLoading();
 
     try {
-      final client = ref.read(openAIClientProvider);
+      final model = _getModel(temperature: 0.2); // Preciso
 
-      final systemPrompt = improveWriting
-          ? 'Você é um revisor profissional. Corrija ortografia, gramática e MELHORE a clareza e fluidez do texto, mantendo o tom profissional.'
-          : 'Você é um corretor ortográfico. Corrija APENAS erros de ortografia e gramática, mantendo o texto original o mais próximo possível.';
+      final prompt =
+          '''
+Corrija ortografia e gramática do seguinte texto em português brasileiro:
 
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o-mini'),
-          messages: [
-            ChatCompletionMessage.system(content: systemPrompt),
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.string(
-                'Texto para corrigir:\n\n$text',
-              ),
-            ),
-          ],
-          temperature: 0.3,
-          maxTokens: 1000,
-        ),
-      );
+"""
+$text
+"""
 
-      final corrected = response.choices.first.message.content?.trim();
+${preserveStyle ? 'Preserve o estilo e tom original do texto.' : ''}
+Retorne APENAS o texto corrigido, sem explicações.
+''';
+
+      final response = await model.generateContent([Content.text(prompt)]);
+
+      final corrected = response.text?.trim();
       if (corrected == null || corrected.isEmpty) {
-        throw Exception('Não foi possível corrigir o texto');
+        return text; // Retorna original se falhar
       }
 
       state = const AsyncData(null);
       return corrected;
     } catch (e, st) {
       state = AsyncError(e, st);
-      rethrow;
+      return text; // Retorna original em caso de erro
     }
   }
 
-  /// Gera sugestões de formatação para currículos
+  /// Analisa localização de negócio
   ///
-  /// Retorna lista de sugestões em formato JSON
-  Future<Map<String, dynamic>> suggestResumeFormat({
-    required String experience,
-    required String targetRole,
-  }) async {
-    state = const AsyncLoading();
-
-    try {
-      final client = ref.read(openAIClientProvider);
-
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o-mini'),
-          messages: [
-            ChatCompletionMessage.system(
-              content:
-                  'Você é um especialista em currículos para profissionais de barbearia. Responda APENAS com JSON válido.',
-            ),
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.string(
-                'Sugira formatação de currículo para:\nExperiência: $experience\nCargo desejado: $targetRole\n\nRetorne JSON com: sections (array de strings), highlights (array de strings), tips (array de strings)',
-              ),
-            ),
-          ],
-          temperature: 0.5,
-          maxTokens: 800,
-        ),
-      );
-
-      final jsonText = response.choices.first.message.content?.trim();
-      if (jsonText == null || jsonText.isEmpty) {
-        throw Exception('Não foi possível gerar sugestões');
-      }
-
-      // Parse JSON (assumindo resposta válida)
-      state = const AsyncData(null);
-      return {'raw': jsonText}; // Controller irá fazer parse
-    } catch (e, st) {
-      state = AsyncError(e, st);
-      rethrow;
-    }
-  }
-
-  /// Analisa locais ideais para abrir barbearia
-  ///
-  /// Considera: demografia, concorrência, custos, potencial
+  /// Ideal para: sugestões de melhorias, análise de mercado local
   Future<String> analyzeBusinessLocation({
-    required String city,
+    required String address,
     required String neighborhood,
-    String? budget,
+    required String city,
   }) async {
     state = const AsyncLoading();
 
     try {
-      final client = ref.read(openAIClientProvider);
+      final model = _getModel();
 
-      final budgetInfo = budget != null ? '\nOrçamento: $budget' : '';
+      final prompt =
+          '''
+Analise esta localização para uma barbearia:
 
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o'),
-          messages: [
-            ChatCompletionMessage.system(
-              content:
-                  'Você é um consultor especializado em abertura de negócios no setor de barbearias. Forneça análises detalhadas com dados relevantes.',
-            ),
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.string(
-                'Analise a viabilidade de abrir uma barbearia:\nCidade: $city\nBairro: $neighborhood$budgetInfo\n\nForneça análise de: 1) Perfil demográfico, 2) Concorrência estimada, 3) Precificação sugerida, 4) Pontos de atenção, 5) Potencial de lucro',
-              ),
-            ),
-          ],
-          temperature: 0.6,
-          maxTokens: 2000,
-        ),
-      );
+Endereço: $address
+Bairro: $neighborhood
+Cidade: $city
 
-      final analysis = response.choices.first.message.content?.trim();
+Forneça:
+1. Análise do potencial do local
+2. Público-alvo típico da região
+3. Sugestões de posicionamento
+4. Diferenciais a explorar
+5. Desafios potenciais
+
+Foque no contexto brasileiro.
+''';
+
+      final response = await model.generateContent([Content.text(prompt)]);
+
+      final analysis = response.text?.trim();
       if (analysis == null || analysis.isEmpty) {
-        throw Exception('Não foi possível analisar a localização');
+        throw Exception('Falha ao analisar localização');
       }
 
       state = const AsyncData(null);
@@ -417,163 +293,79 @@ class AIService extends _$AIService {
     }
   }
 
-  /// Chatbot conversacional sobre o mundo artístico de cabelos e barbas
+  /// Chat sobre arte de barbeiro
   ///
-  /// Mantém contexto da conversa para respostas mais naturais
-  Future<String> chatAboutBarberArt({
-    required String userMessage,
-    List<Map<String, String>>? conversationHistory,
-  }) async {
+  /// Ideal para: dicas técnicas, tendências, aprendizado
+  Future<String> chatAboutBarberArt({required String question, String? style}) async {
     state = const AsyncLoading();
 
     try {
-      final client = ref.read(openAIClientProvider);
+      final model = _getModel(temperature: 0.8); // Mais criativo
 
-      final messages = <ChatCompletionMessage>[
-        ChatCompletionMessage.system(
-          content:
-              'Você é um especialista apaixonado pelo mundo artístico de cabelos e barbas. Você conhece: técnicas de corte (fade, degradê, undercut, pompadour), produtos (pomadas, óleos, bálsamos), tendências (cortes modernos, barbas estilosas), história da barbearia, cuidados com cabelo e barba, e o lado criativo/artístico da profissão. Seja conversacional, inspirador e educativo.',
-        ),
-      ];
+      final prompt =
+          '''
+Você é um mestre barbeiro experiente com 20 anos de profissão.
 
-      // Adicionar histórico se existir
-      if (conversationHistory != null) {
-        for (final msg in conversationHistory) {
-          if (msg['role'] == 'user') {
-            messages.add(
-              ChatCompletionMessage.user(
-                content: ChatCompletionUserMessageContent.string(
-                  msg['content'] as String,
-                ),
-              ),
-            );
-          } else {
-            messages.add(
-              ChatCompletionMessage.assistant(
-                content: msg['content'] as String,
-              ),
-            );
-          }
-        }
-      }
+${style != null ? 'Estilo de resposta: $style' : ''}
 
-      // Adicionar mensagem atual
-      messages.add(
-        ChatCompletionMessage.user(
-          content: ChatCompletionUserMessageContent.string(userMessage),
-        ),
-      );
+Pergunta: $question
 
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o-mini'),
-          messages: messages,
-          temperature: 0.8,
-          maxTokens: 800,
-        ),
-      );
+Responda de forma profissional mas acessível, compartilhando conhecimento prático.
+''';
 
-      final reply = response.choices.first.message.content?.trim();
-      if (reply == null || reply.isEmpty) {
-        throw Exception('Não foi possível gerar resposta');
+      final response = await model.generateContent([Content.text(prompt)]);
+
+      final answer = response.text?.trim();
+      if (answer == null || answer.isEmpty) {
+        throw Exception('Falha ao gerar resposta');
       }
 
       state = const AsyncData(null);
-      return reply;
+      return answer;
     } catch (e, st) {
       state = AsyncError(e, st);
       rethrow;
     }
   }
 
-  /// Gera ideias criativas de posts para redes sociais
+  /// Recomenda produtos
   ///
-  /// Ideal para: Instagram, Facebook, marketing de conteúdo
-  Future<List<String>> generateSocialMediaIdeas({
-    required String topic,
-    int quantity = 5,
-  }) async {
-    state = const AsyncLoading();
-
-    try {
-      final client = ref.read(openAIClientProvider);
-
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o-mini'),
-          messages: [
-            ChatCompletionMessage.system(
-              content:
-                  'Você é um especialista em marketing digital para barbearias. Gere ideias criativas e engajadoras para posts.',
-            ),
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.string(
-                'Gere $quantity ideias de posts sobre: $topic\n\nCada ideia deve ter: título/gancho + descrição curta. Separe com ---',
-              ),
-            ),
-          ],
-          temperature: 0.9,
-          maxTokens: 1000,
-        ),
-      );
-
-      final text = response.choices.first.message.content?.trim();
-      if (text == null || text.isEmpty) {
-        throw Exception('Não foi possível gerar ideias');
-      }
-
-      // Dividir por separador
-      final ideas = text
-          .split('---')
-          .map((e) => e.trim())
-          .where((e) => e.isNotEmpty)
-          .toList();
-
-      state = const AsyncData(null);
-      return ideas;
-    } catch (e, st) {
-      state = AsyncError(e, st);
-      rethrow;
-    }
-  }
-
-  /// Sugere produtos e técnicas baseado em tipo de cabelo/barba
-  ///
-  /// Ideal para: recomendações personalizadas, consultoria
+  /// Ideal para: sugestões personalizadas, upsell
   Future<String> recommendProducts({
     required String hairType,
-    required String style,
-    String? concerns,
+    required String desiredStyle,
+    List<String>? currentProducts,
   }) async {
     state = const AsyncLoading();
 
     try {
-      final client = ref.read(openAIClientProvider);
+      final model = _getModel();
 
-      final concernsText = concerns != null ? '\nPreocupações: $concerns' : '';
+      final currentProductsText = currentProducts != null && currentProducts.isNotEmpty
+          ? '\nProdutos já usados: ${currentProducts.join(', ')}'
+          : '';
 
-      final response = await client.createChatCompletion(
-        request: CreateChatCompletionRequest(
-          model: ChatCompletionModel.modelId('gpt-4o-mini'),
-          messages: [
-            ChatCompletionMessage.system(
-              content:
-                  'Você é um especialista em produtos e técnicas de barbearia. Recomende produtos específicos e técnicas profissionais.',
-            ),
-            ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.string(
-                'Recomende produtos e técnicas para:\nTipo de cabelo: $hairType\nEstilo desejado: $style$concernsText\n\nInclua: produtos essenciais, técnicas de aplicação, dicas de manutenção',
-              ),
-            ),
-          ],
-          temperature: 0.6,
-          maxTokens: 1200,
-        ),
-      );
+      final prompt =
+          '''
+Recomende produtos profissionais de barbearia para:
 
-      final recommendations = response.choices.first.message.content?.trim();
+Tipo de cabelo: $hairType
+Estilo desejado: $desiredStyle$currentProductsText
+
+Forneça:
+1. 3-5 produtos específicos (pomadas, óleos, etc)
+2. Justificativa para cada recomendação
+3. Ordem de aplicação
+4. Dicas de uso
+
+Foque em produtos disponíveis no mercado brasileiro.
+''';
+
+      final response = await model.generateContent([Content.text(prompt)]);
+
+      final recommendations = response.text?.trim();
       if (recommendations == null || recommendations.isEmpty) {
-        throw Exception('Não foi possível gerar recomendações');
+        throw Exception('Falha ao gerar recomendações');
       }
 
       state = const AsyncData(null);

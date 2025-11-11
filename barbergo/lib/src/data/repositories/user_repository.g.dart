@@ -8,13 +8,17 @@ part of 'user_repository.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// Provider do repository
 
 @ProviderFor(userRepository)
 const userRepositoryProvider = UserRepositoryProvider._();
 
+/// Provider do repository
+
 final class UserRepositoryProvider
     extends $FunctionalProvider<UserRepository, UserRepository, UserRepository>
     with $Provider<UserRepository> {
+  /// Provider do repository
   const UserRepositoryProvider._()
     : super(
         from: null,
@@ -48,12 +52,16 @@ final class UserRepositoryProvider
   }
 }
 
-String _$userRepositoryHash() => r'645be9ab672cb405fbcf5809456cae805d733ae8';
+String _$userRepositoryHash() => r'1a4e42f29e04239b4ad4b601f59649a769f6431e';
 
-@ProviderFor(currentUserData)
-const currentUserDataProvider = CurrentUserDataProvider._();
+/// Provider para o user atual (básico - apenas UserEntity, não ProfileEntity completo)
 
-final class CurrentUserDataProvider
+@ProviderFor(currentUser)
+const currentUserProvider = CurrentUserProvider._();
+
+/// Provider para o user atual (básico - apenas UserEntity, não ProfileEntity completo)
+
+final class CurrentUserProvider
     extends
         $FunctionalProvider<
           AsyncValue<UserEntity?>,
@@ -61,19 +69,20 @@ final class CurrentUserDataProvider
           Stream<UserEntity?>
         >
     with $FutureModifier<UserEntity?>, $StreamProvider<UserEntity?> {
-  const CurrentUserDataProvider._()
+  /// Provider para o user atual (básico - apenas UserEntity, não ProfileEntity completo)
+  const CurrentUserProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'currentUserDataProvider',
+        name: r'currentUserProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$currentUserDataHash();
+  String debugGetCreateSourceHash() => _$currentUserHash();
 
   @$internal
   @override
@@ -83,50 +92,8 @@ final class CurrentUserDataProvider
 
   @override
   Stream<UserEntity?> create(Ref ref) {
-    return currentUserData(ref);
+    return currentUser(ref);
   }
 }
 
-String _$currentUserDataHash() => r'3cccf5c77d48327dd66c5f3bdb26f368612b838e';
-
-@ProviderFor(currentAccountType)
-const currentAccountTypeProvider = CurrentAccountTypeProvider._();
-
-final class CurrentAccountTypeProvider
-    extends $FunctionalProvider<AccountType?, AccountType?, AccountType?>
-    with $Provider<AccountType?> {
-  const CurrentAccountTypeProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'currentAccountTypeProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$currentAccountTypeHash();
-
-  @$internal
-  @override
-  $ProviderElement<AccountType?> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  AccountType? create(Ref ref) {
-    return currentAccountType(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AccountType? value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<AccountType?>(value),
-    );
-  }
-}
-
-String _$currentAccountTypeHash() =>
-    r'0b18626b6ee211dfd14d2a6259244dec67986894';
+String _$currentUserHash() => r'baba5670e183037d044527c3892a2bfcc725fab3';

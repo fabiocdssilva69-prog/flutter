@@ -1,0 +1,349 @@
+import 'dart:math';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../../domain/entities/ai_chat_suggestion.dart';
+import '../../../data/repositories/auth_repository.dart';
+import '../../../data/repositories/chat_repository.dart';
+
+part 'ai_chat_enhancement_controller.g.dart';
+
+/// Controller para AI Chat Enhancement (Phase 2)
+@riverpod
+class AIChatEnhancementController extends _$AIChatEnhancementController {
+  @override
+  FutureOr<void> build() async {
+    // Inicializar
+  }
+
+  /// Gerar sugestões de resposta rápida baseado no contexto
+  Future<List<AIChatSuggestion>> generateQuickReplies({
+    required String matchId,
+    required String lastMessage,
+    String? conversationContext,
+  }) async {
+    // Analisar última mensagem
+    final suggestions = <AIChatSuggestion>[];
+
+    // Sugestão 1: Resposta entusiasmada
+    if (_isQuestion(lastMessage)) {
+      suggestions.add(
+        AIChatSuggestion(
+          suggestionId: _generateId(),
+          matchId: matchId,
+          type: SuggestionType.quickReply,
+          suggestedText: _generateEnthusiasticResponse(lastMessage),
+          relevanceScore: 0.8,
+          createdAt: DateTime.now(),
+        ),
+      );
+    }
+
+    // Sugestão 2: Pergunta de retorno
+    suggestions.add(
+      AIChatSuggestion(
+        suggestionId: _generateId(),
+        matchId: matchId,
+        type: SuggestionType.question,
+        suggestedText: _generateFollowUpQuestion(lastMessage),
+        relevanceScore: 0.75,
+        createdAt: DateTime.now(),
+      ),
+    );
+
+    // Sugestão 3: Resposta com emoji
+    suggestions.add(
+      AIChatSuggestion(
+        suggestionId: _generateId(),
+        matchId: matchId,
+        type: SuggestionType.emoji,
+        suggestedText: _addRelevantEmoji(lastMessage),
+        relevanceScore: 0.7,
+        createdAt: DateTime.now(),
+      ),
+    );
+
+    return suggestions;
+  }
+
+  /// Gerar conversation starters
+  Future<List<AIChatSuggestion>> generateConversationStarters({
+    required String matchId,
+    String? matchName,
+    List<String>? matchInterests,
+  }) async {
+    final starters = <String>[
+      'O que você gosta de fazer no fim de semana? 😊',
+      'Qual é o último filme/série que você assistiu?',
+      'Se pudesse viajar para qualquer lugar agora, onde seria?',
+      'Qual é sua comida favorita? 🍕',
+      'Você prefere praia ou montanha?',
+      'Qual é o seu hobby favorito?',
+      'O que te faz rir?',
+      'Conta uma curiosidade sobre você!',
+    ];
+
+    return starters.asMap().entries.map((entry) {
+      return AIChatSuggestion(
+        suggestionId: _generateId(),
+        matchId: matchId,
+        type: SuggestionType.conversationStarter,
+        suggestedText: entry.value,
+        relevanceScore: 0.8 - (entry.key * 0.05),
+        createdAt: DateTime.now(),
+      );
+    }).toList();
+  }
+
+  /// Gerar icebreakers personalizados
+  Future<List<AIChatSuggestion>> generateIcebreakers({
+    required String matchId,
+    String? matchName,
+    String? sharedInterest,
+  }) async {
+    final icebreakers = <String>[
+      if (sharedInterest != null) 'Vi que você também curte $sharedInterest! Qual é sua parte favorita?',
+      'Duas verdades e uma mentira: vai! Começo eu... 😄',
+      'Se você fosse um super-herói, qual seria seu poder?',
+      'Qual é a coisa mais espontânea que você já fez?',
+      'Pineapple na pizza: sim ou não? (Resposta errada não existe 😂)',
+    ];
+
+    return icebreakers.asMap().entries.map((entry) {
+      return AIChatSuggestion(
+        suggestionId: _generateId(),
+        matchId: matchId,
+        type: SuggestionType.icebreaker,
+        suggestedText: entry.value,
+        relevanceScore: 0.85 - (entry.key * 0.05),
+        createdAt: DateTime.now(),
+      );
+    }).toList();
+  }
+
+  /// Analisar sentimento da conversa
+  Future<ConversationSentiment> analyzeConversation({
+    required String matchId,
+    required List<Map<String, dynamic>> recentMessages,
+  }) async {
+    // Análise básica (TODO: Integrar com API de NLP real)
+
+    // Calcular métricas
+    final sentimentScore = _calculateSentiment(recentMessages);
+    final engagementLevel = _calculateEngagement(recentMessages);
+    final avgResponseTime = _calculateAvgResponseTime(recentMessages);
+    final avgMsgLength = _calculateAvgMessageLength(recentMessages);
+
+    // Detectar indicadores
+    final indicators = <String>[];
+    final recommendations = <String>[];
+
+    if (sentimentScore >= 0.7) {
+      indicators.add('Conversa positiva e animada');
+    } else if (sentimentScore < 0.3) {
+      indicators.add('Tom pode estar frio ou desinteressado');
+      recommendations.add('Tente fazer perguntas mais pessoais');
+    }
+
+    if (engagementLevel < 0.4) {
+      indicators.add('Baixo engajamento');
+      recommendations.add('Sugira um encontro ou mude de assunto');
+    }
+
+    if (avgMsgLength < 20) {
+      indicators.add('Respostas muito curtas');
+      recommendations.add('Elabore mais suas respostas');
+    }
+
+    if (avgResponseTime > 3600) {
+      indicators.add('Resposta demorada (>1h)');
+      recommendations.add('Responda mais rápido para manter interesse');
+    }
+
+    return ConversationSentiment(
+      analysisId: _generateId(),
+      matchId: matchId,
+      sentimentScore: sentimentScore,
+      engagementLevel: engagementLevel,
+      avgResponseTimeSeconds: avgResponseTime,
+      avgMessageLength: avgMsgLength,
+      indicators: indicators,
+      recommendations: recommendations,
+      analyzedAt: DateTime.now(),
+    );
+  }
+
+  /// Sugerir ajuste de tom
+  Future<AIChatSuggestion?> suggestToneAdjustment({required String matchId, required String messageText}) async {
+    // Detectar se muito formal
+    final formalWords = ['senhor', 'senhora', 'prezado', 'cordialmente'];
+    final isTooFormal = formalWords.any((word) => messageText.toLowerCase().contains(word));
+
+    if (isTooFormal) {
+      return AIChatSuggestion(
+        suggestionId: _generateId(),
+        matchId: matchId,
+        type: SuggestionType.toneAdjustment,
+        suggestedText: _casualizeTone(messageText),
+        analysisContext: {'issue': 'too_formal'},
+        relevanceScore: 0.75,
+        createdAt: DateTime.now(),
+      );
+    }
+
+    // Detectar se muito curto/seco
+    if (messageText.length < 10 && !messageText.contains('?')) {
+      return AIChatSuggestion(
+        suggestionId: _generateId(),
+        matchId: matchId,
+        type: SuggestionType.expandResponse,
+        suggestedText: _expandMessage(messageText),
+        analysisContext: {'issue': 'too_short'},
+        relevanceScore: 0.7,
+        createdAt: DateTime.now(),
+      );
+    }
+
+    return null;
+  }
+
+  /// Sugerir encontro baseado na conversa
+  Future<AIChatSuggestion?> suggestDateIdea({
+    required String matchId,
+    required int messageCount,
+    String? conversationTopic,
+  }) async {
+    // Só sugerir após 10+ mensagens
+    if (messageCount < 10) return null;
+
+    final dateIdeas = <String>[
+      'Que tal a gente tomar um café no sábado? ☕',
+      'Vamos dar uma caminhada no parque? 🌳',
+      'Quer ir no cinema? Tenho visto bons filmes em cartaz 🎬',
+      'Bora experimentar aquele restaurante novo? 🍽️',
+      'Que tal fazer um piquenique? 🧺',
+    ];
+
+    final randomIdea = dateIdeas[Random().nextInt(dateIdeas.length)];
+
+    return AIChatSuggestion(
+      suggestionId: _generateId(),
+      matchId: matchId,
+      type: SuggestionType.dateSuggestion,
+      suggestedText: randomIdea,
+      analysisContext: {'messageCount': messageCount, 'readyForDate': true},
+      relevanceScore: 0.9,
+      createdAt: DateTime.now(),
+    );
+  }
+
+  // ============================================
+  // INTERNAL HELPERS
+  // ============================================
+
+  bool _isQuestion(String text) {
+    return text.contains('?') ||
+        text.toLowerCase().contains('como') ||
+        text.toLowerCase().contains('qual') ||
+        text.toLowerCase().contains('onde');
+  }
+
+  String _generateEnthusiasticResponse(String question) {
+    // TODO: Gerar resposta contextual real
+    return 'Ótima pergunta! Deixa eu te contar... 😊';
+  }
+
+  String _generateFollowUpQuestion(String lastMessage) {
+    final questions = [
+      'E você, o que acha disso?',
+      'Você já passou por algo parecido?',
+      'Conte mais sobre isso!',
+      'Que legal! E como foi essa experiência?',
+    ];
+    return questions[Random().nextInt(questions.length)];
+  }
+
+  String _addRelevantEmoji(String text) {
+    if (text.toLowerCase().contains('feliz') || text.toLowerCase().contains('legal')) {
+      return '$text 😊';
+    } else if (text.toLowerCase().contains('amor') || text.toLowerCase().contains('coração')) {
+      return '$text ❤️';
+    } else if (text.toLowerCase().contains('viagem') || text.toLowerCase().contains('viajar')) {
+      return '$text ✈️';
+    }
+    return '$text 👍';
+  }
+
+  String _casualizeTone(String formalText) {
+    return formalText
+        .replaceAll('Senhor', 'Você')
+        .replaceAll('Senhora', 'Você')
+        .replaceAll('Prezado', 'Oi')
+        .replaceAll('Cordialmente', 'Abraços');
+  }
+
+  String _expandMessage(String shortMsg) {
+    return '$shortMsg Estou curioso para saber mais sobre você! Como foi seu dia?';
+  }
+
+  double _calculateSentiment(List<Map<String, dynamic>> messages) {
+    // Análise simplificada (TODO: usar NLP real)
+    final positiveWords = ['ótimo', 'legal', 'adorei', 'incrível', 'feliz', '😊', '❤️', '😄'];
+    final negativeWords = ['ruim', 'chato', 'não gostei', 'triste', '😞'];
+
+    int positiveCount = 0;
+    int negativeCount = 0;
+
+    for (final msg in messages) {
+      final text = (msg['text'] as String? ?? '').toLowerCase();
+      positiveCount += positiveWords.where((w) => text.contains(w)).length;
+      negativeCount += negativeWords.where((w) => text.contains(w)).length;
+    }
+
+    final total = positiveCount + negativeCount;
+    if (total == 0) return 0.5; // Neutro
+
+    return positiveCount / total;
+  }
+
+  double _calculateEngagement(List<Map<String, dynamic>> messages) {
+    if (messages.isEmpty) return 0.0;
+
+    // Medir por tamanho médio e frequência de perguntas
+    final avgLength = _calculateAvgMessageLength(messages);
+    final questionCount = messages.where((m) => (m['text'] as String? ?? '').contains('?')).length;
+
+    final lengthScore = (avgLength / 100).clamp(0.0, 1.0);
+    final questionScore = (questionCount / messages.length).clamp(0.0, 1.0);
+
+    return (lengthScore + questionScore) / 2;
+  }
+
+  int _calculateAvgResponseTime(List<Map<String, dynamic>> messages) {
+    if (messages.length < 2) return 0;
+
+    int totalDiff = 0;
+    for (int i = 1; i < messages.length; i++) {
+      final prev = messages[i - 1]['timestamp'] as DateTime?;
+      final curr = messages[i]['timestamp'] as DateTime?;
+      if (prev != null && curr != null) {
+        totalDiff += curr.difference(prev).inSeconds;
+      }
+    }
+
+    return totalDiff ~/ (messages.length - 1);
+  }
+
+  int _calculateAvgMessageLength(List<Map<String, dynamic>> messages) {
+    if (messages.isEmpty) return 0;
+
+    final totalLength = messages.fold<int>(0, (sum, msg) => sum + ((msg['text'] as String? ?? '').length));
+
+    return totalLength ~/ messages.length;
+  }
+
+  String _generateId() {
+    return DateTime.now().millisecondsSinceEpoch.toString();
+  }
+}

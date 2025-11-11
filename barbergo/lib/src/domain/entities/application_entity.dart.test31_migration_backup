@@ -1,0 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'converters.dart';
+import 'enums.dart';
+
+part 'application_entity.freezed.dart';
+part 'application_entity.g.dart';
+
+@freezed
+class ApplicationEntity with _$ApplicationEntity {
+  const factory ApplicationEntity({
+    required String applicationId,
+    required String vacancyId,
+    required String barberId,
+    required String barbershopId,
+
+    // Nome Desnormalizado
+    required String barbershopName,
+
+    required ApplicationStatus status,
+    @TimestampConverter() required DateTime createdAt,
+    @TimestampConverter() DateTime? updatedAt,
+  }) = _ApplicationEntity;
+
+  factory ApplicationEntity.fromJson(Map<String, dynamic> json) =>
+      _$ApplicationEntityFromJson(json);
+}

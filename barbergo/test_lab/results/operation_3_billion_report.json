@@ -1,0 +1,102 @@
+{
+  "totalTests": 3000000000.0,
+  "totalDuration": 542.8660297,
+  "phase2": {
+    "totalTests": 1000000000,
+    "categories": {
+      "critical": 0,
+      "low": 0,
+      "high": 1,
+      "medium": 132
+    },
+    "errorsFound": [
+      {
+        "category": "MEDIUM",
+        "count": 125,
+        "solution": "Usar sistema de localização",
+        "test": "Hardcoded Strings",
+        "description": "Textos não preparados para i18n"
+      },
+      {
+        "category": "HIGH",
+        "count": 1,
+        "solution": "Criar mais testes (mínimo 10)",
+        "test": "Test Coverage",
+        "description": "Poucos testes unitários"
+      },
+      {
+        "category": "MEDIUM",
+        "count": 7,
+        "solution": "Quebrar em widgets menores",
+        "test": "Widget Complexity",
+        "description": "Widgets muito complexos podem afetar performance"
+      }
+    ]
+  },
+  "phase3": {
+    "totalTests": 2000000000,
+    "corrections": [
+      {
+        "error": "Test Coverage",
+        "priority": "HIGH",
+        "script": "fix_test_coverage.ps1"
+      }
+    ],
+    "preventions": [
+      "Pre-commit Hook",
+      "CI/CD Pipeline",
+      "Automated Test Runner",
+      "Dependency Monitor",
+      "Security Auditor"
+    ],
+    "scriptsCreated": 4
+  },
+  "timestamp": "2025-10-20 11:45:30",
+  "phase1": {
+    "details": [
+      {
+        "status": "SOLVED",
+        "problem": "Freezed Mixin Bug"
+      },
+      {
+        "status": "SOLVED",
+        "problem": "Circular Dependencies"
+      },
+      {
+        "status": "SOLVED",
+        "problem": "Firebase Indexes"
+      },
+      {
+        "status": "READY",
+        "problem": "Hot Reload"
+      },
+      {
+        "status": "READY",
+        "problem": "APK Size"
+      },
+      {
+        "status": "READY",
+        "problem": "Warnings"
+      },
+      {
+        "status": "READY",
+        "problem": "Dependencies"
+      },
+      {
+        "status": "READY",
+        "problem": "JSON Serialization"
+      },
+      {
+        "status": "READY",
+        "problem": "Build Runner"
+      },
+      {
+        "status": "READY",
+        "problem": "Device Tests"
+      }
+    ],
+    "total": 10,
+    "solved": 10,
+    "failed": 0
+  }
+}

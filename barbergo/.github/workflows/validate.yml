@@ -1,0 +1,16 @@
+# Configuração CI/CD - GitHub Actions
+name: Validate Flutter App
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - run: flutter pub get
+      - run: dart analyze --fatal-infos
+      - run: flutter test
+      - run: dart run build_runner build
+      - run: flutter build apk --debug

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/async_value_ui.dart';
+import '../../../core/utils/form_validators.dart';
 import '../../../services/firebase_service.dart';
 import '../controllers/auth_controller.dart';
 
@@ -90,14 +91,14 @@ class _SignUpScreenState extends ConsumerState {
                 ),
                 keyboardType: TextInputType.emailAddress,
                 enabled: !isLoading,
-                validator: (value) => (value == null || !value.contains('@')) ? 'E-mail inválido' : null,
+                validator: FormValidators.email,
               ),
               const SizedBox(height: 16),
               // Senha
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  labelText: 'Senha (mínimo 6 caracteres)',
+                  labelText: 'Senha (mín 8 caracteres, letra + número)',
                   border: const OutlineInputBorder(),
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
@@ -111,7 +112,7 @@ class _SignUpScreenState extends ConsumerState {
                 ),
                 obscureText: _isPasswordObscured,
                 enabled: !isLoading,
-                validator: (value) => (value == null || value.length < 6) ? 'Mínimo 6 caracteres' : null,
+                validator: FormValidators.strongPassword,
               ),
               const SizedBox(height: 16),
               // Confirmar Senha
@@ -124,12 +125,7 @@ class _SignUpScreenState extends ConsumerState {
                 ),
                 obscureText: _isPasswordObscured,
                 enabled: !isLoading,
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return "As senhas não coincidem";
-                  }
-                  return null;
-                },
+                validator: (value) => FormValidators.confirmPassword(value, _passwordController.text),
               ),
               const SizedBox(height: 32),
               // Botão Registrar

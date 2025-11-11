@@ -1,0 +1,17 @@
+
+lib/src/domain/entities/vacancy_entity.dart:11:7: Error: The non-abstract class 'VacancyEntity' is missing implementations for these members:
+lib/src/domain/entities/profile_entity.dart:12:7: Error: The non-abstract class 'ProfileEntity' is missing implementations for these members:
+lib/src/domain/entities/application_entity.dart:11:7: Error: The non-abstract class 'ApplicationEntity' is missing implementations for these members:
+lib/src/domain/entities/notification_entity.dart:16:7: Error: The non-abstract class 'NotificationEntity' is missing implementations for these members:
+lib/src/domain/entities/user_interaction_entity.dart:12:7: Error: The non-abstract class 'UserInteractionEntity' is missing implementations for these members:
+lib/src/features/ai/controllers/chat_state.dart:8:7: Error: The non-abstract class 'ChatStateData' is missing implementations for these members:
+lib/src/domain/entities/ai/chat_message.dart:14:7: Error: The non-abstract class 'ChatMessage' is missing implementations for these members:
+ - _$ChatMessage.isError
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+lib/src/domain/entities/ai/chat_message.freezed.dart:18:113: Context: '_$ChatMessage.isError' is defined here.
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+

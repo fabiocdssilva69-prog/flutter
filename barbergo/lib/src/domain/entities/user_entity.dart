@@ -1,65 +1,56 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import 'enums.dart';
 
-class UserEntity {
+part 'user_entity.mapper.dart';
+
+/// Entity simplificada para User (quando precisar de dados básicos sem profile completo)
+@MappableClass()
+class UserEntity with UserEntityMappable {
+  final String userId;
+  final AccountType accountType;
+  final String name;
+  final String email;
+  final String? avatarUrl;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+
   const UserEntity({
-    required this.uid,
-    required this.email,
-    required this.name,
+    required this.userId,
     required this.accountType,
-    required this.subscriptionTier,
+    required this.name,
+    required this.email,
+    this.avatarUrl,
     required this.createdAt,
+    this.updatedAt,
   });
 
-  final String uid;
-  final String email;
-  final String name;
-  final AccountType accountType;
-  final SubscriptionTier subscriptionTier;
-  final DateTime createdAt;
-
-  factory UserEntity.fromJson(Map<String, dynamic> json) {
+  /// Construtor de factory do Firestore
+  factory UserEntity.fromMap(Map<String, dynamic> map, String userId) {
     return UserEntity(
-      uid: json['uid'] as String,
-      email: json['email'] as String,
-      name: json['name'] as String,
+      userId: userId,
       accountType: AccountType.values.firstWhere(
-        (e) => e.toString().split('.').last == json['accountType'],
+        (e) => e.toString().split('.').last == (map['accountType'] as String? ?? 'customer'),
+        orElse: () => AccountType.customer,
       ),
-      subscriptionTier: SubscriptionTier.values.firstWhere(
-        (e) => e.toString().split('.').last == json['subscriptionTier'],
-      ),
-      createdAt: (json['createdAt'] as Timestamp).toDate(),
+      name: map['name'] as String? ?? '',
+      email: map['email'] as String? ?? '',
+      avatarUrl: map['avatarUrl'] as String?,
+      createdAt: map['createdAt'] != null ? DateTime.parse(map['createdAt'] as String) : DateTime.now(),
+      updatedAt: map['updatedAt'] != null ? DateTime.parse(map['updatedAt'] as String) : null,
     );
   }
 
-  Map<String, dynamic> toJson() {
+  /// Converter para Map para Firestore
+  Map<String, dynamic> toMap() {
     return {
-      'uid': uid,
-      'email': email,
-      'name': name,
+      'userId': userId,
       'accountType': accountType.toString().split('.').last,
-      'subscriptionTier': subscriptionTier.toString().split('.').last,
-      'createdAt': Timestamp.fromDate(createdAt),
+      'name': name,
+      'email': email,
+      if (avatarUrl != null) 'avatarUrl': avatarUrl,
+      'createdAt': createdAt.toIso8601String(),
+      if (updatedAt != null) 'updatedAt': updatedAt!.toIso8601String(),
     };
-  }
-
-  UserEntity copyWith({
-    String? uid,
-    String? email,
-    String? name,
-    AccountType? accountType,
-    SubscriptionTier? subscriptionTier,
-    DateTime? createdAt,
-  }) {
-    return UserEntity(
-      uid: uid ?? this.uid,
-      email: email ?? this.email,
-      name: name ?? this.name,
-      accountType: accountType ?? this.accountType,
-      subscriptionTier: subscriptionTier ?? this.subscriptionTier,
-      createdAt: createdAt ?? this.createdAt,
-    );
   }
 }

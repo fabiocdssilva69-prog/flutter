@@ -1,0 +1,244 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../../domain/entities/ai_coach_message.dart';
+import '../../../../domain/entities/profile_entity.dart';
+import '../../../data/repositories/ai_coach_repository.dart';
+import '../../../data/repositories/auth_repository.dart';
+import '../../profile/controllers/profile_controller.dart';
+
+part 'ai_dating_coach_controller.g.dart';
+
+/// Controller para o AI Dating Coach (Phase 2)
+@riverpod
+class AIDatingCoachController extends _$AIDatingCoachController {
+  @override
+  FutureOr<bool> build() {
+    return true; // Inicializar
+  }
+
+  /// Gerar análise de perfil do usuário
+  Future<AICoachMessage?> analyzeProfile() async {
+    state = const AsyncLoading();
+
+    try {
+      final currentUser = ref.read(authRepositoryProvider).currentUser;
+      if (currentUser == null) throw Exception('Usuário não autenticado');
+
+      final profile = ref.read(currentUserProfileProvider).value;
+      if (profile == null) throw Exception('Perfil não encontrado');
+
+      // Análise de completude
+      final analysis = _generateProfileAnalysis(profile);
+
+      final message = AICoachMessage(
+        messageId: '',
+        userId: currentUser.uid,
+        type: CoachMessageType.profileAnalysis,
+        content: analysis,
+        context: {
+          'profileCompleteness': _calculateCompleteness(profile),
+          'photoCount': profile.portfolioUrls.length,
+          'hasPrompts': profile.prompts.isNotEmpty,
+          'hasMedia': profile.mediaContent.isNotEmpty,
+        },
+        createdAt: DateTime.now(),
+      );
+
+      final repo = ref.read(aiCoachRepositoryProvider);
+      await repo.saveMessage(message);
+
+      state = const AsyncData(null);
+      return message;
+    } catch (e, stack) {
+      state = AsyncError(e, stack);
+      return null;
+    }
+  }
+
+  /// Gerar dica para chat específico
+  Future<AICoachMessage?> generateChatTip({
+    required String matchId,
+    required String matchName,
+    int messageCount = 0,
+  }) async {
+    state = const AsyncLoading();
+
+    try {
+      final currentUser = ref.read(authRepositoryProvider).currentUser;
+      if (currentUser == null) throw Exception('Usuário não autenticado');
+
+      final tip = _generateChatTip(messageCount, matchName);
+
+      final message = AICoachMessage(
+        messageId: '',
+        userId: currentUser.uid,
+        type: CoachMessageType.chatTip,
+        content: tip,
+        context: {'matchId': matchId, 'matchName': matchName, 'messageCount': messageCount},
+        createdAt: DateTime.now(),
+      );
+
+      final repo = ref.read(aiCoachRepositoryProvider);
+      await repo.saveMessage(message);
+
+      state = const AsyncData(null);
+      return message;
+    } catch (e, stack) {
+      state = AsyncError(e, stack);
+      return null;
+    }
+  }
+
+  /// Gerar conselho geral
+  Future<AICoachMessage?> generateGeneralAdvice(String topic) async {
+    state = const AsyncLoading();
+
+    try {
+      final currentUser = ref.read(authRepositoryProvider).currentUser;
+      if (currentUser == null) throw Exception('Usuário não autenticado');
+
+      final advice = _generateGeneralAdvice(topic);
+
+      final message = AICoachMessage(
+        messageId: '',
+        userId: currentUser.uid,
+        type: CoachMessageType.generalAdvice,
+        content: advice,
+        context: {'topic': topic},
+        createdAt: DateTime.now(),
+      );
+
+      final repo = ref.read(aiCoachRepositoryProvider);
+      await repo.saveMessage(message);
+
+      state = const AsyncData(null);
+      return message;
+    } catch (e, stack) {
+      state = AsyncError(e, stack);
+      return null;
+    }
+  }
+
+  /// Stream de mensagens do usuário
+  Stream<List<AICoachMessage>> watchMessages() {
+    final currentUser = ref.read(authRepositoryProvider).currentUser;
+    if (currentUser == null) return const Stream.empty();
+
+    final repo = ref.read(aiCoachRepositoryProvider);
+    return repo.watchUserMessages(currentUser.uid);
+  }
+
+  /// Marcar mensagem como lida
+  Future<void> markAsRead(String messageId) async {
+    final repo = ref.read(aiCoachRepositoryProvider);
+    await repo.markAsRead(messageId);
+  }
+
+  /// Avaliar mensagem
+  Future<void> rateMessage(String messageId, int rating) async {
+    final repo = ref.read(aiCoachRepositoryProvider);
+    await repo.rateMessage(messageId, rating);
+  }
+
+  // ============================================
+  // INTERNAL HELPERS - Geração de Conteúdo
+  // ============================================
+
+  String _generateProfileAnalysis(ProfileEntity profile) {
+    final completeness = _calculateCompleteness(profile);
+
+    if (completeness >= 0.8) {
+      return '🎉 Seu perfil está ótimo! Com ${(completeness * 100).toInt()}% completo, '
+          'você tem grandes chances de matches. Continue ativo e autêntico!';
+    } else if (completeness >= 0.6) {
+      final suggestions = <String>[];
+      if (profile.portfolioUrls.length < 3) suggestions.add('adicione mais fotos');
+      if (profile.prompts.length < 3) suggestions.add('complete seus prompts');
+      if (profile.mediaContent.isEmpty) suggestions.add('grave um vídeo de apresentação');
+
+      return '💡 Seu perfil está ${(completeness * 100).toInt()}% completo. '
+          'Para aumentar suas chances, ${suggestions.join(', ')}. '
+          'Perfis completos recebem 3x mais likes!';
+    } else {
+      return '⚠️ Seu perfil precisa de atenção! Com apenas ${(completeness * 100).toInt()}% completo, '
+          'você pode estar perdendo matches. Comece adicionando fotos de qualidade e '
+          'respondendo aos prompts para mostrar sua personalidade.';
+    }
+  }
+
+  String _generateChatTip(int messageCount, String matchName) {
+    if (messageCount == 0) {
+      return '💬 Primeira mensagem para $matchName? Comente algo específico do perfil dela, '
+          'como um prompt ou foto. Evite apenas "Oi, tudo bem?". Seja criativo!';
+    } else if (messageCount < 5) {
+      return '🎯 A conversa está começando bem! Faça perguntas abertas que estimulem respostas '
+          'longas. Por exemplo: "O que você mais gosta de fazer no fim de semana?"';
+    } else if (messageCount < 10) {
+      return '📱 Já trocaram várias mensagens! Que tal sugerir um encontro casual? '
+          '"Quer tomar um café no sábado?" é direto e mostra interesse real.';
+    } else {
+      return '⏰ Vocês já conversaram bastante! Não deixe o papo esfriar. '
+          'Marque um encontro ou ligue para criar mais conexão.';
+    }
+  }
+
+  String _generateGeneralAdvice(String topic) {
+    // TODO: Integrar com API de IA real (Perplexity, Google AI, etc)
+    final advices = {
+      'first_date':
+          '🌟 Primeiro encontro? Escolha um lugar público e casual, '
+          'como um café ou parque. Seja pontual, ouça ativamente e faça perguntas '
+          'genuínas. Relaxe e seja você mesmo!',
+      'profile_photos':
+          '📸 Fotos de perfil: Use pelo menos 4 fotos variadas. '
+          'Inclua uma foto de rosto sorrindo, uma de corpo inteiro, uma fazendo algo '
+          'que você ama, e uma com amigos. Evite filtros excessivos!',
+      'conversation':
+          '💬 Manter conversa: Alterne entre falar de você e fazer perguntas. '
+          'Use a regra 70/30: 70% ouvindo, 30% falando. Seja curioso e autêntico!',
+      'confidence':
+          '💪 Confiança é atraente! Trabalhe em você mesmo: exercícios, '
+          'hobbies, desenvolvimento pessoal. Quando você se sente bem, isso transpira.',
+    };
+
+    return advices[topic] ??
+        '💡 Dica geral: Seja autêntico, respeitoso e divirta-se! '
+            'O match perfeito virá quando você for genuinamente você mesmo.';
+  }
+
+  double _calculateCompleteness(ProfileEntity profile) {
+    int completed = 0;
+    int total = 10;
+
+    if (profile.name.isNotEmpty) completed++;
+    if (profile.bio.length >= 50) completed++;
+    if (profile.portfolioUrls.length >= 3) completed++;
+    if (profile.location.isNotEmpty) completed++;
+    if (profile.phoneNumber.isNotEmpty) completed++;
+    if (profile.serviceTypes.isNotEmpty) completed++;
+    if (profile.prompts.length >= 3) completed++;
+    if (profile.mediaContent.isNotEmpty) completed++;
+    if (profile.workingHours != null) completed++;
+    if (profile.hourlyRate != null) completed++;
+
+    return completed / total;
+  }
+}
+
+/// Provider para stream de mensagens
+@riverpod
+Stream<List<AICoachMessage>> aiCoachMessages(AiCoachMessagesRef ref) {
+  final controller = ref.watch(aIDatingCoachControllerProvider.notifier);
+  return controller.watchMessages();
+}
+
+/// Provider para contagem de não lidas
+@riverpod
+Future<int> unreadCoachMessagesCount(UnreadCoachMessagesCountRef ref) async {
+  final currentUser = ref.watch(authRepositoryProvider).currentUser;
+  if (currentUser == null) return 0;
+
+  final repo = ref.watch(aiCoachRepositoryProvider);
+  return repo.getUnreadCount(currentUser.uid);
+}

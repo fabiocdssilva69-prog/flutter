@@ -1,0 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'converters.dart';
+
+part 'user_interaction_entity.freezed.dart';
+part 'user_interaction_entity.g.dart';
+
+enum InteractionType { applied, ignored }
+
+@freezed
+class UserInteractionEntity with _$UserInteractionEntity {
+  const factory UserInteractionEntity({
+    required String vacancyId,
+    required InteractionType type,
+    @TimestampConverter() required DateTime timestamp,
+  }) = _UserInteractionEntity;
+
+  factory UserInteractionEntity.fromJson(Map<String, dynamic> json) =>
+      _$UserInteractionEntityFromJson(json);
+}

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../controllers/vacancy_controller.dart';
-import '../widgets/application_tile.dart';
-import '../../../core/utils/async_value_ui.dart';
+import 'package:intl/intl.dart';
+
+import '../../../data/repositories/vacancy_match_repository.dart';
 
 class VacancyDetailsScreen extends ConsumerWidget {
   const VacancyDetailsScreen({super.key, required this.vacancyId});
@@ -17,19 +17,8 @@ class VacancyDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final applicationsAsync = ref.watch(
-      applicationsForVacancyStreamProvider(vacancyId),
-    );
-
-    // Observa erros no ManagementController
-    ref.listen<AsyncValue<void>>(
-      managementControllerProvider,
-      (_, state) => state.showAlertDialogOnError(context),
-    );
-
-    final isLoading = ref.watch(
-      managementControllerProvider.select((state) => state.isLoading),
-    );
+    // CORRIGIDO: Busca matches ao invés of applications
+    final matchesStream = ref.watch(vacancyMatchRepositoryProvider).watchVacancyMatches(vacancyId);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,52 +33,72 @@ class VacancyDetailsScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: applicationsAsync.when(
-        data: (applications) {
-          if (applications.isEmpty) {
+      body: StreamBuilder(
+        stream: matchesStream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.error_outline, size: 48),
+                  const SizedBox(height: 16),
+                  Text('Erro: ${snapshot.error}'),
+                ],
+              ),
+            );
+          }
+
+          final matches = snapshot.data ?? [];
+
+          if (matches.isEmpty) {
             return const Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.inbox_outlined, size: 72, color: Colors.grey),
                   SizedBox(height: 16),
-                  Text(
-                    'Nenhuma candidatura ainda',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
+                  Text('Nenhum match ainda', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
-                  Text(
-                    'Compartilhe esta vaga para receber candidaturas',
-                    textAlign: TextAlign.center,
-                  ),
+                  Text('Aguarde barbeiros curtirem esta vaga', textAlign: TextAlign.center),
                 ],
               ),
             );
           }
 
-          return IgnorePointer(
-            ignoring: isLoading,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: applications.length,
-              itemBuilder: (context, index) {
-                return ApplicationTile(application: applications[index]);
-              },
-            ),
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: matches.length,
+            itemBuilder: (context, index) {
+              final match = matches[index];
+              return Card(
+                child: ListTile(
+                  leading: const CircleAvatar(child: Icon(Icons.person)),
+                  title: Text(match.barberName),
+                  subtitle: Text('Match em ${_formatDate(match.createdAt)}'),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.chat),
+                    onPressed: () {
+                      // TODO: Abrir chat com o barbeiro
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('Chat com ${match.barberName} em breve!')));
+                    },
+                  ),
+                ),
+              );
+            },
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.error_outline, size: 48),
-              const SizedBox(height: 16),
-              Text('Erro: $error'),
-            ],
-          ),
-        ),
       ),
     );
+  }
+
+  String _formatDate(DateTime date) {
+    return DateFormat('dd/MM/yyyy HH:mm').format(date);
   }
 }

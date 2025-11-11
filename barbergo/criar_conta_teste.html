@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta de Teste - BarberGo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .dados-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .dados-label {
+            font-weight: bold;
+            min-width: 100px;
+            color: #555;
+        }
+        .dados-valor {
+            flex: 1;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #ddd;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-copy {
+            background: #28a745;
+        }
+        .btn-copy:hover {
+            background: #218838;
+        }
+        .steps {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .step {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        .step::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .link-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .link-box a {
+            color: #856404;
+            word-break: break-all;
+            font-size: 14px;
+        }
+        .alert {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #0c5460;
+        }
+        .conta-type {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .type-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .type-btn:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+        .type-btn.active {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+        .type-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Criar Conta de Teste</h1>
+        <p class="subtitle">BarberGo - Sistema de Testes</p>
+
+        <div class="conta-type">
+            <div class="type-btn active" onclick="selecionarTipo('barber')">
+                <div class="type-icon">✂️</div>
+                <div><strong>Barbeiro</strong></div>
+                <div style="font-size: 12px; color: #666;">Candidata-se a vagas</div>
+            </div>
+            <div class="type-btn" onclick="selecionarTipo('barbershop')">
+                <div class="type-icon">🏪</div>
+                <div><strong>Barbearia</strong></div>
+                <div style="font-size: 12px; color: #666;">Publica vagas</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📋 Dados da Conta de Teste</h3>
+            <div class="dados-row">
+                <span class="dados-label">Email:</span>
+                <span class="dados-valor" id="email">barbeiro1@teste.com</span>
+            </div>
+            <div class="dados-row">
+                <span class="dados-label">Senha:</span>
+                <span class="dados-valor" id="senha">teste123</span>
+            </div>
+            <div class="dados-row">
+                <span class="dados-label">Nome:</span>
+                <span class="dados-valor" id="nome">João Silva</span>
+            </div>
+            <div class="dados-row">
+                <span class="dados-label">Telefone:</span>
+                <span class="dados-valor" id="telefone">11987654321</span>
+            </div>
+            <div class="dados-row">
+                <span class="dados-label">Tipo:</span>
+                <span class="dados-valor" id="tipo">barber</span>
+            </div>
+            <button class="btn btn-copy" onclick="copiarDados()">📋 Copiar Todos os Dados</button>
+        </div>
+
+        <div class="alert">
+            <strong>⚡ Método Rápido:</strong> Use o app no celular para criar a conta diretamente!
+        </div>
+
+        <div class="steps">
+            <h3 style="margin-bottom: 15px; color: #1976d2;">📱 Passos no App</h3>
+            <div class="step">Abra o app BarberGo no celular</div>
+            <div class="step">Clique em "Criar conta" ou "Cadastre-se"</div>
+            <div class="step">Preencha com os dados acima</div>
+            <div class="step">Faça login e teste!</div>
+        </div>
+
+        <div class="steps" style="background: #fff3cd; margin-top: 20px;">
+            <h3 style="margin-bottom: 15px; color: #856404;">🌐 Alternativa: Firebase Console</h3>
+            <div class="step">Criar usuário no Authentication</div>
+            <div class="step">Copiar o UID gerado</div>
+            <div class="step">Criar documento na collection 'profiles'</div>
+            <div class="step">Usar o UID como Document ID</div>
+        </div>
+
+        <div class="link-box">
+            <strong>🔗 Links Úteis:</strong><br>
+            <a href="https://console.firebase.google.com/project/barbergo-38c21/authentication/users" target="_blank">
+                Firebase Authentication
+            </a><br>
+            <a href="https://console.firebase.google.com/project/barbergo-38c21/firestore/databases/-default-/data/~2Fprofiles" target="_blank">
+                Firestore Profiles
+            </a>
+        </div>
+
+        <button class="btn" onclick="abrirGuia()">📖 Ver Guia Completo</button>
+    </div>
+
+    <script>
+        const contas = {
+            barber: {
+                email: 'barbeiro1@teste.com',
+                senha: 'teste123',
+                nome: 'João Silva',
+                telefone: '11987654321',
+                tipo: 'barber'
+            },
+            barbershop: {
+                email: 'barbearia2@teste.com',
+                senha: 'teste123',
+                nome: 'Cortes Modernos',
+                telefone: '11965432109',
+                tipo: 'barbershop'
+            }
+        };
+
+        let tipoAtual = 'barber';
+
+        function selecionarTipo(tipo) {
+            tipoAtual = tipo;
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.type-btn').classList.add('active');
+
+            const conta = contas[tipo];
+            document.getElementById('email').textContent = conta.email;
+            document.getElementById('senha').textContent = conta.senha;
+            document.getElementById('nome').textContent = conta.nome;
+            document.getElementById('telefone').textContent = conta.telefone;
+            document.getElementById('tipo').textContent = conta.tipo;
+        }
+
+        function copiarDados() {
+            const conta = contas[tipoAtual];
+            const texto = `Email: ${conta.email}
+Senha: ${conta.senha}
+Nome: ${conta.nome}
+Telefone: ${conta.telefone}
+Tipo: ${conta.tipo}`;
+
+            navigator.clipboard.writeText(texto).then(() => {
+                const btn = event.target;
+                const textoOriginal = btn.textContent;
+                btn.textContent = '✅ Copiado!';
+                btn.style.background = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = textoOriginal;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        function abrirGuia() {
+            alert('Abra o arquivo CRIAR_CONTA_BARBEIRO_TESTE.md para ver o guia completo!');
+        }
+    </script>
+</body>
+</html>

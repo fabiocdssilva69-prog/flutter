@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/enums.dart';
 import '../../../domain/entities/vacancy_entity.dart';
-import '../../profiles/data/profile_repository.dart';
+import '../../profile/controllers/profile_controller.dart'; // CORRIGIDO: usar profile_controller
 import '../data/vacancy_repository.dart';
 
 class CreateVacancyScreen extends StatefulWidget {
@@ -74,7 +74,7 @@ class _CreateVacancyScreenState extends State<CreateVacancyScreen> {
       }
 
       // Obtém o perfil da barbearia (necessário para nome e localização)
-      final barbershopProfile = await ref.read(userProfileProvider.future);
+      final barbershopProfile = ref.read(currentUserProfileProvider).value;
       if (barbershopProfile == null) {
         throw Exception('Perfil da barbearia não encontrado');
       }
@@ -95,6 +95,7 @@ class _CreateVacancyScreenState extends State<CreateVacancyScreen> {
         type: _selectedType,
         workHours: _workHoursController.text.trim(),
         locationCityState: barbershopProfile.location,
+        preciseLocation: barbershopProfile.preciseLocation ?? {}, // Usa localização do profile
         commissionPercentage: commissionPercentage,
         isActive: true,
         createdAt: now,

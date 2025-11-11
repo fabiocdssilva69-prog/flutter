@@ -41,5 +41,6 @@ firebase_app_id_file.json
 .env
 .env.local
 .env.*.local
+lib/src/core/config/api_keys.dart
 # Biome binary
 biome.exe

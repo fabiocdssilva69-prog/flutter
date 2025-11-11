@@ -1,0 +1,99 @@
+{
+  "@@locale": "pt",
+  "appTitle": "BarberGO",
+  "tabDiscovery": "Descobrir",
+  "tabApplications": "Candidaturas",
+  "tabInbox": "Inbox",
+  "tabAiStudio": "AI Studio",
+  "tabProfile": "Perfil",
+  "tabMyVacancies": "Minhas Vagas",
+  "fieldRequired": "Campo obrigatório",
+  "error": "Erro",
+  "loading": "Carregando...",
+  "logout": "Sair da Conta",
+  "profileScreenTitle": "Meu Perfil",
+  "onboardingScreenTitle": "Complete seu Cadastro",
+  "accountType": "Tipo de Conta",
+  "barber": "Barbeiro(a)",
+  "barbershop": "Barbearia",
+  "nameLabel": "Nome Completo ou Nome da Barbearia",
+  "locationLabel": "Localização (Ex: Cidade, Estado)",
+  "phoneLabel": "Telefone de Contato",
+  "bioLabel": "Biografia ou Descrição dos Serviços",
+  "saveChangesButton": "SALVAR ALTERAÇÕES",
+  "completeRegistrationButton": "CONCLUIR CADASTRO",
+  "profileSavedSuccess": "Perfil salvo com sucesso!",
+  "swipeToApply": "Arraste → para Candidatar-se",
+  "noVacanciesFound": "Nenhuma vaga ativa encontrada no momento. Volte mais tarde!",
+  "applicationSentTo": "Candidatura enviada para: {barbershopName}",
+  "@applicationSentTo": {
+    "placeholders": {
+      "barbershopName": {}
+    }
+  },
+  "requirementsTitle": "Requisitos:",
+  "noRequirementsSpecified": "A barbearia não especificou requisitos detalhados.",
+  "commissionLabel": "{percentage}% Comissão",
+  "@commissionLabel": {
+    "placeholders": {
+      "percentage": {}
+    }
+  },
+  "viewPhotos": "Ver Fotos",
+  "viewRequirements": "Ver Requisitos",
+  "publishNewVacancy": "Publicar Nova Vaga",
+  "createVacancyTitle": "Publicar Nova Vaga",
+  "vacancyTitleLabel": "Título da Vaga (Ex: Barbeiro Freelancer)",
+  "vacancyTypeLabel": "Tipo de Contratação",
+  "freelancer": "Freelancer",
+  "clt": "CLT (Fixo)",
+  "commissioned": "Comissionado (%)",
+  "commissionPercentageLabel": "Porcentagem da Comissão (%)",
+  "workHoursLabel": "Horário de Trabalho (Ex: Terça a Sábado, 9h às 19h)",
+  "requirementsOptionalLabel": "Requisitos e Experiências (Opcional)",
+  "vacancyCreatedSuccess": "Vaga criada com sucesso!",
+  "manageCandidatesTitle": "Gerenciar Candidatos",
+  "applicationsReceivedTitle": "Candidaturas Recebidas:",
+  "noApplicationsYet": "Nenhum barbeiro se candidatou ainda.",
+  "rejectButton": "Rejeitar",
+  "acceptAndOpenChatButton": "Aceitar e Abrir Chat",
+  "statusActive": "ATIVA",
+  "statusPaused": "PAUSADA",
+  "pauseVacancy": "Pausar Vaga",
+  "reopenVacancy": "Reabrir Vaga",
+  "confirmPauseReopen": "Tem certeza que deseja {action} esta vaga? Vagas pausadas não aparecem na busca.",
+  "@confirmPauseReopen": {
+    "placeholders": {
+      "action": {}
+    }
+  },
+  "startConversation": "INICIAR CONVERSA",
+  "continueBrowsing": "Continuar Navegando",
+  "itsAMatch": "É um Match! 🎉",
+  "matchMessage": "Você e {userName} combinaram! Agora vocês podem conversar.",
+  "@matchMessage": {
+    "placeholders": {
+      "userName": {}
+    }
+  },
+  "typeMessageHint": "Digite sua mensagem...",
+  "noConversationsYet": "Nenhuma conversa iniciada ainda.",
+  "noNotificationsYet": "Nenhuma notificação por enquanto.",
+  "notificationsTitle": "Notificações",
+  "markAllAsRead": "Marcar todas como lidas",
+  "aiStudioTitle": "BarberGO AI Studio",
+  "aiStudioDescription": "Ferramentas inteligentes para impulsionar sua carreira e seu negócio.",
+  "forYourCareer": "Para Sua Carreira",
+  "forYourBusiness": "Para Seu Negócio",
+  "generalTools": "Ferramentas Gerais",
+  "errorLoadingProfile": "Erro ao carregar perfil.",
+  "errorLoadingChat": "Erro ao carregar o chat.",
+  "authError": "Usuário não autenticado.",
+  "locationRequiredForVacancy": "Atualize sua localização exata (GPS) no Perfil antes de criar vagas.",
+  "locationPermissionDenied": "Permissão de localização negada.",
+  "gpsCaptureRequired": "Por favor, capture sua localização (GPS) antes de salvar.",
+  "errorLoadingMatch": "Erro ao carregar tela de Match.",
+  "portfolioLimitReached": "Limite de 6 fotos no portfólio atingido.",
+  "removeImage": "Remover Imagem",
+  "confirmRemoveImage": "Tem certeza que deseja remover esta imagem do seu portfólio?"
+}

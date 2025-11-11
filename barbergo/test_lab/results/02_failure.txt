@@ -1,0 +1,3 @@
+
+FileSystemException: Cannot open file, path = 'C:\workspaces\fabiocdssilva69-prog\barbergo\flutter\bin\cache\libimobiledevice.stamp' (OS Error: A opera├º├úo solicitada n├úo pode ser executada em um arquivo com uma se├º├úo mapeada pelo usu├írio aberta.
+

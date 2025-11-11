@@ -1,0 +1,207 @@
+{
+  "duration": 0.4244405,
+  "scriptsCreated": 13,
+  "totalProblems": 30,
+  "problemsSolved": 10,
+  "problems": {
+    "predicted": [
+      {
+        "Solution": "Sempre regenerar após merge",
+        "Issue": "Git conflicts em .freezed.dart",
+        "ID": 11,
+        "Risk": "HIGH"
+      },
+      {
+        "Solution": "Usar autoDispose",
+        "Issue": "Memory leaks em Riverpod providers",
+        "ID": 12,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Monitorar uso, implementar cache",
+        "Issue": "Firebase quota exceeded",
+        "ID": 13,
+        "Risk": "HIGH"
+      },
+      {
+        "Solution": "Configurar AndroidManifest + iOS plist",
+        "Issue": "Deep links não funcionando",
+        "ID": 14,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Verificar pubspec assets",
+        "Issue": "Fontes customizadas não carregando",
+        "ID": 15,
+        "Risk": "LOW"
+      },
+      {
+        "Solution": "Verificar FCM tokens",
+        "Issue": "Push notifications não chegando",
+        "ID": 16,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Implementar image compression",
+        "Issue": "Crash ao abrir imagens grandes",
+        "ID": 17,
+        "Risk": "HIGH"
+      },
+      {
+        "Solution": "Usar ListView.builder",
+        "Issue": "Scroll performance ruim",
+        "ID": 18,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Usar SingleChildScrollView",
+        "Issue": "Teclado sobrepondo inputs",
+        "ID": 19,
+        "Risk": "LOW"
+      },
+      {
+        "Solution": "Implementar retry com backoff",
+        "Issue": "API rate limiting",
+        "ID": 20,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Remover prints em produção",
+        "Issue": "Dados sensíveis em logs",
+        "ID": 21,
+        "Risk": "HIGH"
+      },
+      {
+        "Solution": "Sempre usar UTC no backend",
+        "Issue": "Timezone bugs",
+        "ID": 22,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Usar Theme e ColorScheme",
+        "Issue": "Cores diferentes em devices",
+        "ID": 23,
+        "Risk": "LOW"
+      },
+      {
+        "Solution": "Usar RepaintBoundary",
+        "Issue": "Animações travando",
+        "ID": 24,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Atualizar targetSdkVersion",
+        "Issue": "Crash no Android 14+",
+        "ID": 25,
+        "Risk": "HIGH"
+      },
+      {
+        "Solution": "Request em runtime",
+        "Issue": "Photos/Camera permission denied",
+        "ID": 26,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Otimizar inicialização",
+        "Issue": "Splash screen demora muito",
+        "ID": 27,
+        "Risk": "LOW"
+      },
+      {
+        "Solution": "Aumentar timeout, retry",
+        "Issue": "Network timeout em 3G",
+        "ID": 28,
+        "Risk": "MEDIUM"
+      },
+      {
+        "Solution": "Validar todos inputs",
+        "Issue": "Injection de SQL via Firestore",
+        "ID": 29,
+        "Risk": "HIGH"
+      },
+      {
+        "Solution": "Atualizar CocoaPods",
+        "Issue": "Build iOS falhando",
+        "ID": 30,
+        "Risk": "MEDIUM"
+      }
+    ],
+    "original": [
+      {
+        "risk": "HIGH",
+        "solutions": [
+          "fix_freezed_mixin_bug.ps1",
+          "post_build_runner hook",
+          "watchdog script"
+        ],
+        "description": "Freezed 3.2.x gera mixin sem constraint"
+      },
+      {
+        "risk": "HIGH",
+        "solutions": [
+          "circular dependency detector",
+          "backup system"
+        ],
+        "description": "Modificar mixin cria loop circular"
+      },
+      {
+        "risk": "MEDIUM",
+        "solutions": [
+          "index generator"
+        ],
+        "description": "Queries complexas precisam de índices"
+      },
+      {
+        "risk": "MEDIUM",
+        "solutions": [
+          "quick reset script"
+        ],
+        "description": "Mudanças em @freezed quebram hot reload"
+      },
+      {
+        "risk": "MEDIUM",
+        "solutions": [
+          "APK optimizer"
+        ],
+        "description": "APK excede 50MB dificultando distribuição"
+      },
+      {
+        "risk": "LOW",
+        "solutions": [
+          "auto-fix script"
+        ],
+        "description": "Warnings acumulando no código"
+      },
+      {
+        "risk": "LOW",
+        "solutions": [
+          "dependency checker"
+        ],
+        "description": "Packages desatualizados com vulnerabilidades"
+      },
+      {
+        "risk": "MEDIUM",
+        "solutions": [
+          "serialization tests"
+        ],
+        "description": "fromJson/toJson falhando em runtime"
+      },
+      {
+        "risk": "HIGH",
+        "solutions": [
+          "clean rebuild script"
+        ],
+        "description": "Conflitos após pub upgrade"
+      },
+      {
+        "risk": "MEDIUM",
+        "solutions": [
+          "multi-device tester"
+        ],
+        "description": "Redmi Note 8 Pro com comportamento diferente"
+      }
+    ]
+  },
+  "problemsPrevented": 20,
+  "timestamp": "2025-10-20 11:30:49"
+}

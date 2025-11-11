@@ -1,34 +1,86 @@
-# BarberGO
+# BarberGO App
 
-BarberGO é um aplicativo móvel desenhado para conectar barbeiros freelancers a barbearias que estão procurando profissionais para vagas como freelancer, CLT ou comissionado. O projeto utiliza o Flutter para criar aplicações multi‑plataforma a partir de um único código‑fonte:contentReference[oaicite:1]{index=1}. Adotamos os princípios da Clean Architecture, que promovem a separação de responsabilidades e visam criar bases de código modulares, escaláveis e testáveis:contentReference[oaicite:2]{index=2}. Para gerenciamento de estado usamos o Riverpod, um framework reativo de cache e data‑binding que suporta programação declarativa e a recomputação automática de chamadas de rede:contentReference[oaicite:3]{index=3}:contentReference[oaicite:4]{index=4}.
+**O Tinder profissional para conectar Barbeiros a Barbearias** 💼✂️
 
-## Stack Tecnológica
+> **Conceito Core**: Marketplace de RECRUTAMENTO que conecta barbeiros talentosos buscando emprego com barbearias procurando profissionais qualificados.
 
-- **Flutter + Dart** para UI e lógica de negócio, permitindo compilar aplicações nativas para várias plataformas a partir de um único código:contentReference[oaicite:5]{index=5}.
-- **Firebase** (Auth, Cloud Firestore, Storage) para serviços de backend.
-- **Riverpod** para gerenciamento de estado e injeção de dependências:contentReference[oaicite:6]{index=6}.
-- **Clean Architecture** para organizar as camadas (presentation, domain, data) e facilitar testes e manutenção:contentReference[oaicite:7]{index=7}.
-- **🤖 Integração IA Híbrida** (Gemini + GPT-4 + Claude):
-  - **Gemini 1.5 Flash/Pro**: Geração de bio, análise de portfólio com Vision (GRÁTIS com Google One Ultra)
-  - **GPT-4o**: Smart matching, análise de compatibilidade (Incluído no Pro $200/mês)
-  - **Claude 3.5 Sonnet**: Geração de contratos CLT e documentos legais (~$5/mês)
-- Bibliotecas adicionais: **go_router** para navegação, **freezed_annotation** e **json_annotation** para modelos imutáveis, **cached_network_image** para carregamento de imagens e **intl** para internacionalização.
+📖 **[Leia o conceito completo aqui](CORE_CONCEPT.md)**
 
-## 🤖 Recursos de IA
+## 🚀 Visão Geral
 
-O BarberGO possui integração avançada com 3 modelos de IA, escolhidos estrategicamente para máxima performance e custo-benefício:
+BarberGO é um **app de recrutamento profissional** (não um marketplace de serviços) que utiliza mecânica de swipe/match para conectar:
+- 🏢 **Barbearias** criando vagas e buscando talentos
+- ✂️ **Barbeiros** procurando oportunidades de emprego fixo
 
-### ✨ Funcionalidades
-- **Geração Inteligente de Bio** - Gemini cria biografias profissionais em segundos
-- **Smart Matching** - GPT-4 analisa compatibilidade barbeiro x vaga com score 0-100
-- **Análise de Portfólio** - Vision AI detecta estilos, técnicas e qualidade dos cortes
-- **Geração de Contratos** - Claude produz documentos CLT completos e em conformidade com LGPD
-- **Orquestração Inteligente** - Sistema escolhe automaticamente o melhor modelo para cada tarefa
+### Stack Tecnológica
 
-### 💰 Custo Total: ~$5/mês
-- Gemini: **GRÁTIS** (Google One Ultra 30TB)
-- GPT-4: **$0 adicional** (já incluído no Pro $200)
-- Claude: **~$5/mês** (apenas para contratos)
+BarberGO utiliza uma stack moderna para oferecer uma experiência fluida e inteligente:
+
+- **Framework:** Flutter
+- **Backend:** Firebase (Auth, Firestore, Cloud Messaging)
+- **State Management:** Riverpod 2.x (com Generators)
+- **Arquitetura:** Clean Architecture
+- **IA:** Integração com OpenAI (GPT-4)
+
+## 🛠️ Configuração do Ambiente de Desenvolvimento
+
+### Pré-requisitos
+
+1. Flutter SDK (Versão estável mais recente)
+2. Dart SDK
+3. Firebase CLI (para deploy de regras/índices)
+4. IDE (VS Code recomendado)
+
+### Passos para Execução
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/fabiocdssilva69-prog/barbergo-app.git
+   cd barbergo-app
+   ```
+
+2. **Instale as dependências:**
+   ```bash
+   flutter pub get
+   ```
+
+3. **Configure as Variáveis de Ambiente (`.env`):**
+   
+   Crie um arquivo `.env` na raiz do projeto (NÃO FAÇA COMMIT DESTE ARQUIVO). Certifique-se que o arquivo está listado na seção `assets` do `pubspec.yaml`.
+   
+   ```dotenv
+   OPENAI_API_KEY=sk-proj-YOUR_OPENAI_KEY_HERE
+   ```
+
+4. **Configure o Firebase:**
+   
+   Certifique-se de que o arquivo `lib/firebase_options.dart` está presente e configurado para seu projeto Firebase (geralmente via `flutterfire configure`).
+
+5. **Gere o Código (Riverpod/Freezed):**
+   
+   Este passo é crucial para gerar os provedores e modelos.
+   
+   ```bash
+   dart run build_runner build --delete-conflicting-outputs
+   ```
+
+6. **Execute o aplicativo:**
+   ```bash
+   # Para Web
+   flutter run -d chrome
+   
+   # Para Android (com emulador ou dispositivo conectado)
+   flutter run
+   ```
+
+## 📂 Estrutura do Projeto
+
+O projeto segue os princípios da Clean Architecture:
+
+- `lib/src/core`: Serviços globais, Configuração, Tema, Roteamento
+- `lib/src/data`: Repositórios e acesso a dados
+- `lib/src/domain`: Entidades (Freezed), Enums e regras de negócio puras
+- `lib/src/features`: Código organizado por funcionalidade (Auth, Profile, Discovery, Applications)
 
 📖 **[Documentação completa da integração IA](lib/src/features/ai/README.md)**
 

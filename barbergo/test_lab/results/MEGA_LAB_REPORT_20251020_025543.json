@@ -1,0 +1,150 @@
+{
+  "top_solution": {
+    "success": false,
+    "name": "json + Auto copyWith",
+    "score": 0,
+    "duration": 0.021126,
+    "test": 32
+  },
+  "duration_minutes": 0.2,
+  "all_results": [
+    {
+      "success": false,
+      "name": "json + Auto copyWith",
+      "score": 0,
+      "duration": 0.021126,
+      "test": 32
+    },
+    {
+      "success": false,
+      "name": "json - All 7 Entities",
+      "score": 0,
+      "duration": 0.0488321,
+      "test": 33
+    },
+    {
+      "success": false,
+      "name": "json + equatable",
+      "score": 0,
+      "duration": 0.0308493,
+      "test": 34
+    },
+    {
+      "success": false,
+      "name": "json + meta",
+      "score": 0,
+      "duration": 0.0316383,
+      "test": 35
+    },
+    {
+      "success": false,
+      "name": "Freezed + built_value Mix",
+      "score": 0,
+      "duration": 0.0427118,
+      "test": 36
+    },
+    {
+      "success": false,
+      "name": "json + Freezed Mix",
+      "score": 0,
+      "duration": 0.0236028,
+      "test": 37
+    },
+    {
+      "success": false,
+      "name": "data_class_plugin",
+      "score": 0,
+      "duration": 0.0257226,
+      "test": 38
+    },
+    {
+      "success": false,
+      "name": "Custom Generator",
+      "score": 0,
+      "duration": 0.0248751,
+      "test": 39
+    },
+    {
+      "success": false,
+      "name": "Dart Macros (Experimental)",
+      "score": 0,
+      "duration": 0.0447593,
+      "test": 40
+    },
+    {
+      "success": false,
+      "name": "Flutter 3.24.x",
+      "score": 0,
+      "duration": 0.0368119,
+      "test": 41
+    },
+    {
+      "success": false,
+      "name": "Dart 3.5.x",
+      "score": 0,
+      "duration": 0.0363325,
+      "test": 42
+    },
+    {
+      "success": false,
+      "name": "Fresh Project",
+      "score": 0,
+      "duration": 0.0396355,
+      "test": 43
+    },
+    {
+      "success": false,
+      "name": "Docker Build",
+      "score": 0,
+      "duration": 0.0460145,
+      "test": 44
+    },
+    {
+      "success": false,
+      "name": "CI/CD Simulation",
+      "score": 0,
+      "duration": 0.0392662,
+      "test": 45
+    },
+    {
+      "success": false,
+      "name": "AST Manipulation",
+      "score": 0,
+      "duration": 0.0204479,
+      "test": 46
+    },
+    {
+      "success": false,
+      "name": "Custom Analyzer Plugin",
+      "score": 0,
+      "duration": 0.0254821,
+      "test": 47
+    },
+    {
+      "success": false,
+      "name": "JIT Tricks",
+      "score": 0,
+      "duration": 0.0316061,
+      "test": 48
+    },
+    {
+      "success": false,
+      "name": "Reflection Serialization",
+      "score": 0,
+      "duration": 0.0257497,
+      "test": 49
+    },
+    {
+      "success": false,
+      "name": "Manual .freezed.dart",
+      "score": 0,
+      "duration": 0.0423944,
+      "test": 50
+    }
+  ],
+  "successes": 0,
+  "total_tests": 19,
+  "failures": 19,
+  "timestamp": "2025-10-20 02:55:43",
+  "success_rate": 0.0
+}

@@ -1,0 +1,834 @@
+[ +615 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[   +2 ms] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[ +173 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[   +5 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +88 ms] executing: C:\Users\daewd\AppData\Local\Android\sdk\platform-tools\adb.exe devices -l
+[ +134 ms] List of devices attached
+           uwbekb8hpf6lamts       device product:begonia_eea model:Redmi_Note_8_Pro device:begonia transport_id:5
+[  +11 ms] C:\Users\daewd\AppData\Local\Android\sdk\platform-tools\adb.exe -s uwbekb8hpf6lamts shell getprop
+[ +172 ms] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[   +3 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[ +223 ms] Skipping pub get: version match.
+[ +372 ms] Found plugin integration_test at c:\workspaces\fabiocdssilva69-prog\barbergo\flutter\packages\integration_test\
+[  +94 ms] Found plugin firebase_core at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-4.2.0\
+[   +5 ms] Found plugin firebase_core_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core_web-3.2.0\
+[  +18 ms] Found plugin firebase_auth at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth-6.1.1\
+[   +3 ms] Found plugin firebase_auth_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth_web-6.0.4\
+[  +53 ms] Found plugin cloud_firestore at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore-6.0.3\
+[   +7 ms] Found plugin cloud_firestore_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore_web-5.0.3\
+[  +18 ms] Found plugin url_launcher at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[   +5 ms] Found plugin url_launcher_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.4\
+[   +9 ms] Found plugin url_launcher_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.1\
+[   +5 ms] Found plugin url_launcher_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.4\
+[   +4 ms] Found plugin url_launcher_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.1\
+[   +5 ms] Found plugin url_launcher_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.3.5\
+[   +3 ms] Found plugin url_launcher_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.24\
+[  +20 ms] Found plugin sign_in_with_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sign_in_with_apple-6.1.4\
+[   +3 ms] Found plugin sign_in_with_apple_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sign_in_with_apple_web-2.1.1\
+[   +7 ms] Found plugin shared_preferences at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.3\
+[   +3 ms] Found plugin shared_preferences_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +4 ms] Found plugin path_provider_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +5 ms] Found plugin shared_preferences_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +2 ms] Found plugin shared_preferences_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +3 ms] Found plugin path_provider_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +6 ms] Found plugin shared_preferences_foundation at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.5\
+[   +3 ms] Found plugin shared_preferences_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.15\
+[  +10 ms] Found plugin purchases_flutter at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\purchases_flutter-9.9.1\
+[   +6 ms] Found plugin permission_handler at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler-11.4.0\
+[   +3 ms] Found plugin permission_handler_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_windows-0.2.1\
+[   +6 ms] Found plugin permission_handler_html at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_html-0.1.3+5\
+[   +4 ms] Found plugin permission_handler_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_apple-9.4.7\
+[   +4 ms] Found plugin permission_handler_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-12.1.0\
+[   +4 ms] Found plugin path_provider at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +4 ms] Found plugin path_provider_foundation at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.4.3\
+[   +4 ms] Found plugin path_provider_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.20\
+[  +10 ms] Found plugin image_picker at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker-1.2.0\
+[   +4 ms] Found plugin image_picker_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_windows-0.2.2\
+[   +9 ms] Found plugin file_selector_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_windows-0.9.3+4\
+[   +8 ms] Found plugin image_picker_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_macos-0.2.2+1\
+[   +4 ms] Found plugin file_selector_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_macos-0.9.4+5\
+[   +3 ms] Found plugin image_picker_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_linux-0.2.2\
+[   +3 ms] Found plugin file_selector_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_linux-0.9.3+2\
+[   +3 ms] Found plugin image_picker_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_ios-0.8.13+1\
+[   +3 ms] Found plugin image_picker_for_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_for_web-3.1.0\
+[   +3 ms] Found plugin image_picker_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\
+[   +3 ms] Found plugin flutter_plugin_android_lifecycle at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.32\
+[   +3 ms] Found plugin image_cropper at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_cropper-8.1.0\
+[   +4 ms] Found plugin image_cropper_for_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_cropper_for_web-6.1.0\
+[   +3 ms] Found plugin google_sign_in at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in-6.3.0\
+[   +3 ms] Found plugin google_sign_in_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_web-0.12.4+4\
+[  +10 ms] Found plugin google_sign_in_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_ios-5.9.0\
+[   +3 ms] Found plugin google_sign_in_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_android-6.2.1\
+[   +3 ms] Found plugin google_maps_flutter at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter-2.13.1\
+[   +3 ms] Found plugin google_maps_flutter_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_web-0.5.14+2\
+[  +18 ms] Found plugin google_maps_flutter_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_ios-2.15.5\
+[   +3 ms] Found plugin google_maps_flutter_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_android-2.18.4\
+[  +10 ms] Found plugin geolocator at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator-14.0.2\
+[   +3 ms] Found plugin geolocator_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_windows-0.2.5\
+[   +6 ms] Found plugin geolocator_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_web-4.1.3\
+[   +2 ms] Found plugin geolocator_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_linux-0.2.3\
+[   +3 ms] Found plugin package_info_plus at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-8.3.1\
+[  +14 ms] Found plugin geolocator_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_apple-2.3.13\
+[   +3 ms] Found plugin geolocator_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-5.0.2\
+[   +4 ms] Found plugin geocoding at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding-3.0.0\
+[   +5 ms] Found plugin geocoding_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_ios-3.1.0\
+[   +2 ms] Found plugin geocoding_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_android-3.3.1\
+[  +13 ms] Found plugin flutter_image_compress at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress-2.4.0\
+[   +4 ms] Found plugin flutter_image_compress_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_web-0.1.5\
+[   +5 ms] Found plugin flutter_image_compress_ohos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_ohos-0.0.3\
+[   +3 ms] Found plugin flutter_image_compress_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_macos-1.0.3\
+[   +3 ms] Found plugin flutter_image_compress_common at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_common-1.0.6\
+[  +12 ms] Found plugin firebase_storage at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_storage-13.0.3\
+[   +3 ms] Found plugin firebase_storage_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_storage_web-3.10.21\
+[   +5 ms] Found plugin firebase_remote_config at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_remote_config-6.1.0\
+[   +4 ms] Found plugin firebase_remote_config_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_remote_config_web-1.9.0\
+[   +6 ms] Found plugin firebase_messaging at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-16.0.3\
+[   +3 ms] Found plugin firebase_messaging_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging_web-4.0.3\
+[   +7 ms] Found plugin firebase_crashlytics at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_crashlytics-5.0.3\
+[   +6 ms] Found plugin firebase_analytics at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_analytics-12.0.3\
+[   +3 ms] Found plugin firebase_analytics_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_analytics_web-0.6.0+3\
+[  +21 ms] Found plugin sqflite at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite-2.4.2\
+[   +7 ms] Found plugin sqflite_darwin at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_darwin-2.4.2\
+[   +3 ms] Found plugin sqflite_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.2+2\
+[ +224 ms] Found plugin integration_test at c:\workspaces\fabiocdssilva69-prog\barbergo\flutter\packages\integration_test\
+[  +41 ms] Found plugin firebase_core at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-4.2.0\
+[   +2 ms] Found plugin firebase_core_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core_web-3.2.0\
+[   +8 ms] Found plugin firebase_auth at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth-6.1.1\
+[   +1 ms] Found plugin firebase_auth_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth_web-6.0.4\
+[  +26 ms] Found plugin cloud_firestore at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore-6.0.3\
+[   +1 ms] Found plugin cloud_firestore_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore_web-5.0.3\
+[  +10 ms] Found plugin url_launcher at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[   +3 ms] Found plugin url_launcher_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.4\
+[   +4 ms] Found plugin url_launcher_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.1\
+[   +2 ms] Found plugin url_launcher_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.4\
+[   +2 ms] Found plugin url_launcher_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.1\
+[   +2 ms] Found plugin url_launcher_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.3.5\
+[   +3 ms] Found plugin url_launcher_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.24\
+[  +10 ms] Found plugin sign_in_with_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sign_in_with_apple-6.1.4\
+[   +1 ms] Found plugin sign_in_with_apple_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sign_in_with_apple_web-2.1.1\
+[   +3 ms] Found plugin shared_preferences at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.3\
+[   +2 ms] Found plugin shared_preferences_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +3 ms] Found plugin path_provider_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +4 ms] Found plugin shared_preferences_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +2 ms] Found plugin shared_preferences_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +2 ms] Found plugin path_provider_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +4 ms] Found plugin shared_preferences_foundation at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.5\
+[   +2 ms] Found plugin shared_preferences_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.15\
+[   +7 ms] Found plugin purchases_flutter at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\purchases_flutter-9.9.1\
+[   +4 ms] Found plugin permission_handler at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler-11.4.0\
+[   +2 ms] Found plugin permission_handler_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_windows-0.2.1\
+[   +3 ms] Found plugin permission_handler_html at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_html-0.1.3+5\
+[   +2 ms] Found plugin permission_handler_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_apple-9.4.7\
+[   +2 ms] Found plugin permission_handler_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-12.1.0\
+[   +2 ms] Found plugin path_provider at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +2 ms] Found plugin path_provider_foundation at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.4.3\
+[   +2 ms] Found plugin path_provider_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.20\
+[   +5 ms] Found plugin image_picker at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker-1.2.0\
+[   +2 ms] Found plugin image_picker_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_windows-0.2.2\
+[   +4 ms] Found plugin file_selector_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_windows-0.9.3+4\
+[   +3 ms] Found plugin image_picker_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_macos-0.2.2+1\
+[   +2 ms] Found plugin file_selector_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_macos-0.9.4+5\
+[   +1 ms] Found plugin image_picker_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_linux-0.2.2\
+[   +2 ms] Found plugin file_selector_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_linux-0.9.3+2\
+[   +2 ms] Found plugin image_picker_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_ios-0.8.13+1\
+[   +1 ms] Found plugin image_picker_for_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_for_web-3.1.0\
+[   +1 ms] Found plugin image_picker_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\
+[   +2 ms] Found plugin flutter_plugin_android_lifecycle at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.32\
+[   +1 ms] Found plugin image_cropper at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_cropper-8.1.0\
+[   +2 ms] Found plugin image_cropper_for_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_cropper_for_web-6.1.0\
+[   +2 ms] Found plugin google_sign_in at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in-6.3.0\
+[   +2 ms] Found plugin google_sign_in_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_web-0.12.4+4\
+[   +5 ms] Found plugin google_sign_in_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_ios-5.9.0\
+[   +3 ms] Found plugin google_sign_in_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_android-6.2.1\
+[   +2 ms] Found plugin google_maps_flutter at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter-2.13.1\
+[   +2 ms] Found plugin google_maps_flutter_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_web-0.5.14+2\
+[  +13 ms] Found plugin google_maps_flutter_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_ios-2.15.5\
+[   +2 ms] Found plugin google_maps_flutter_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_android-2.18.4\
+[   +5 ms] Found plugin geolocator at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator-14.0.2\
+[   +1 ms] Found plugin geolocator_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_windows-0.2.5\
+[   +3 ms] Found plugin geolocator_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_web-4.1.3\
+[   +2 ms] Found plugin geolocator_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_linux-0.2.3\
+[   +1 ms] Found plugin package_info_plus at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-8.3.1\
+[   +8 ms] Found plugin geolocator_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_apple-2.3.13\
+[   +1 ms] Found plugin geolocator_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-5.0.2\
+[   +5 ms] Found plugin geocoding at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding-3.0.0\
+[   +4 ms] Found plugin geocoding_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_ios-3.1.0\
+[   +2 ms] Found plugin geocoding_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_android-3.3.1\
+[   +8 ms] Found plugin flutter_image_compress at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress-2.4.0\
+[   +1 ms] Found plugin flutter_image_compress_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_web-0.1.5\
+[   +2 ms] Found plugin flutter_image_compress_ohos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_ohos-0.0.3\
+[   +1 ms] Found plugin flutter_image_compress_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_macos-1.0.3\
+[   +2 ms] Found plugin flutter_image_compress_common at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_common-1.0.6\
+[   +4 ms] Found plugin firebase_storage at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_storage-13.0.3\
+[   +2 ms] Found plugin firebase_storage_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_storage_web-3.10.21\
+[   +3 ms] Found plugin firebase_remote_config at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_remote_config-6.1.0\
+[   +1 ms] Found plugin firebase_remote_config_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_remote_config_web-1.9.0\
+[   +3 ms] Found plugin firebase_messaging at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-16.0.3\
+[   +1 ms] Found plugin firebase_messaging_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging_web-4.0.3\
+[   +2 ms] Found plugin firebase_crashlytics at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_crashlytics-5.0.3\
+[   +3 ms] Found plugin firebase_analytics at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_analytics-12.0.3\
+[   +2 ms] Found plugin firebase_analytics_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_analytics_web-0.6.0+3\
+[  +13 ms] Found plugin sqflite at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite-2.4.2\
+[   +6 ms] Found plugin sqflite_darwin at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_darwin-2.4.2\
+[   +3 ms] Found plugin sqflite_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.2+2\
+[  +26 ms] Skipping generating web_plugin_registrant.dart because it is up-to-date.
+[ +134 ms] Found plugin integration_test at c:\workspaces\fabiocdssilva69-prog\barbergo\flutter\packages\integration_test\
+[  +42 ms] Found plugin firebase_core at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-4.2.0\
+[   +1 ms] Found plugin firebase_core_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core_web-3.2.0\
+[  +10 ms] Found plugin firebase_auth at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth-6.1.1\
+[   +1 ms] Found plugin firebase_auth_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth_web-6.0.4\
+[  +26 ms] Found plugin cloud_firestore at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore-6.0.3\
+[   +2 ms] Found plugin cloud_firestore_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore_web-5.0.3\
+[   +9 ms] Found plugin url_launcher at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[   +2 ms] Found plugin url_launcher_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.4\
+[   +4 ms] Found plugin url_launcher_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.1\
+[   +2 ms] Found plugin url_launcher_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.4\
+[   +2 ms] Found plugin url_launcher_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.1\
+[   +2 ms] Found plugin url_launcher_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.3.5\
+[   +2 ms] Found plugin url_launcher_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.24\
+[  +12 ms] Found plugin sign_in_with_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sign_in_with_apple-6.1.4\
+[   +2 ms] Found plugin sign_in_with_apple_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sign_in_with_apple_web-2.1.1\
+[   +4 ms] Found plugin shared_preferences at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.3\
+[   +2 ms] Found plugin shared_preferences_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +3 ms] Found plugin path_provider_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +3 ms] Found plugin shared_preferences_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +2 ms] Found plugin shared_preferences_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +1 ms] Found plugin path_provider_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +3 ms] Found plugin shared_preferences_foundation at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.5\
+[   +1 ms] Found plugin shared_preferences_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.15\
+[   +6 ms] Found plugin purchases_flutter at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\purchases_flutter-9.9.1\
+[   +3 ms] Found plugin permission_handler at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler-11.4.0\
+[   +1 ms] Found plugin permission_handler_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_windows-0.2.1\
+[   +3 ms] Found plugin permission_handler_html at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_html-0.1.3+5\
+[   +1 ms] Found plugin permission_handler_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_apple-9.4.7\
+[   +1 ms] Found plugin permission_handler_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-12.1.0\
+[   +1 ms] Found plugin path_provider at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +2 ms] Found plugin path_provider_foundation at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.4.3\
+[   +1 ms] Found plugin path_provider_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.20\
+[   +4 ms] Found plugin image_picker at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker-1.2.0\
+[   +2 ms] Found plugin image_picker_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_windows-0.2.2\
+[   +4 ms] Found plugin file_selector_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_windows-0.9.3+4\
+[   +4 ms] Found plugin image_picker_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_macos-0.2.2+1\
+[   +2 ms] Found plugin file_selector_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_macos-0.9.4+5\
+[   +2 ms] Found plugin image_picker_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_linux-0.2.2\
+[   +2 ms] Found plugin file_selector_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_linux-0.9.3+2\
+[   +2 ms] Found plugin image_picker_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_ios-0.8.13+1\
+[   +1 ms] Found plugin image_picker_for_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_for_web-3.1.0\
+[   +1 ms] Found plugin image_picker_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\
+[   +1 ms] Found plugin flutter_plugin_android_lifecycle at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.32\
+[   +2 ms] Found plugin image_cropper at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_cropper-8.1.0\
+[   +3 ms] Found plugin image_cropper_for_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_cropper_for_web-6.1.0\
+[   +1 ms] Found plugin google_sign_in at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in-6.3.0\
+[   +2 ms] Found plugin google_sign_in_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_web-0.12.4+4\
+[   +4 ms] Found plugin google_sign_in_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_ios-5.9.0\
+[   +1 ms] Found plugin google_sign_in_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_android-6.2.1\
+[   +2 ms] Found plugin google_maps_flutter at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter-2.13.1\
+[   +2 ms] Found plugin google_maps_flutter_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_web-0.5.14+2\
+[  +10 ms] Found plugin google_maps_flutter_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_ios-2.15.5\
+[   +1 ms] Found plugin google_maps_flutter_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_android-2.18.4\
+[   +7 ms] Found plugin geolocator at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator-14.0.2\
+[   +2 ms] Found plugin geolocator_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_windows-0.2.5\
+[   +4 ms] Found plugin geolocator_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_web-4.1.3\
+[   +1 ms] Found plugin geolocator_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_linux-0.2.3\
+[   +1 ms] Found plugin package_info_plus at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-8.3.1\
+[   +7 ms] Found plugin geolocator_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_apple-2.3.13\
+[   +1 ms] Found plugin geolocator_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-5.0.2\
+[   +3 ms] Found plugin geocoding at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding-3.0.0\
+[   +2 ms] Found plugin geocoding_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_ios-3.1.0\
+[   +2 ms] Found plugin geocoding_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_android-3.3.1\
+[   +7 ms] Found plugin flutter_image_compress at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress-2.4.0\
+[   +2 ms] Found plugin flutter_image_compress_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_web-0.1.5\
+[   +2 ms] Found plugin flutter_image_compress_ohos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_ohos-0.0.3\
+[   +1 ms] Found plugin flutter_image_compress_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_macos-1.0.3\
+[   +1 ms] Found plugin flutter_image_compress_common at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_common-1.0.6\
+[   +6 ms] Found plugin firebase_storage at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_storage-13.0.3\
+[   +1 ms] Found plugin firebase_storage_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_storage_web-3.10.21\
+[   +2 ms] Found plugin firebase_remote_config at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_remote_config-6.1.0\
+[   +1 ms] Found plugin firebase_remote_config_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_remote_config_web-1.9.0\
+[   +2 ms] Found plugin firebase_messaging at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-16.0.3\
+[   +1 ms] Found plugin firebase_messaging_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging_web-4.0.3\
+[   +3 ms] Found plugin firebase_crashlytics at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_crashlytics-5.0.3\
+[   +2 ms] Found plugin firebase_analytics at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_analytics-12.0.3\
+[   +1 ms] Found plugin firebase_analytics_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_analytics_web-0.6.0+3\
+[  +11 ms] Found plugin sqflite at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite-2.4.2\
+[   +4 ms] Found plugin sqflite_darwin at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_darwin-2.4.2\
+[   +2 ms] Found plugin sqflite_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.2+2\
+[  +39 ms] Generating C:\workspaces\fabiocdssilva69-prog\barbergo\android\app\src\main\java\io\flutter\plugins\GeneratedPluginRegistrant.java
+[   +4 ms] Skipping generating GeneratedPluginRegistrant.java because it is up-to-date.
+[   +7 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[   +2 ms] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[   +2 ms] Skipping generating generated_plugins.cmake because it is up-to-date.
+[   +4 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[   +2 ms] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[   +2 ms] Skipping generating generated_plugins.cmake because it is up-to-date.
+[   +3 ms] Skipping generating GeneratedPluginRegistrant.h because it is up-to-date.
+[   +2 ms] Skipping generating GeneratedPluginRegistrant.m because it is up-to-date.
+[   +2 ms] Skipping generating GeneratedPluginRegistrant.swift because it is up-to-date.
+[ +101 ms] ro.hardware = mt6785
+[        ] ro.build.characteristics = default
+[ +128 ms] Initializing file store
+[  +17 ms] gen_localizations: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: c:\workspaces\fabiocdssilva69-prog\barbergo\flutter\packages\flutter_tools\lib\src\build_system\targets\localizations.dart,C:\workspaces\fabiocdssilva69-prog\barbergo\l10n.yaml,C:\workspaces\fabiocdssilva69-prog\barbergo\lib\src\localization\app_pt.arb,C:\workspaces\fabiocdssilva69-prog\barbergo\lib\src\localization\app_localizations_pt.dart,C:\workspaces\fabiocdssilva69-prog\barbergo\lib\src\localization\app_localizations.dart}
+[ +166 ms] gen_dart_plugin_registrant: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: C:\workspaces\fabiocdssilva69-prog\barbergo\.dart_tool\package_config.json,C:\workspaces\fabiocdssilva69-prog\barbergo\.dart_tool\flutter_build\dart_plugin_registrant.dart}
+[ +228 ms] Found plugin integration_test at c:\workspaces\fabiocdssilva69-prog\barbergo\flutter\packages\integration_test\
+[  +56 ms] Found plugin firebase_core at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-4.2.0\
+[   +2 ms] Found plugin firebase_core_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core_web-3.2.0\
+[  +15 ms] Found plugin firebase_auth at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth-6.1.1\
+[   +2 ms] Found plugin firebase_auth_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_auth_web-6.0.4\
+[  +30 ms] Found plugin cloud_firestore at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore-6.0.3\
+[   +2 ms] Found plugin cloud_firestore_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\cloud_firestore_web-5.0.3\
+[   +9 ms] Found plugin url_launcher at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[   +2 ms] Found plugin url_launcher_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.4\
+[   +3 ms] Found plugin url_launcher_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.1\
+[   +2 ms] Found plugin url_launcher_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.4\
+[   +3 ms] Found plugin url_launcher_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.1\
+[   +2 ms] Found plugin url_launcher_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.3.5\
+[   +2 ms] Found plugin url_launcher_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.24\
+[  +13 ms] Found plugin sign_in_with_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sign_in_with_apple-6.1.4\
+[   +2 ms] Found plugin sign_in_with_apple_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sign_in_with_apple_web-2.1.1\
+[   +4 ms] Found plugin shared_preferences at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.3\
+[   +2 ms] Found plugin shared_preferences_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +4 ms] Found plugin path_provider_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +4 ms] Found plugin shared_preferences_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +2 ms] Found plugin shared_preferences_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +2 ms] Found plugin path_provider_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +3 ms] Found plugin shared_preferences_foundation at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.5\
+[   +2 ms] Found plugin shared_preferences_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.15\
+[   +7 ms] Found plugin purchases_flutter at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\purchases_flutter-9.9.1\
+[   +4 ms] Found plugin permission_handler at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler-11.4.0\
+[   +2 ms] Found plugin permission_handler_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_windows-0.2.1\
+[   +6 ms] Found plugin permission_handler_html at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_html-0.1.3+5\
+[   +2 ms] Found plugin permission_handler_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_apple-9.4.7\
+[   +2 ms] Found plugin permission_handler_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-12.1.0\
+[   +2 ms] Found plugin path_provider at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +3 ms] Found plugin path_provider_foundation at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.4.3\
+[   +2 ms] Found plugin path_provider_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.20\
+[   +7 ms] Found plugin image_picker at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker-1.2.0\
+[   +2 ms] Found plugin image_picker_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_windows-0.2.2\
+[   +6 ms] Found plugin file_selector_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_windows-0.9.3+4\
+[   +3 ms] Found plugin image_picker_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_macos-0.2.2+1\
+[   +2 ms] Found plugin file_selector_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_macos-0.9.4+5\
+[   +3 ms] Found plugin image_picker_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_linux-0.2.2\
+[   +2 ms] Found plugin file_selector_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_linux-0.9.3+2\
+[   +2 ms] Found plugin image_picker_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_ios-0.8.13+1\
+[   +2 ms] Found plugin image_picker_for_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_for_web-3.1.0\
+[   +2 ms] Found plugin image_picker_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\
+[   +1 ms] Found plugin flutter_plugin_android_lifecycle at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.32\
+[   +1 ms] Found plugin image_cropper at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_cropper-8.1.0\
+[   +4 ms] Found plugin image_cropper_for_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\image_cropper_for_web-6.1.0\
+[   +2 ms] Found plugin google_sign_in at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in-6.3.0\
+[   +1 ms] Found plugin google_sign_in_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_web-0.12.4+4\
+[   +5 ms] Found plugin google_sign_in_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_ios-5.9.0\
+[   +1 ms] Found plugin google_sign_in_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_sign_in_android-6.2.1\
+[   +2 ms] Found plugin google_maps_flutter at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter-2.13.1\
+[   +2 ms] Found plugin google_maps_flutter_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_web-0.5.14+2\
+[  +10 ms] Found plugin google_maps_flutter_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_ios-2.15.5\
+[   +2 ms] Found plugin google_maps_flutter_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_android-2.18.4\
+[   +5 ms] Found plugin geolocator at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator-14.0.2\
+[   +2 ms] Found plugin geolocator_windows at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_windows-0.2.5\
+[   +4 ms] Found plugin geolocator_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_web-4.1.3\
+[   +1 ms] Found plugin geolocator_linux at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_linux-0.2.3\
+[   +7 ms] Found plugin package_info_plus at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-8.3.1\
+[  +12 ms] Found plugin geolocator_apple at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_apple-2.3.13\
+[   +3 ms] Found plugin geolocator_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-5.0.2\
+[   +4 ms] Found plugin geocoding at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding-3.0.0\
+[   +4 ms] Found plugin geocoding_ios at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_ios-3.1.0\
+[   +2 ms] Found plugin geocoding_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_android-3.3.1\
+[  +12 ms] Found plugin flutter_image_compress at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress-2.4.0\
+[   +2 ms] Found plugin flutter_image_compress_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_web-0.1.5\
+[   +4 ms] Found plugin flutter_image_compress_ohos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_ohos-0.0.3\
+[   +2 ms] Found plugin flutter_image_compress_macos at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_macos-1.0.3\
+[   +5 ms] Found plugin flutter_image_compress_common at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_common-1.0.6\
+[   +7 ms] Found plugin firebase_storage at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_storage-13.0.3\
+[   +2 ms] Found plugin firebase_storage_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_storage_web-3.10.21\
+[   +4 ms] Found plugin firebase_remote_config at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_remote_config-6.1.0\
+[   +3 ms] Found plugin firebase_remote_config_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_remote_config_web-1.9.0\
+[   +3 ms] Found plugin firebase_messaging at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-16.0.3\
+[   +2 ms] Found plugin firebase_messaging_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging_web-4.0.3\
+[   +3 ms] Found plugin firebase_crashlytics at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_crashlytics-5.0.3\
+[   +2 ms] Found plugin firebase_analytics at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_analytics-12.0.3\
+[   +2 ms] Found plugin firebase_analytics_web at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_analytics_web-0.6.0+3\
+[  +14 ms] Found plugin sqflite at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite-2.4.2\
+[   +7 ms] Found plugin sqflite_darwin at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_darwin-2.4.2\
+[   +2 ms] Found plugin sqflite_android at C:\Users\daewd\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.2+2\
+[  +15 ms] Skipping generating dart_plugin_registrant.dart because it is up-to-date.
+[        ] gen_dart_plugin_registrant: Complete
+[ +757 ms] gen_localizations: Complete
+[   +4 ms] Skipping target: _composite
+[   +2 ms] complete
+[   +4 ms] Launching lib\main.dart on Redmi Note 8 Pro in debug mode...
+[   +2 ms] c:\workspaces\fabiocdssilva69-prog\barbergo\flutter\bin\cache\dart-sdk\bin\dartaotruntime.exe c:\workspaces\fabiocdssilva69-prog\barbergo\flutter\bin\cache\dart-sdk\bin\snapshots\frontend_server_aot.dart.snapshot --sdk-root c:\workspaces\fabiocdssilva69-prog\barbergo\flutter\bin\cache\artifacts\engine\common\flutter_patched_sdk/ --incremental --target=flutter --experimental-emit-debug-metadata -DFLUTTER_VERSION=3.35.5 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=ac4e799d23 -DFLUTTER_ENGINE_REVISION=d3d45dcf25 -DFLUTTER_DART_VERSION=3.9.2 --output-dill C:\Users\daewd\AppData\Local\Temp\flutter_tools.b5b61259\flutter_tool.7051a453\app.dill --packages C:\workspaces\fabiocdssilva69-prog\barbergo\.dart_tool\package_config.json -Ddart.vm.profile=false -Ddart.vm.product=false --enable-asserts --track-widget-creation --filesystem-scheme org-dartlang-root --initialize-from-dill build\210bad4901163cba762d02a4a1c86c00.cache.dill.track.dill --source file:///C:/workspaces/fabiocdssilva69-prog/barbergo/.dart_tool/flutter_build/dart_plugin_registrant.dart --source package:flutter/src/dart_plugin_registrant.dart -Dflutter.dart_plugin_registrant=file:///C:/workspaces/fabiocdssilva69-prog/barbergo/.dart_tool/flutter_build/dart_plugin_registrant.dart --verbosity=error --enable-experiment=alternative-invalidation-strategy
+[   +7 ms] executing: C:\Users\daewd\AppData\Local\Android\sdk\build-tools\36.1.0\aapt dump xmltree C:\workspaces\fabiocdssilva69-prog\barbergo\build\app\outputs\flutter-apk\app-debug.apk AndroidManifest.xml
+[  +65 ms] Exit code 0 from: C:\Users\daewd\AppData\Local\Android\sdk\build-tools\36.1.0\aapt dump xmltree C:\workspaces\fabiocdssilva69-prog\barbergo\build\app\outputs\flutter-apk\app-debug.apk AndroidManifest.xml
+[        ] N: android=http://schemas.android.com/apk/res/android
+             E: manifest (line=2)
+               A: android:versionCode(0x0101021b)=(type 0x10)0x1
+               A: android:versionName(0x0101021c)="1.0.0" (Raw: "1.0.0")
+               A: android:compileSdkVersion(0x01010572)=(type 0x10)0x24
+               A: android:compileSdkVersionCodename(0x01010573)="16" (Raw: "16")
+               A: package="com.example.barbergo_app" (Raw: "com.example.barbergo_app")
+               A: platformBuildVersionCode=(type 0x10)0x24
+               A: platformBuildVersionName=(type 0x10)0x10
+               E: uses-sdk (line=7)
+                 A: android:minSdkVersion(0x0101020c)=(type 0x10)0x18
+                 A: android:targetSdkVersion(0x01010270)=(type 0x10)0x24
+               E: uses-permission (line=15)
+                 A: android:name(0x01010003)="android.permission.INTERNET" (Raw: "android.permission.INTERNET")
+               E: uses-permission (line=17)
+                 A: android:name(0x01010003)="android.permission.POST_NOTIFICATIONS" (Raw: "android.permission.POST_NOTIFICATIONS")
+               E: uses-permission (line=18)
+                 A: android:name(0x01010003)="android.permission.ACCESS_FINE_LOCATION" (Raw: "android.permission.ACCESS_FINE_LOCATION")
+               E: uses-permission (line=19)
+                 A: android:name(0x01010003)="android.permission.ACCESS_COARSE_LOCATION" (Raw: "android.permission.ACCESS_COARSE_LOCATION")
+               E: queries (line=27)
+                 E: intent (line=28)
+                   E: action (line=29)
+                     A: android:name(0x01010003)="android.intent.action.PROCESS_TEXT" (Raw: "android.intent.action.PROCESS_TEXT")
+                   E: data (line=31)
+                     A: android:mimeType(0x01010026)="text/plain" (Raw: "text/plain")
+                 E: intent (line=33)
+                   E: action (line=34)
+                     A: android:name(0x01010003)="com.android.vending.billing.InAppBillingService.BIND" (Raw: "com.android.vending.billing.InAppBillingService.BIND")
+                 E: intent (line=36)
+                   E: action (line=37)
+                     A: android:name(0x01010003)="com.google.android.apps.play.billingtestcompanion.BillingOverrideService.BIND" (Raw: "com.google.android.apps.play.billingtestcompanion.BillingOverrideService.BIND")
+                 E: package (line=39)
+                   A: android:name(0x01010003)="com.google.android.apps.maps" (Raw: "com.google.android.apps.maps")
+               E: uses-permission (line=42)
+                 A: android:name(0x01010003)="android.permission.ACCESS_NETWORK_STATE" (Raw: "android.permission.ACCESS_NETWORK_STATE")
+               E: uses-permission (line=43)
+                 A: android:name(0x01010003)="android.permission.WAKE_LOCK" (Raw: "android.permission.WAKE_LOCK")
+               E: uses-permission (line=44)
+                 A: android:name(0x01010003)="com.android.vending.BILLING" (Raw: "com.android.vending.BILLING")
+               E: uses-feature (line=46)
+                 A: android:glEsVersion(0x01010281)=(type 0x11)0x20000
+                 A: android:required(0x0101028e)=(type 0x12)0xffffffff
+               E: uses-permission (line=49)
+                 A: android:name(0x01010003)="com.google.android.c2dm.permission.RECEIVE" (Raw: "com.google.android.c2dm.permission.RECEIVE")
+               E: uses-permission (line=50)
+                 A: android:name(0x01010003)="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" (Raw: "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE")
+               E: uses-permission (line=51)
+                 A: android:name(0x01010003)="com.google.android.gms.permission.AD_ID" (Raw: "com.google.android.gms.permission.AD_ID")
+               E: uses-permission (line=52)
+                 A: android:name(0x01010003)="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" (Raw: "android.permission.ACCESS_ADSERVICES_ATTRIBUTION")
+               E: uses-permission (line=53)
+                 A: android:name(0x01010003)="android.permission.ACCESS_ADSERVICES_AD_ID" (Raw: "android.permission.ACCESS_ADSERVICES_AD_ID")
+               E: uses-permission (line=54)
+                 A: android:name(0x01010003)="com.google.android.providers.gsf.permission.READ_GSERVICES" (Raw: "com.google.android.providers.gsf.permission.READ_GSERVICES")
+               E: permission (line=56)
+                 A: android:name(0x01010003)="com.example.barbergo_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" (Raw: "com.example.barbergo_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION")
+                 A: android:protectionLevel(0x01010009)=(type 0x11)0x2
+               E: uses-permission (line=60)
+                 A: android:name(0x01010003)="com.example.barbergo_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" (Raw: "com.example.barbergo_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION")
+               E: application (line=62)
+                 A: android:label(0x01010001)="BarberGO" (Raw: "BarberGO")
+                 A: android:icon(0x01010002)=@0x7f0d0001
+                 A: android:name(0x01010003)="android.app.Application" (Raw: "android.app.Application")
+                 A: android:debuggable(0x0101000f)=(type 0x12)0xffffffff
+                 A: android:extractNativeLibs(0x010104ea)=(type 0x12)0x0
+                 A: android:appComponentFactory(0x0101057a)="androidx.core.app.CoreComponentFactory" (Raw: "androidx.core.app.CoreComponentFactory")
+                 E: meta-data (line=69)
+                   A: android:name(0x01010003)="com.google.android.geo.API_KEY" (Raw: "com.google.android.geo.API_KEY")
+                   A: android:value(0x01010024)="AIzaSyC2Bc5zn-00KeQO8sb0uV1zkXeJXpql2GQ" (Raw: "AIzaSyC2Bc5zn-00KeQO8sb0uV1zkXeJXpql2GQ")
+                 E: activity (line=73)
+                   A: android:theme(0x01010000)=@0x7f1000a2
+                   A: android:name(0x01010003)="com.example.barbergo_app.MainActivity" (Raw: "com.example.barbergo_app.MainActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   A: android:taskAffinity(0x01010012)="" (Raw: "")
+                   A: android:launchMode(0x0101001d)=(type 0x10)0x1
+                   A: android:configChanges(0x0101001f)=(type 0x11)0x40003fb4
+                   A: android:windowSoftInputMode(0x0101022b)=(type 0x11)0x10
+                   A: android:hardwareAccelerated(0x010102d3)=(type 0x12)0xffffffff
+                   E: meta-data (line=89)
+                     A: android:name(0x01010003)="io.flutter.embedding.android.NormalTheme" (Raw: "io.flutter.embedding.android.NormalTheme")
+                     A: android:resource(0x01010025)=@0x7f1000a3
+                   E: intent-filter (line=93)
+                     E: action (line=94)
+                       A: android:name(0x01010003)="android.intent.action.MAIN" (Raw: "android.intent.action.MAIN")
+                     E: category (line=96)
+                       A: android:name(0x01010003)="android.intent.category.LAUNCHER" (Raw: "android.intent.category.LAUNCHER")
+                 E: meta-data (line=103)
+                   A: android:name(0x01010003)="flutterEmbedding" (Raw: "flutterEmbedding")
+                   A: android:value(0x01010024)=(type 0x10)0x2
+                 E: meta-data (line=108)
+                   A: android:name(0x01010003)="com.google.android.geo.API_KEY" (Raw: "com.google.android.geo.API_KEY")
+                   A: android:value(0x01010024)="AIzaSyC2Bc5zn-00KeQO8sb0uV1zkXeJXpql2GQ" (Raw: "AIzaSyC2Bc5zn-00KeQO8sb0uV1zkXeJXpql2GQ")
+                 E: meta-data (line=113)
+                   A: android:name(0x01010003)="com.google.firebase.messaging.default_notification_channel_id" (Raw: "com.google.firebase.messaging.default_notification_channel_id")
+                   A: android:value(0x01010024)="barbergo_premium_channel" (Raw: "barbergo_premium_channel")
+                 E: meta-data (line=118)
+                   A: android:name(0x01010003)="com.google.firebase.messaging.default_notification_icon" (Raw: "com.google.firebase.messaging.default_notification_icon")
+                   A: android:resource(0x01010025)=@0x7f0d0001
+                 E: meta-data (line=123)
+                   A: android:name(0x01010003)="com.google.firebase.messaging.default_notification_color" (Raw: "com.google.firebase.messaging.default_notification_color")
+                   A: android:resource(0x01010025)=@0x01060019
+                 E: service (line=127)
+                   A: android:name(0x01010003)="com.google.firebase.components.ComponentDiscoveryService" (Raw: "com.google.firebase.components.ComponentDiscoveryService")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:directBootAware(0x01010505)=(type 0x12)0xffffffff
+                   E: meta-data (line=131)
+                     A: android:name(0x01010003)="com.google.firebase.components:io.flutter.plugins.firebase.analytics.FlutterFirebaseAppRegistrar" (Raw: "com.google.firebase.components:io.flutter.plugins.firebase.analytics.FlutterFirebaseAppRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=134)
+                     A: android:name(0x01010003)="com.google.firebase.components:io.flutter.plugins.firebase.firebaseremoteconfig.FlutterFirebaseAppRegistrar" (Raw: "com.google.firebase.components:io.flutter.plugins.firebase.firebaseremoteconfig.FlutterFirebaseAppRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=137)
+                     A: android:name(0x01010003)="com.google.firebase.components:io.flutter.plugins.firebase.firestore.FlutterFirebaseFirestoreRegistrar" (Raw: "com.google.firebase.components:io.flutter.plugins.firebase.firestore.FlutterFirebaseFirestoreRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=140)
+                     A: android:name(0x01010003)="com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar" (Raw: "com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=143)
+                     A: android:name(0x01010003)="com.google.firebase.components:io.flutter.plugins.firebase.crashlytics.FlutterFirebaseAppRegistrar" (Raw: "com.google.firebase.components:io.flutter.plugins.firebase.crashlytics.FlutterFirebaseAppRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=146)
+                     A: android:name(0x01010003)="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar" (Raw: "com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=149)
+                     A: android:name(0x01010003)="com.google.firebase.components:io.flutter.plugins.firebase.storage.FlutterFirebaseAppRegistrar" (Raw: "com.google.firebase.components:io.flutter.plugins.firebase.storage.FlutterFirebaseAppRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=152)
+                     A: android:name(0x01010003)="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar" (Raw: "com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=155)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=158)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=161)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=164)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=167)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=170)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.storage.FirebaseStorageKtxRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.storage.FirebaseStorageKtxRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=173)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.storage.StorageRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=176)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckKtxRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckKtxRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=179)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=182)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.remoteconfig.FirebaseRemoteConfigKtxRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.remoteconfig.FirebaseRemoteConfigKtxRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=185)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.remoteconfig.RemoteConfigRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.remoteconfig.RemoteConfigRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=188)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.crashlytics.FirebaseCrashlyticsKtxRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.crashlytics.FirebaseCrashlyticsKtxRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=191)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.crashlytics.CrashlyticsRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.crashlytics.CrashlyticsRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=194)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=197)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.sessions.FirebaseSessionsRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.sessions.FirebaseSessionsRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=200)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=203)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=206)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=209)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.abt.component.AbtRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.abt.component.AbtRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                   E: meta-data (line=212)
+                     A: android:name(0x01010003)="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar" (Raw: "com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar")
+                     A: android:value(0x01010024)="com.google.firebase.components.ComponentRegistrar" (Raw: "com.google.firebase.components.ComponentRegistrar")
+                 E: service (line=216)
+                   A: android:name(0x01010003)="com.baseflow.geolocator.GeolocatorLocationService" (Raw: "com.baseflow.geolocator.GeolocatorLocationService")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:foregroundServiceType(0x01010599)=(type 0x11)0x8
+                 E: receiver (line=222)
+                   A: android:name(0x01010003)="com.amazon.device.iap.ResponseReceiver" (Raw: "com.amazon.device.iap.ResponseReceiver")
+                   A: android:permission(0x01010006)="com.amazon.inapp.purchasing.Permission.NOTIFY" (Raw: "com.amazon.inapp.purchasing.Permission.NOTIFY")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=226)
+                     E: action (line=227)
+                       A: android:name(0x01010003)="com.amazon.inapp.purchasing.NOTIFY" (Raw: "com.amazon.inapp.purchasing.NOTIFY")
+                 E: activity (line=231)
+                   A: android:theme(0x01010000)=@0x01030010
+                   A: android:name(0x01010003)="com.revenuecat.purchases.amazon.purchasing.ProxyAmazonBillingActivity" (Raw: "com.revenuecat.purchases.amazon.purchasing.ProxyAmazonBillingActivity")
+                   A: android:configChanges(0x0101001f)=(type 0x11)0x5b0
+                 E: meta-data (line=236)
+                   A: android:name(0x01010003)="com.google.android.play.billingclient.version" (Raw: "com.google.android.play.billingclient.version")
+                   A: android:value(0x01010024)="8.0.0" (Raw: "8.0.0")
+                 E: activity (line=240)
+                   A: android:theme(0x01010000)=@0x01030010
+                   A: android:name(0x01010003)="com.android.billingclient.api.ProxyBillingActivity" (Raw: "com.android.billingclient.api.ProxyBillingActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:configChanges(0x0101001f)=(type 0x11)0x5b0
+                 E: activity (line=245)
+                   A: android:theme(0x01010000)=@0x01030010
+                   A: android:name(0x01010003)="com.android.billingclient.api.ProxyBillingActivityV2" (Raw: "com.android.billingclient.api.ProxyBillingActivityV2")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:configChanges(0x0101001f)=(type 0x11)0x5b0
+                 E: provider (line=251)
+                   A: android:name(0x01010003)="io.flutter.plugins.imagepicker.ImagePickerFileProvider" (Raw: "io.flutter.plugins.imagepicker.ImagePickerFileProvider")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:authorities(0x01010018)="com.example.barbergo_app.flutter.image_provider" (Raw: "com.example.barbergo_app.flutter.image_provider")
+                   A: android:grantUriPermissions(0x0101001b)=(type 0x12)0xffffffff
+                   E: meta-data (line=256)
+                     A: android:name(0x01010003)="android.support.FILE_PROVIDER_PATHS" (Raw: "android.support.FILE_PROVIDER_PATHS")
+                     A: android:resource(0x01010025)=@0x7f120001
+                 E: service (line=260)
+                   A: android:name(0x01010003)="com.google.android.gms.metadata.ModuleDependencies" (Raw: "com.google.android.gms.metadata.ModuleDependencies")
+                   A: android:enabled(0x0101000e)=(type 0x12)0x0
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   E: intent-filter (line=264)
+                     E: action (line=265)
+                       A: android:name(0x01010003)="com.google.android.gms.metadata.MODULE_DEPENDENCIES" (Raw: "com.google.android.gms.metadata.MODULE_DEPENDENCIES")
+                   E: meta-data (line=268)
+                     A: android:name(0x01010003)="photopicker_activity:0:required" (Raw: "photopicker_activity:0:required")
+                     A: android:value(0x01010024)="" (Raw: "")
+                 E: activity (line=273)
+                   A: android:theme(0x01010000)=@0x01030007
+                   A: android:name(0x01010003)="io.flutter.plugins.urllauncher.WebViewActivity" (Raw: "io.flutter.plugins.urllauncher.WebViewActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: service (line=278)
+                   A: android:name(0x01010003)="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService" (Raw: "io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService")
+                   A: android:permission(0x01010006)="android.permission.BIND_JOB_SERVICE" (Raw: "android.permission.BIND_JOB_SERVICE")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: service (line=282)
+                   A: android:name(0x01010003)="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService" (Raw: "io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   E: intent-filter (line=285)
+                     E: action (line=286)
+                       A: android:name(0x01010003)="com.google.firebase.MESSAGING_EVENT" (Raw: "com.google.firebase.MESSAGING_EVENT")
+                 E: receiver (line=290)
+                   A: android:name(0x01010003)="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver" (Raw: "io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver")
+                   A: android:permission(0x01010006)="com.google.android.c2dm.permission.SEND" (Raw: "com.google.android.c2dm.permission.SEND")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=294)
+                     E: action (line=295)
+                       A: android:name(0x01010003)="com.google.android.c2dm.intent.RECEIVE" (Raw: "com.google.android.c2dm.intent.RECEIVE")
+                 E: provider (line=299)
+                   A: android:name(0x01010003)="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider" (Raw: "io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:authorities(0x01010018)="com.example.barbergo_app.flutterfirebasemessaginginitprovider" (Raw: "com.example.barbergo_app.flutterfirebasemessaginginitprovider")
+                   A: android:initOrder(0x0101001a)=(type 0x10)0x63
+                 E: activity (line=305)
+                   A: android:theme(0x01010000)=@0x01030010
+                   A: android:name(0x01010003)="com.google.firebase.auth.internal.GenericIdpActivity" (Raw: "com.google.firebase.auth.internal.GenericIdpActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   A: android:excludeFromRecents(0x01010017)=(type 0x12)0xffffffff
+                   A: android:launchMode(0x0101001d)=(type 0x10)0x2
+                   E: intent-filter (line=311)
+                     E: action (line=312)
+                       A: android:name(0x01010003)="android.intent.action.VIEW" (Raw: "android.intent.action.VIEW")
+                     E: category (line=314)
+                       A: android:name(0x01010003)="android.intent.category.DEFAULT" (Raw: "android.intent.category.DEFAULT")
+                     E: category (line=315)
+                       A: android:name(0x01010003)="android.intent.category.BROWSABLE" (Raw: "android.intent.category.BROWSABLE")
+                     E: data (line=317)
+                       A: android:scheme(0x01010027)="genericidp" (Raw: "genericidp")
+                       A: android:host(0x01010028)="firebase.auth" (Raw: "firebase.auth")
+                       A: android:path(0x0101002a)="/" (Raw: "/")
+                 E: activity (line=323)
+                   A: android:theme(0x01010000)=@0x01030010
+                   A: android:name(0x01010003)="com.google.firebase.auth.internal.RecaptchaActivity" (Raw: "com.google.firebase.auth.internal.RecaptchaActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   A: android:excludeFromRecents(0x01010017)=(type 0x12)0xffffffff
+                   A: android:launchMode(0x0101001d)=(type 0x10)0x2
+                   E: intent-filter (line=329)
+                     E: action (line=330)
+                       A: android:name(0x01010003)="android.intent.action.VIEW" (Raw: "android.intent.action.VIEW")
+                     E: category (line=332)
+                       A: android:name(0x01010003)="android.intent.category.DEFAULT" (Raw: "android.intent.category.DEFAULT")
+                     E: category (line=333)
+                       A: android:name(0x01010003)="android.intent.category.BROWSABLE" (Raw: "android.intent.category.BROWSABLE")
+                     E: data (line=335)
+                       A: android:scheme(0x01010027)="recaptcha" (Raw: "recaptcha")
+                       A: android:host(0x01010028)="firebase.auth" (Raw: "firebase.auth")
+                       A: android:path(0x0101002a)="/" (Raw: "/")
+                 E: uses-library (line=342)
+                   A: android:name(0x01010003)="androidx.window.extensions" (Raw: "androidx.window.extensions")
+                   A: android:required(0x0101028e)=(type 0x12)0x0
+                 E: uses-library (line=345)
+                   A: android:name(0x01010003)="androidx.window.sidecar" (Raw: "androidx.window.sidecar")
+                   A: android:required(0x0101028e)=(type 0x12)0x0
+                 E: uses-library (line=348)
+                   A: android:name(0x01010003)="org.apache.http.legacy" (Raw: "org.apache.http.legacy")
+                   A: android:required(0x0101028e)=(type 0x12)0x0
+                 E: service (line=352)
+                   A: android:name(0x01010003)="androidx.credentials.playservices.CredentialProviderMetadataHolder" (Raw: "androidx.credentials.playservices.CredentialProviderMetadataHolder")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   E: meta-data (line=356)
+                     A: android:name(0x01010003)="androidx.credentials.CREDENTIAL_PROVIDER_KEY" (Raw: "androidx.credentials.CREDENTIAL_PROVIDER_KEY")
+                     A: android:value(0x01010024)="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" (Raw: "androidx.credentials.playservices.CredentialProviderPlayServicesImpl")
+                 E: activity (line=361)
+                   A: android:theme(0x01010000)=@0x7f10012d
+                   A: android:name(0x01010003)="androidx.credentials.playservices.HiddenActivity" (Raw: "androidx.credentials.playservices.HiddenActivity")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:configChanges(0x0101001f)=(type 0x11)0x5a0
+                   A: android:fitsSystemWindows(0x010100dd)=(type 0x12)0xffffffff
+                 E: activity (line=369)
+                   A: android:theme(0x01010000)=@0x01030010
+                   A: android:name(0x01010003)="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" (Raw: "com.google.android.gms.auth.api.signin.internal.SignInHubActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:excludeFromRecents(0x01010017)=(type 0x12)0xffffffff
+                 E: service (line=378)
+                   A: android:name(0x01010003)="com.google.android.gms.auth.api.signin.RevocationBoundService" (Raw: "com.google.android.gms.auth.api.signin.RevocationBoundService")
+                   A: android:permission(0x01010006)="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" (Raw: "com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   A: android:visibleToInstantApps(0x01010531)=(type 0x12)0xffffffff
+                 E: receiver (line=384)
+                   A: android:name(0x01010003)="com.google.firebase.iid.FirebaseInstanceIdReceiver" (Raw: "com.google.firebase.iid.FirebaseInstanceIdReceiver")
+                   A: android:permission(0x01010006)="com.google.android.c2dm.permission.SEND" (Raw: "com.google.android.c2dm.permission.SEND")
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   E: intent-filter (line=388)
+                     E: action (line=389)
+                       A: android:name(0x01010003)="com.google.android.c2dm.intent.RECEIVE" (Raw: "com.google.android.c2dm.intent.RECEIVE")
+                   E: meta-data (line=392)
+                     A: android:name(0x01010003)="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED" (Raw: "com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED")
+                     A: android:value(0x01010024)=(type 0x12)0xffffffff
+                 E: service (line=400)
+                   A: android:name(0x01010003)="com.google.firebase.messaging.FirebaseMessagingService" (Raw: "com.google.firebase.messaging.FirebaseMessagingService")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:directBootAware(0x01010505)=(type 0x12)0xffffffff
+                   E: intent-filter (line=404)
+                     A: android:priority(0x0101001c)=(type 0x10)0xfffffe0c
+                     E: action (line=405)
+                       A: android:name(0x01010003)="com.google.firebase.MESSAGING_EVENT" (Raw: "com.google.firebase.MESSAGING_EVENT")
+                 E: receiver (line=409)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementReceiver" (Raw: "com.google.android.gms.measurement.AppMeasurementReceiver")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: service (line=415)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementService" (Raw: "com.google.android.gms.measurement.AppMeasurementService")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: service (line=419)
+                   A: android:name(0x01010003)="com.google.android.gms.measurement.AppMeasurementJobService" (Raw: "com.google.android.gms.measurement.AppMeasurementJobService")
+                   A: android:permission(0x01010006)="android.permission.BIND_JOB_SERVICE" (Raw: "android.permission.BIND_JOB_SERVICE")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: activity (line=425)
+                   A: android:theme(0x01010000)=@0x01030010
+                   A: android:name(0x01010003)="com.google.android.gms.common.api.GoogleApiActivity" (Raw: "com.google.android.gms.common.api.GoogleApiActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: provider (line=430)
+                   A: android:name(0x01010003)="com.google.firebase.provider.FirebaseInitProvider" (Raw: "com.google.firebase.provider.FirebaseInitProvider")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:authorities(0x01010018)="com.example.barbergo_app.firebaseinitprovider" (Raw: "com.example.barbergo_app.firebaseinitprovider")
+                   A: android:initOrder(0x0101001a)=(type 0x10)0x64
+                   A: android:directBootAware(0x01010505)=(type 0x12)0xffffffff
+                 E: provider (line=436)
+                   A: android:name(0x01010003)="androidx.startup.InitializationProvider" (Raw: "androidx.startup.InitializationProvider")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:authorities(0x01010018)="com.example.barbergo_app.androidx-startup" (Raw: "com.example.barbergo_app.androidx-startup")
+                   E: meta-data (line=440)
+                     A: android:name(0x01010003)="androidx.emoji2.text.EmojiCompatInitializer" (Raw: "androidx.emoji2.text.EmojiCompatInitializer")
+                     A: android:value(0x01010024)="androidx.startup" (Raw: "androidx.startup")
+                   E: meta-data (line=443)
+                     A: android:name(0x01010003)="androidx.lifecycle.ProcessLifecycleInitializer" (Raw: "androidx.lifecycle.ProcessLifecycleInitializer")
+                     A: android:value(0x01010024)="androidx.startup" (Raw: "androidx.startup")
+                   E: meta-data (line=446)
+                     A: android:name(0x01010003)="androidx.profileinstaller.ProfileInstallerInitializer" (Raw: "androidx.profileinstaller.ProfileInstallerInitializer")
+                     A: android:value(0x01010024)="androidx.startup" (Raw: "androidx.startup")
+                 E: uses-library (line=451)
+                   A: android:name(0x01010003)="android.ext.adservices" (Raw: "android.ext.adservices")
+                   A: android:required(0x0101028e)=(type 0x12)0x0
+                 E: meta-data (line=455)
+                   A: android:name(0x01010003)="com.google.android.gms.version" (Raw: "com.google.android.gms.version")
+                   A: android:value(0x01010024)=@0x7f090004
+                 E: service (line=459)
+                   A: android:name(0x01010003)="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery" (Raw: "com.google.android.datatransport.runtime.backends.TransportBackendDiscovery")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   E: meta-data (line=462)
+                     A: android:name(0x01010003)="backend:com.google.android.datatransport.cct.CctBackendFactory" (Raw: "backend:com.google.android.datatransport.cct.CctBackendFactory")
+                     A: android:value(0x01010024)="cct" (Raw: "cct")
+                 E: receiver (line=467)
+                   A: android:name(0x01010003)="androidx.profileinstaller.ProfileInstallReceiver" (Raw: "androidx.profileinstaller.ProfileInstallReceiver")
+                   A: android:permission(0x01010006)="android.permission.DUMP" (Raw: "android.permission.DUMP")
+                   A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+                   A: android:exported(0x01010010)=(type 0x12)0xffffffff
+                   A: android:directBootAware(0x01010505)=(type 0x12)0x0
+                   E: intent-filter (line=473)
+                     E: action (line=474)
+                       A: android:name(0x01010003)="androidx.profileinstaller.action.INSTALL_PROFILE" (Raw: "androidx.profileinstaller.action.INSTALL_PROFILE")
+                   E: intent-filter (line=476)
+                     E: action (line=477)
+                       A: android:name(0x01010003)="androidx.profileinstaller.action.SKIP_FILE" (Raw: "androidx.profileinstaller.action.SKIP_FILE")
+                   E: intent-filter (line=479)
+                     E: action (line=480)
+                       A: android:name(0x01010003)="androidx.profileinstaller.action.SAVE_PROFILE" (Raw: "androidx.profileinstaller.action.SAVE_PROFILE")
+                   E: intent-filter (line=482)
+                     E: action (line=483)
+                       A: android:name(0x01010003)="androidx.profileinstaller.action.BENCHMARK_OPERATION" (Raw: "androidx.profileinstaller.action.BENCHMARK_OPERATION")
+                 E: service (line=487)
+                   A: android:name(0x01010003)="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService" (Raw: "com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService")
+                   A: android:permission(0x01010006)="android.permission.BIND_JOB_SERVICE" (Raw: "android.permission.BIND_JOB_SERVICE")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: receiver (line=493)
+                   A: android:name(0x01010003)="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver" (Raw: "com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                 E: activity (line=496)
+                   A: android:theme(0x01010000)=@0x7f10012e
+                   A: android:name(0x01010003)="com.google.android.play.core.common.PlayCoreDialogWrapperActivity" (Raw: "com.google.android.play.core.common.PlayCoreDialogWrapperActivity")
+                   A: android:exported(0x01010010)=(type 0x12)0x0
+                   A: android:stateNotNeeded(0x01010016)=(type 0x12)0xffffffff
+[  +11 ms] executing: C:\Users\daewd\AppData\Local\Android\sdk\platform-tools\adb.exe -s uwbekb8hpf6lamts shell -x logcat -v time -t 1
+[  +13 ms] <- compile package:barbergo_app/main.dart
+[ +204 ms] --------- beginning of main
+           11-08 22:11:36.401 D/AAL     (  941): DRECurveCalculation: BLKNUM = 16 8
+[  +14 ms] executing: C:\Users\daewd\AppData\Local\Android\sdk\platform-tools\adb.exe version

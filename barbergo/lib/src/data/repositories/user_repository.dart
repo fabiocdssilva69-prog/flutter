@@ -1,58 +1,80 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../domain/entities/enums.dart';
 import '../../domain/entities/user_entity.dart';
-import '../datasources/firestore_service.dart';
-import 'auth_repository.dart'; // Para acessar o usuário atual
+import 'auth_repository.dart';
 
 part 'user_repository.g.dart';
 
-class UserRepository {
-  UserRepository(this._service);
-  final FirestoreService _service;
-
-  static const String usersPath = 'Users';
-  static String userPath(String uid) => '$usersPath/$uid';
-
-  // Cria ou atualiza o documento do usuário no Firestore (UserEntity)
-  Future<void> setUser(UserEntity user) => _service.setData(path: userPath(user.uid), data: user.toJson());
-
-  // Obtém o UserEntity do usuário atual como Stream
-  Stream<UserEntity?> watchUser(String uid) =>
-      _service.documentStream(path: userPath(uid), builder: (data, _) => UserEntity.fromJson(data));
-
-  // Obtém um usuário específico por ID (leitura única)
-  Future<UserEntity?> getUserById(String uid) async {
-    return _service
-        .documentStream<UserEntity>(path: userPath(uid), builder: (data, _) => UserEntity.fromJson(data))
-        .first;
-  }
-}
-
-// Provedor para o UserRepository
+/// Provider do repository
 @riverpod
 UserRepository userRepository(Ref ref) {
-  final service = ref.watch(firestoreServiceProvider);
-  return UserRepository(service);
+  return UserRepository(FirebaseFirestore.instance);
 }
 
-// Provedor que observa os dados do usuário logado (UserEntity)
-// Nomeado como currentUserData para clareza (diferente do FirebaseAuth User)
+/// Provider para o user atual (básico - apenas UserEntity, não ProfileEntity completo)
 @riverpod
-Stream<UserEntity?> currentUserData(Ref ref) {
-  // 1. Observa o estado de autenticação (FirebaseAuth)
-  final authUser = ref.watch(authStateChangesProvider).value;
-  if (authUser == null) {
-    // Retorna um stream vazio se não estiver logado
-    return const Stream.empty();
+Stream<UserEntity?> currentUser(Ref ref) {
+  final authUser = ref.watch(authRepositoryProvider).currentUser;
+  if (authUser == null) return Stream.value(null);
+
+  final repo = ref.watch(userRepositoryProvider);
+  return repo.watchUser(authUser.uid);
+}
+
+/// Repository para operações com User (dados básicos)
+class UserRepository {
+  final FirebaseFirestore _firestore;
+
+  UserRepository(this._firestore);
+
+  CollectionReference<Map<String, dynamic>> get _users => _firestore.collection('users');
+
+  /// Observa mudanças no user (dados básicos)
+  Stream<UserEntity?> watchUser(String userId) {
+    return _users.doc(userId).snapshots().map((snapshot) {
+      if (!snapshot.exists) return null;
+      return UserEntity.fromMap(snapshot.data()!, userId);
+    });
   }
-  // 2. Se autenticado, observa o documento correspondente no Firestore (UserEntity)
-  return ref.watch(userRepositoryProvider).watchUser(authUser.uid);
-}
 
-// Provedor auxiliar para obter o tipo de conta atual (Resolve pendência do relatório)
-@riverpod
-AccountType? currentAccountType(Ref ref) {
-  final user = ref.watch(currentUserDataProvider).value;
-  return user?.accountType;
+  /// Pega user uma vez
+  Future<UserEntity?> getUser(String userId) async {
+    final doc = await _users.doc(userId).get();
+    if (!doc.exists) return null;
+    return UserEntity.fromMap(doc.data()!, userId);
+  }
+
+  /// Cria/Atualiza user básico
+  Future<void> saveUser(UserEntity user) async {
+    await _users.doc(user.userId).set(user.toMap(), SetOptions(merge: true));
+  }
+
+  /// Atualiza campos específicos
+  Future<void> updateUser({required String userId, required Map<String, dynamic> data}) async {
+    await _users.doc(userId).update({...data, 'updatedAt': DateTime.now().toIso8601String()});
+  }
+
+  /// Deleta user
+  Future<void> deleteUser(String userId) async {
+    await _users.doc(userId).delete();
+  }
+
+  /// Verifica se user existe
+  Future<bool> userExists(String userId) async {
+    final doc = await _users.doc(userId).get();
+    return doc.exists;
+  }
+
+  /// Busca users por email
+  Future<List<UserEntity>> findByEmail(String email) async {
+    final query = await _users.where('email', isEqualTo: email).get();
+    return query.docs.map((doc) => UserEntity.fromMap(doc.data(), doc.id)).toList();
+  }
+
+  /// Alias para getUser (compatibilidade)
+  Future<UserEntity?> getUserById(String userId) => getUser(userId);
+
+  /// Alias para saveUser (compatibilidade)
+  Future<void> setUser(UserEntity user) => saveUser(user);
 }

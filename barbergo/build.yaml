@@ -1,5 +1,8 @@
 targets:
   $default:
+    sources:
+      exclude:
+        - lib/src/_inactive/**
     builders:
       freezed:
         options:

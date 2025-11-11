@@ -33,11 +33,10 @@ class OnboardingController extends _$OnboardingController {
 
     // Cria as entidades UserEntity e ProfileEntity
     final newUser = UserEntity(
-      uid: firebaseUser.uid,
+      userId: firebaseUser.uid,
       email: firebaseUser.email!,
       name: name,
       accountType: accountType,
-      subscriptionTier: SubscriptionTier.free,
       createdAt: DateTime.now(),
     );
 

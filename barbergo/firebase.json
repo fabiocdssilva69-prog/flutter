@@ -1,18 +1,1 @@
-{
-  "firestore": {
-    "rules": "firestore.rules"
-  },
-  "flutter": {
-    "platforms": {
-      "dart": {
-        "lib/firebase_options.dart": {
-          "projectId": "barbergo-38c21",
-          "configurations": {
-            "android": "1:872973233743:android:9e9afc289da1698cfe843a",
-            "ios": "1:872973233743:ios:78d3098295f61c12fe843a"
-          }
-        }
-      }
-    }
-  }
-}
+{"firestore":{"rules":"firestore.rules","indexes":"firestore.indexes.json"},"storage":{"rules":"storage.rules"},"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"barbergo-38c21","configurations":{"android":"1:872973233743:android:8bb896541d348fc8fe843a","ios":"1:872973233743:ios:e0914268d4dbc86bfe843a","macos":"1:872973233743:ios:e0914268d4dbc86bfe843a","web":"1:872973233743:web:d01c747eb112ce3cfe843a","windows":"1:872973233743:web:32f86a2ec595ebc4fe843a"}}},"android":{"default":{"projectId":"barbergo-38c21","appId":"1:872973233743:android:8bb896541d348fc8fe843a","fileOutput":"android/app/google-services.json"}}}},"functions":[{"codebase":"default","ignore":["node_modules",".git","firebase-debug.log","firebase-debug.*.log","*.local"],"predeploy":["npm --prefix \"$RESOURCE_DIR\" run build"],"source":"functions","runtime":"nodejs20"}],"extensions":{"firestore-stripe-payments":"stripe/firestore-stripe-payments@0.3.4"}}

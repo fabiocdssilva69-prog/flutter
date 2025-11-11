@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/async_value_ui.dart'; // Importação adicionada
+import '../../../core/utils/form_validators.dart';
 import '../../../services/firebase_service.dart';
 import '../controllers/auth_controller.dart'; // Importação adicionada
 
@@ -91,7 +92,7 @@ class _LoginScreenState extends ConsumerState {
                     ),
                     keyboardType: TextInputType.emailAddress,
                     enabled: !isLoading,
-                    validator: (value) => (value == null || !value.contains('@')) ? 'Digite um e-mail válido' : null,
+                    validator: FormValidators.email,
                   ),
                   const SizedBox(height: 16),
                   // Campo de Senha
@@ -113,7 +114,7 @@ class _LoginScreenState extends ConsumerState {
                     ),
                     obscureText: _isPasswordObscured,
                     enabled: !isLoading,
-                    validator: (value) => (value == null || value.isEmpty) ? 'A senha não pode ser vazia' : null,
+                    validator: FormValidators.password,
                   ),
                   const SizedBox(height: 32),
                   // Botão de Login

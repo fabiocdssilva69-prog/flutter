@@ -11,7 +11,7 @@ part of 'gemini_provider.dart';
 /// Provider para o modelo Gemini Pro
 ///
 /// IMPORTANTE: Configure a API key no arquivo .env:
-/// - Adicione GEMINI_API_KEY=sua_chave no arquivo .env
+/// - Adicione GOOGLE_GEMINI_API_KEY=sua_chave no arquivo .env
 /// - O arquivo .env está no .gitignore (seguro)
 
 @ProviderFor(geminiProModel)
@@ -20,7 +20,7 @@ const geminiProModelProvider = GeminiProModelProvider._();
 /// Provider para o modelo Gemini Pro
 ///
 /// IMPORTANTE: Configure a API key no arquivo .env:
-/// - Adicione GEMINI_API_KEY=sua_chave no arquivo .env
+/// - Adicione GOOGLE_GEMINI_API_KEY=sua_chave no arquivo .env
 /// - O arquivo .env está no .gitignore (seguro)
 
 final class GeminiProModelProvider
@@ -30,7 +30,7 @@ final class GeminiProModelProvider
   /// Provider para o modelo Gemini Pro
   ///
   /// IMPORTANTE: Configure a API key no arquivo .env:
-  /// - Adicione GEMINI_API_KEY=sua_chave no arquivo .env
+  /// - Adicione GOOGLE_GEMINI_API_KEY=sua_chave no arquivo .env
   /// - O arquivo .env está no .gitignore (seguro)
   const GeminiProModelProvider._()
     : super(
@@ -65,7 +65,7 @@ final class GeminiProModelProvider
   }
 }
 
-String _$geminiProModelHash() => r'48365337551f7828ff653a2d964fcfc4f20640f1';
+String _$geminiProModelHash() => r'9c0bfee73c0d7f1274249c52b3a55c3e24444d13';
 
 /// Provider para o modelo Gemini Pro Vision (análise de imagens)
 
@@ -113,4 +113,4 @@ final class GeminiProVisionModelProvider
 }
 
 String _$geminiProVisionModelHash() =>
-    r'0cb662ad352d8e8109d59f7df08e82fa9859141e';
+    r'c7e933b0249dbff4bb18d7a70234f0bc193c328d';

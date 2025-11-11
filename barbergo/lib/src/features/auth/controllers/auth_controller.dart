@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../../../data/repositories/auth_repository.dart';
+
 part 'auth_controller.g.dart';
 
 // Usamos AsyncNotifier para gerenciar estados assíncronos (Loading, Error, Data).
@@ -16,25 +18,34 @@ class AuthController extends _$AuthController {
     state = const AsyncLoading();
     // Executa a operação e atualiza o estado com o resultado (Sucesso ou Erro)
     // AsyncValue.guard captura exceções automaticamente.
-    state = await AsyncValue.guard(
-      () => authRepository.signInWithEmailAndPassword(email, password),
-    );
+    final result = await AsyncValue.guard(() => authRepository.signInWithEmailAndPassword(email, password));
+    // ✅ FIX: Verifica se o provider ainda está montado antes de atualizar state
+    // Previne erro "Cannot use Ref after disposed" durante navegação
+    if (ref.mounted) {
+      state = result;
+    }
     // Retorna true se a operação foi bem-sucedida (não gerou erro)
-    return state.hasError == false;
+    return result.hasError == false;
   }
 
   Future signUp(String email, String password) async {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
-    state = await AsyncValue.guard(
-      () => authRepository.signUpWithEmailAndPassword(email, password),
-    );
-    return state.hasError == false;
+    final result = await AsyncValue.guard(() => authRepository.signUpWithEmailAndPassword(email, password));
+    // ✅ FIX: Verifica se o provider ainda está montado antes de atualizar state
+    if (ref.mounted) {
+      state = result;
+    }
+    return result.hasError == false;
   }
 
   Future signOut() async {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() => authRepository.signOut());
+    final result = await AsyncValue.guard(() => authRepository.signOut());
+    // ✅ FIX: Verifica se o provider ainda está montado antes de atualizar state
+    if (ref.mounted) {
+      state = result;
+    }
   }
 }

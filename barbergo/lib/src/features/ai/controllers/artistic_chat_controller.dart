@@ -32,17 +32,15 @@ class ArtisticChatController extends _$ArtisticChatController {
     state = AsyncValue.data(updatedWithUser);
 
     try {
-      // Converter histórico para formato do AIService
-      final conversationHistory = current.map((msg) => msg.toMap()).toList();
+      // Converter histórico para formato do AIService (Map<String, String>)
+      final conversationHistory = current.map((msg) {
+        final map = msg.toMap();
+        return map.map((key, value) => MapEntry(key, value.toString()));
+      }).toList();
 
       // Obter resposta da IA
-      final chatbotController = ref.read(
-        barberChatbotControllerProvider.notifier,
-      );
-      final response = await chatbotController.sendMessage(
-        message: content,
-        conversationHistory: conversationHistory,
-      );
+      final chatbotController = ref.read(barberChatbotControllerProvider.notifier);
+      final response = await chatbotController.sendMessage(message: content, conversationHistory: conversationHistory);
 
       // Adicionar resposta da IA
       final aiMessage = ChatMessage.assistant(response);
@@ -51,9 +49,7 @@ class ArtisticChatController extends _$ArtisticChatController {
       state = AsyncValue.data(finalMessages);
     } catch (e) {
       // Adicionar mensagem de erro
-      final errorMessage = ChatMessage.error(
-        'Desculpe, ocorreu um erro ao processar sua mensagem. Tente novamente.',
-      );
+      final errorMessage = ChatMessage.error('Desculpe, ocorreu um erro ao processar sua mensagem. Tente novamente.');
       final messagesWithError = <ChatMessage>[...updatedWithUser, errorMessage];
 
       state = AsyncValue.data(messagesWithError);
@@ -66,9 +62,6 @@ class ArtisticChatController extends _$ArtisticChatController {
   }
 
   /// Retorna se está aguardando resposta da IA
-  bool get isAwaitingResponse => state.when(
-    loading: () => true,
-    data: (_) => false,
-    error: (error, stackTrace) => false,
-  );
+  bool get isAwaitingResponse =>
+      state.when(loading: () => true, data: (_) => false, error: (error, stackTrace) => false);
 }

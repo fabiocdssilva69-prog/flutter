@@ -54,44 +54,4 @@ final class ProfileRepositoryProvider
   }
 }
 
-String _$profileRepositoryHash() => r'4391bfdbf79110347a2a16b6aae330116bab7030';
-
-@ProviderFor(currentProfileData)
-const currentProfileDataProvider = CurrentProfileDataProvider._();
-
-final class CurrentProfileDataProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<ProfileEntity?>,
-          ProfileEntity?,
-          Stream<ProfileEntity?>
-        >
-    with $FutureModifier<ProfileEntity?>, $StreamProvider<ProfileEntity?> {
-  const CurrentProfileDataProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'currentProfileDataProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$currentProfileDataHash();
-
-  @$internal
-  @override
-  $StreamProviderElement<ProfileEntity?> $createElement(
-    $ProviderPointer pointer,
-  ) => $StreamProviderElement(pointer);
-
-  @override
-  Stream<ProfileEntity?> create(Ref ref) {
-    return currentProfileData(ref);
-  }
-}
-
-String _$currentProfileDataHash() =>
-    r'cec3d8adb32df86aec1858402258b5ea4ba75075';
+String _$profileRepositoryHash() => r'0e6c80f0884ac67864852bc88990c2fca39e9427';

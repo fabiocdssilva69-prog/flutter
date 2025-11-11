@@ -37,7 +37,7 @@ final class BarberChatbotControllerProvider
 }
 
 String _$barberChatbotControllerHash() =>
-    r'623c5ea4a2998edb6ed3848f1cd5fe23bccea4d6';
+    r'4cb1db984953f2e2894cc67f896c45e599e7d5b6';
 
 /// Controller para chatbot especializado no mundo artístico de cabelos e barbas
 

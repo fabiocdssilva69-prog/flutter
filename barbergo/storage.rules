@@ -1,0 +1,62 @@
+rules_version = '2';
+
+// Regras de Segurança do Firebase Storage para BarberGO
+// APLICAR EM: Firebase Console → Storage → Rules → Copiar e Colar → Publicar
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // ===== REGRAS DE PRODUÇÃO =====
+    
+    // === PADRÃO 1: /portfolio/{userId}/{filename} ===
+    match /portfolio/{userId}/{filename} {
+      // Leitura: Público para todos os usuários autenticados
+      allow read: if request.auth != null;
+      
+      // Escrita: Apenas o dono pode fazer upload/delete
+      allow write: if request.auth != null 
+                   && request.auth.uid == userId
+                   && isValidImageUpload();
+    }
+    
+    // === PADRÃO 2: /avatars/{userId}/{filename} ===
+    match /avatars/{userId}/{filename} {
+      // Leitura: Público para todos os usuários autenticados
+      allow read: if request.auth != null;
+      
+      // Escrita: Apenas o dono pode fazer upload/delete
+      allow write: if request.auth != null 
+                   && request.auth.uid == userId
+                   && isValidImageUpload();
+    }
+    
+    // === PADRÃO 3: /images/{folder}/{userId}/{filename} (Backup/Legado) ===
+    match /images/{folder}/{userId}/{filename} {
+      // Leitura: Qualquer usuário autenticado pode ver imagens
+      allow read: if request.auth != null;
+      
+      // Escrita: Apenas o dono da pasta pode fazer upload/delete
+      allow write: if request.auth != null 
+                   && request.auth.uid == userId
+                   && isValidImageUpload()
+                   && folder in ['avatars', 'portfolio', 'barbershops', 'services', 'profile_pictures'];
+    }
+    
+    // Validações de segurança compartilhadas
+    function isValidImageUpload() {
+      // Verifica se é uma operação de upload (não delete)
+      // Para delete, request.resource será null (permitido)
+      return request.resource == null  // Allow delete
+             || (
+               // Validações para upload
+               request.resource.contentType.matches('image/.*')  // Qualquer tipo de imagem
+               && request.resource.size < 10 * 1024 * 1024  // 10MB max
+             );
+    }
+    
+    // ===== FALLBACK: Bloquear tudo que não corresponder =====
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

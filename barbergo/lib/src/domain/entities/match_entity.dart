@@ -1,19 +1,23 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
-import 'converters.dart';
+import 'package:barbergo_app/src/core/infrastructure/mappable_hooks.dart';
 
-part 'match_entity.freezed.dart';
-part 'match_entity.g.dart';
+part 'match_entity.mapper.dart';
 
-@freezed
-abstract class MatchEntity with _$MatchEntity {
-  const factory MatchEntity({
-    required String matchId,
-    required List<String> participants,
-    @TimestampConverter() required DateTime matchedAt,
-    Map<String, dynamic>? contactInfo,
-  }) = _MatchEntity;
+@MappableClass()
+class MatchEntity with MatchEntityMappable {
+  final String matchId;
+  final List<String> participants;
 
-  factory MatchEntity.fromJson(Map<String, dynamic> json) => _$MatchEntityFromJson(json);
+  @MappableField(hook: TimestampHook())
+  final DateTime matchedAt;
+
+  final Map<String, dynamic>? contactInfo;
+
+  const MatchEntity({required this.matchId, required this.participants, required this.matchedAt, this.contactInfo});
+
+  // Factory constructors para compatibilidade com repositórios
+  static MatchEntity fromMap(Map<String, dynamic> map) => MatchEntityMapper.fromMap(map);
+
+  static MatchEntity fromJson(String json) => MatchEntityMapper.fromJson(json);
 }

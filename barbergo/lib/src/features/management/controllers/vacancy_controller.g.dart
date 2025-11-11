@@ -48,7 +48,7 @@ final class MyVacanciesStreamProvider
   }
 }
 
-String _$myVacanciesStreamHash() => r'704416cb487f80a9a3a6de525952149e2a64d4ba';
+String _$myVacanciesStreamHash() => r'ee11bed689062b8f778c275e97afa8ff754147d8';
 
 @ProviderFor(applicationsForVacancyStream)
 const applicationsForVacancyStreamProvider =
@@ -155,7 +155,7 @@ final class ManagementControllerProvider
 }
 
 String _$managementControllerHash() =>
-    r'76f3b613a735c64e025b04d4819c6cc7759a63db';
+    r'9ed42f489c88d31d1d37881e561c048fc58c9821';
 
 abstract class _$ManagementController extends $AsyncNotifier<void> {
   FutureOr<void> build();

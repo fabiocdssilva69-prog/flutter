@@ -1,0 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'converters.dart';
+
+part 'notification_entity.freezed.dart';
+part 'notification_entity.g.dart';
+
+enum NotificationType {
+  applicationReceived,
+  applicationStatusUpdate,
+  systemAlert,
+}
+
+@freezed
+class NotificationEntity with _$NotificationEntity {
+  const factory NotificationEntity({
+    required String id,
+    required NotificationType type,
+    required String title,
+    required String message,
+    Map<String, dynamic>? contextData,
+    @Default(false) bool isRead,
+    @TimestampConverter() required DateTime createdAt,
+  }) = _NotificationEntity;
+
+  factory NotificationEntity.fromJson(Map<String, dynamic> json) =>
+      _$NotificationEntityFromJson(json);
+}

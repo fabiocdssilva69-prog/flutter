@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Função helper: Verifica se o usuário está autenticado
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // === PROFILES & Subcoleções ===
+    match /profiles/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && request.auth.uid == userId;
+      
+      // Subcoleção: Interactions (Privado)
+      match /interactions/{interactionId} {
+        allow read, write: if isSignedIn() && request.auth.uid == userId;
+      }
+      
+      // Subcoleção: AI Chats (Privado)
+      match /ai_chats/{personaKey}/messages/{messageId} {
+        allow read, write: if isSignedIn() && request.auth.uid == userId;
+      }
+      
+      // Subcoleção: Notifications (Privado - Implementada nesta Sprint)
+      match /notifications/{notificationId} {
+        allow read, write: if isSignedIn() && request.auth.uid == userId;
+      }
+    }
+
+    // === VACANCIES ===
+    match /vacancies/{vacancyId} {
+      // Leitura: Se ativa OU se for o dono.
+      allow read: if isSignedIn() && (
+        resource.data.isActive == true || 
+        request.auth.uid == resource.data.barbershopId
+      );
+      allow create: if isSignedIn() && request.resource.data.barbershopId == request.auth.uid;
+      allow update, delete: if isSignedIn() && request.auth.uid == resource.data.barbershopId;
+    }
+
+    // === APPLICATIONS ===
+    match /applications/{applicationId} {
+      // Leitura: Pelo Barbeiro que aplicou OU pela Barbearia que recebeu.
+      allow read: if isSignedIn() && (
+        request.auth.uid == resource.data.barberId ||
+        request.auth.uid == resource.data.barbershopId
+      );
+      allow create: if isSignedIn() && request.resource.data.barberId == request.auth.uid;
+      // Atualização (Status): Apenas a barbearia dona da vaga.
+      allow update: if isSignedIn() && request.auth.uid == resource.data.barbershopId;
+    }
+    
+    // === CHAT ROOMS (NOVO - Sprint 21) ===
+    match /chat_rooms/{roomId} {
+      // Leitura/Escrita apenas se o usuário estiver na lista de participantes
+      allow read, write: if isSignedIn() && request.auth.uid in resource.data.participantIds;
+      
+      // Mensagens Diretas
+      match /messages/{messageId} {
+         // Leitura: Herda as permissões da sala (usando get() para acessar o documento pai)
+         allow read: if isSignedIn() && request.auth.uid in get(/databases/$(database)/documents/chat_rooms/$(roomId)).data.participantIds;
+         // Criação: Apenas se for o remetente E estiver na sala
+         allow create: if isSignedIn() && request.resource.data.senderId == request.auth.uid &&
+                        request.auth.uid in get(/databases/$(database)/documents/chat_rooms/$(roomId)).data.participantIds;
+      }
+    }
+  }
+}

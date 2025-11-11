@@ -7,21 +7,21 @@ part 'gemini_provider.g.dart';
 /// Provider para o modelo Gemini Pro
 ///
 /// IMPORTANTE: Configure a API key no arquivo .env:
-/// - Adicione GEMINI_API_KEY=sua_chave no arquivo .env
+/// - Adicione GOOGLE_GEMINI_API_KEY=sua_chave no arquivo .env
 /// - O arquivo .env está no .gitignore (seguro)
 @riverpod
 GenerativeModel geminiProModel(Ref ref) {
-  final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
+  final apiKey = dotenv.env['GOOGLE_GEMINI_API_KEY'] ?? '';
 
   if (apiKey.isEmpty || apiKey == 'sua_key_aqui') {
     throw Exception(
-      'GEMINI_API_KEY não configurada. '
+      'GOOGLE_GEMINI_API_KEY não configurada. '
       'Adicione sua chave no arquivo .env na raiz do projeto',
     );
   }
 
   return GenerativeModel(
-    model: 'models/gemini-1.5-flash', // Mais rápido e barato que o Pro
+    model: 'gemini-2.0-flash-exp', // Modelo mais recente (experimental)
     apiKey: apiKey,
     generationConfig: GenerationConfig(
       temperature: 0.7, // Criatividade moderada
@@ -41,14 +41,14 @@ GenerativeModel geminiProModel(Ref ref) {
 /// Provider para o modelo Gemini Pro Vision (análise de imagens)
 @riverpod
 GenerativeModel geminiProVisionModel(Ref ref) {
-  const apiKey = String.fromEnvironment('GEMINI_API_KEY', defaultValue: '');
+  final apiKey = dotenv.env['GOOGLE_GEMINI_API_KEY'] ?? '';
 
   if (apiKey.isEmpty) {
-    throw Exception('GEMINI_API_KEY não configurada.');
+    throw Exception('GOOGLE_GEMINI_API_KEY não configurada.');
   }
 
   return GenerativeModel(
-    model: 'models/gemini-1.5-flash', // Flash também suporta visão
+    model: 'gemini-2.0-flash-exp', // Flash 2.0 também suporta visão multimodal
     apiKey: apiKey,
     generationConfig: GenerationConfig(
       temperature: 0.4, // Mais preciso para análise de imagens

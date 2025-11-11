@@ -1,0 +1,723 @@
+Running Gradle task 'assembleDebug'...                          
+lib/src/domain/entities/profile_entity.dart:8:6: Error: Error when reading 'lib/src/domain/entities/profile_entity.freezed.dart': O sistema n├úo pode encontrar o arquivo especificado.
+
+part 'profile_entity.freezed.dart';
+     ^
+lib/src/domain/entities/profile_entity.dart:9:6: Error: Error when reading 'lib/src/domain/entities/profile_entity.g.dart': O sistema n├úo pode encontrar o arquivo especificado.
+
+part 'profile_entity.g.dart';
+     ^
+lib/src/domain/entities/profile_entity.dart:8:6: Error: Can't use 'lib/src/domain/entities/profile_entity.freezed.dart' as a part, because it has no 'part of' declaration.
+part 'profile_entity.freezed.dart';
+     ^
+lib/src/domain/entities/profile_entity.dart:9:6: Error: Can't use 'lib/src/domain/entities/profile_entity.g.dart' as a part, because it has no 'part of' declaration.
+part 'profile_entity.g.dart';
+     ^
+lib/src/domain/entities/profile_entity.dart:12:32: Error: Type '_$2' not found.
+class ProfileEntity implements _$2 {
+                               ^^^
+lib/src/domain/entities/profile_entity.dart:27:8: Error: Couldn't find constructor '_ProfileEntity'.
+  }) = _ProfileEntity;
+       ^
+lib/src/domain/entities/profile_entity.dart:27:8: Error: Redirection constructor target not found: '_ProfileEntity'
+  }) = _ProfileEntity;
+       ^
+lib/src/core/services/notification_service.dart:100:94: Error: A value of type 'Object?' can't be assigned to a variable of type 'Object'.
+ - 'Object' is from 'dart:core'.
+      _logger.logEvent("FCM_ForegroundMessageReceived", parameters: {"id": message.messageId as Object?});
+                                                                                          ^
+lib/src/core/services/notification_service.dart:105:87: Error: A value of type 'Object?' can't be assigned to a variable of type 'Object'.
+ - 'Object' is from 'dart:core'.
+      _logger.logEvent("FCM_NotificationTapped", parameters: {"id": message.messageId as Object?});
+                                                                                      ^
+lib/src/data/repositories/profile_repository.dart:24:35: Error: The method 'copyWith' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'copyWith'.
+    final profileToSave = profile.copyWith(updatedAt: DateTime.now());
+                                  ^^^^^^^^
+lib/src/data/repositories/profile_repository.dart:25:60: Error: The getter 'userId' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'userId'.
+    await _service.db.collection(profilesPath).doc(profile.userId).set(profileToSave.toJson());
+                                                           ^^^^^^
+lib/src/features/home/presentation/home_screen.dart:61:37: Error: The getter 'accountType' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'accountType'.
+        final accountType = profile.accountType;
+                                    ^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.dart:11:7: Error: The non-abstract class 'VacancyEntity' is missing implementations for these members:
+ - _$VacancyEntity.barbershopId
+ - _$VacancyEntity.barbershopName
+ - _$VacancyEntity.benefits
+ - _$VacancyEntity.commissionPercentage
+ - _$VacancyEntity.createdAt
+ - _$VacancyEntity.isActive
+ - _$VacancyEntity.locationCityState
+ - _$VacancyEntity.requirements
+ - _$VacancyEntity.title
+ - _$VacancyEntity.toJson
+ - _$VacancyEntity.type
+ - _$VacancyEntity.updatedAt
+ - _$VacancyEntity.vacancyId
+ - _$VacancyEntity.workHours
+ - _VacancyEntity&Object&_$VacancyEntity.barbershopId
+ - _VacancyEntity&Object&_$VacancyEntity.barbershopName
+ - _VacancyEntity&Object&_$VacancyEntity.benefits
+ - _VacancyEntity&Object&_$VacancyEntity.commissionPercentage
+ - _VacancyEntity&Object&_$VacancyEntity.createdAt
+ - _VacancyEntity&Object&_$VacancyEntity.isActive
+ - _VacancyEntity&Object&_$VacancyEntity.locationCityState
+ - _VacancyEntity&Object&_$VacancyEntity.requirements
+ - _VacancyEntity&Object&_$VacancyEntity.title
+ - _VacancyEntity&Object&_$VacancyEntity.toJson
+ - _VacancyEntity&Object&_$VacancyEntity.type
+ - _VacancyEntity&Object&_$VacancyEntity.updatedAt
+ - _VacancyEntity&Object&_$VacancyEntity.vacancyId
+ - _VacancyEntity&Object&_$VacancyEntity.workHours
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class VacancyEntity with _$VacancyEntity {
+      ^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:18:35: Context: '_$VacancyEntity.barbershopId' is defined here.
+ String get vacancyId; String get barbershopId;// Dados Desnormalizados
+                                  ^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:13: Context: '_$VacancyEntity.barbershopName' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+            ^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:199: Context: '_$VacancyEntity.benefits' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:111: Context: '_$VacancyEntity.commissionPercentage' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:262: Context: '_$VacancyEntity.createdAt' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:218: Context: '_$VacancyEntity.isActive' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:40: Context: '_$VacancyEntity.locationCityState' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                       ^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:167: Context: '_$VacancyEntity.requirements' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:70: Context: '_$VacancyEntity.title' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                     ^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:27:24: Context: '_$VacancyEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:93: Context: '_$VacancyEntity.type' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:308: Context: '_$VacancyEntity.updatedAt' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:18:13: Context: '_$VacancyEntity.vacancyId' is defined here.
+ String get vacancyId; String get barbershopId;// Dados Desnormalizados
+            ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:144: Context: '_$VacancyEntity.workHours' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:18:35: Context: 'Object with _$VacancyEntity.barbershopId' is defined here.
+ String get vacancyId; String get barbershopId;// Dados Desnormalizados
+                                  ^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:13: Context: 'Object with _$VacancyEntity.barbershopName' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+            ^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:199: Context: 'Object with _$VacancyEntity.benefits' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:111: Context: 'Object with _$VacancyEntity.commissionPercentage' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:262: Context: 'Object with _$VacancyEntity.createdAt' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:218: Context: 'Object with _$VacancyEntity.isActive' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:40: Context: 'Object with _$VacancyEntity.locationCityState' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                       ^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:167: Context: 'Object with _$VacancyEntity.requirements' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:70: Context: 'Object with _$VacancyEntity.title' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                     ^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:27:24: Context: 'Object with _$VacancyEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:93: Context: 'Object with _$VacancyEntity.type' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:308: Context: 'Object with _$VacancyEntity.updatedAt' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:18:13: Context: 'Object with _$VacancyEntity.vacancyId' is defined here.
+ String get vacancyId; String get barbershopId;// Dados Desnormalizados
+            ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:144: Context: 'Object with _$VacancyEntity.workHours' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/notification_entity.dart:16:7: Error: The non-abstract class 'NotificationEntity' is missing implementations for these members:
+ - _$NotificationEntity.contextData
+ - _$NotificationEntity.createdAt
+ - _$NotificationEntity.id
+ - _$NotificationEntity.isRead
+ - _$NotificationEntity.message
+ - _$NotificationEntity.title
+ - _$NotificationEntity.toJson
+ - _$NotificationEntity.type
+ - _NotificationEntity&Object&_$NotificationEntity.contextData
+ - _NotificationEntity&Object&_$NotificationEntity.createdAt
+ - _NotificationEntity&Object&_$NotificationEntity.id
+ - _NotificationEntity&Object&_$NotificationEntity.isRead
+ - _NotificationEntity&Object&_$NotificationEntity.message
+ - _NotificationEntity&Object&_$NotificationEntity.title
+ - _NotificationEntity&Object&_$NotificationEntity.toJson
+ - _NotificationEntity&Object&_$NotificationEntity.type
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class NotificationEntity with _$NotificationEntity {
+      ^^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:108: Context: '_$NotificationEntity.contextData' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:172: Context: '_$NotificationEntity.createdAt' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:13: Context: '_$NotificationEntity.id' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+            ^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:130: Context: '_$NotificationEntity.isRead' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:73: Context: '_$NotificationEntity.message' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                        ^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:55: Context: '_$NotificationEntity.title' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                      ^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:26:24: Context: '_$NotificationEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:38: Context: '_$NotificationEntity.type' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                     ^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:108: Context: 'Object with _$NotificationEntity.contextData' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:172: Context: 'Object with _$NotificationEntity.createdAt' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:13: Context: 'Object with _$NotificationEntity.id' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+            ^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:130: Context: 'Object with _$NotificationEntity.isRead' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:73: Context: 'Object with _$NotificationEntity.message' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                        ^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:55: Context: 'Object with _$NotificationEntity.title' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                      ^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:26:24: Context: 'Object with _$NotificationEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:38: Context: 'Object with _$NotificationEntity.type' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                     ^^^^
+lib/src/features/profile/controllers/profile_controller.dart:62:35: Error: The getter 'createdAt' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'createdAt'.
+      createdAt: existingProfile?.createdAt ?? DateTime.now(),
+                                  ^^^^^^^^^
+lib/src/features/profile/screens/profile_screen.dart:47:38: Error: The getter 'name' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'name'.
+      _nameController.text = profile.name;
+                                     ^^^^
+lib/src/features/profile/screens/profile_screen.dart:48:37: Error: The getter 'bio' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'bio'.
+      _bioController.text = profile.bio;
+                                    ^^^
+lib/src/features/profile/screens/profile_screen.dart:49:42: Error: The getter 'location' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'location'.
+      _locationController.text = profile.location;
+                                         ^^^^^^^^
+lib/src/features/profile/screens/profile_screen.dart:50:39: Error: The getter 'contactPhone' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'contactPhone'.
+      _phoneController.text = profile.contactPhone;
+                                      ^^^^^^^^^^^^
+lib/src/features/profile/screens/profile_screen.dart:51:38: Error: The getter 'accountType' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'accountType'.
+      _selectedAccountType = profile.accountType;
+                                     ^^^^^^^^^^^
+lib/src/features/vacancies/presentation/create_vacancy_screen.dart:95:43: Error: The getter 'name' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'name'.
+        barbershopName: barbershopProfile.name,
+                                          ^^^^
+lib/src/features/vacancies/presentation/create_vacancy_screen.dart:99:46: Error: The getter 'location' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'location'.
+        locationCityState: barbershopProfile.location,
+                                             ^^^^^^^^
+lib/src/domain/entities/profile_entity.dart:30:7: Error: Method not found: '_$ProfileEntityFromJson'.
+      _$ProfileEntityFromJson(json);
+      ^^^^^^^^^^^^^^^^^^^^^^^
+lib/src/features/discovery/controllers/discovery_controller.dart:20:31: Error: The getter 'userId' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'userId'.
+  final userId = userProfile?.userId;
+                              ^^^^^^
+lib/src/features/discovery/controllers/discovery_controller.dart:23:60: Error: The getter 'location' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'location'.
+  if (userId == null || userProfile == null || userProfile.location.isEmpty) {
+                                                           ^^^^^^^^
+lib/src/features/discovery/controllers/discovery_controller.dart:31:87: Error: The getter 'location' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'location'.
+  final locationFilteredStream = vacancyRepo.watchFilteredActiveVacancies(userProfile.location);
+                                                                                      ^^^^^^^^
+lib/src/features/management/controllers/management_controller.dart:68:24: Error: The getter 'accountType' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'accountType'.
+    if (currentProfile.accountType != AccountType.barbershop) {
+                       ^^^^^^^^^^^
+lib/src/features/management/controllers/management_controller.dart:70:93: Error: The getter 'accountType' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'accountType'.
+        "Apenas perfis de Barbearia podem criar vagas. Seu perfil atual ├®: ${currentProfile.accountType.toString().split('.').last}",
+                                                                                          ^^^^^^^^^^^
+lib/src/features/management/controllers/management_controller.dart:77:24: Error: The getter 'location' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'location'.
+    if (currentProfile.location.isEmpty) {
+                       ^^^^^^^^
+lib/src/features/management/controllers/management_controller.dart:88:38: Error: The getter 'name' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'name'.
+      barbershopName: currentProfile.name, // Nome Desnormalizado
+                                     ^^^^
+lib/src/features/management/controllers/management_controller.dart:89:41: Error: The getter 'location' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'location'.
+      locationCityState: currentProfile.location, // Localiza├º├úo Desnormalizada
+                                        ^^^^^^^^
+lib/src/domain/entities/application_entity.dart:11:7: Error: The non-abstract class 'ApplicationEntity' is missing implementations for these members:
+ - _$ApplicationEntity.applicationId
+ - _$ApplicationEntity.barberId
+ - _$ApplicationEntity.barbershopId
+ - _$ApplicationEntity.barbershopName
+ - _$ApplicationEntity.createdAt
+ - _$ApplicationEntity.status
+ - _$ApplicationEntity.toJson
+ - _$ApplicationEntity.updatedAt
+ - _$ApplicationEntity.vacancyId
+ - _ApplicationEntity&Object&_$ApplicationEntity.applicationId
+ - _ApplicationEntity&Object&_$ApplicationEntity.barberId
+ - _ApplicationEntity&Object&_$ApplicationEntity.barbershopId
+ - _ApplicationEntity&Object&_$ApplicationEntity.barbershopName
+ - _ApplicationEntity&Object&_$ApplicationEntity.createdAt
+ - _ApplicationEntity&Object&_$ApplicationEntity.status
+ - _ApplicationEntity&Object&_$ApplicationEntity.toJson
+ - _ApplicationEntity&Object&_$ApplicationEntity.updatedAt
+ - _ApplicationEntity&Object&_$ApplicationEntity.vacancyId
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class ApplicationEntity with _$ApplicationEntity {
+      ^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:13: Context: '_$ApplicationEntity.applicationId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+            ^^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:61: Context: '_$ApplicationEntity.barberId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                                            ^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:82: Context: '_$ApplicationEntity.barbershopId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                                                                 ^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:13: Context: '_$ApplicationEntity.barbershopName' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+            ^^^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:93: Context: '_$ApplicationEntity.createdAt' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:51: Context: '_$ApplicationEntity.status' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                  ^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:27:24: Context: '_$ApplicationEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:139: Context: '_$ApplicationEntity.updatedAt' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:39: Context: '_$ApplicationEntity.vacancyId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                      ^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:13: Context: 'Object with _$ApplicationEntity.applicationId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+            ^^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:61: Context: 'Object with _$ApplicationEntity.barberId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                                            ^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:82: Context: 'Object with _$ApplicationEntity.barbershopId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                                                                 ^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:13: Context: 'Object with _$ApplicationEntity.barbershopName' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+            ^^^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:93: Context: 'Object with _$ApplicationEntity.createdAt' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:51: Context: 'Object with _$ApplicationEntity.status' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                  ^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:27:24: Context: 'Object with _$ApplicationEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:139: Context: 'Object with _$ApplicationEntity.updatedAt' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:39: Context: 'Object with _$ApplicationEntity.vacancyId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                      ^^^^^^^^^
+lib/src/features/management/widgets/application_tile.dart:39:45: Error: The getter 'name' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'name'.
+                        child: Text(profile.name[0].toUpperCase(), style: const TextStyle(color: Colors.white)),
+                                            ^^^^
+lib/src/features/management/widgets/application_tile.dart:46:42: Error: The getter 'name' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'name'.
+                            Text(profile.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                         ^^^^
+lib/src/features/management/widgets/application_tile.dart:47:40: Error: The getter 'email' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'email'.
+                            Text(user?.email ?? '', style: TextStyle(color: Colors.grey[600])),
+                                       ^^^^^
+lib/src/features/profiles/data/profile_repository.dart:16:57: Error: The getter 'userId' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'userId'.
+    await _firestore.collection('profiles').doc(profile.userId).set(profile.toJson());
+                                                        ^^^^^^
+lib/src/features/profiles/data/profile_repository.dart:16:77: Error: The method 'toJson' isn't defined for the type 'ProfileEntity'.
+ - 'ProfileEntity' is from 'package:barbergo_app/src/domain/entities/profile_entity.dart' ('lib/src/domain/entities/profile_entity.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'toJson'.
+    await _firestore.collection('profiles').doc(profile.userId).set(profile.toJson());
+                                                                            ^^^^^^
+lib/src/domain/entities/user_interaction_entity.dart:12:7: Error: The non-abstract class 'UserInteractionEntity' is missing implementations for these members:
+ - _$UserInteractionEntity.timestamp
+ - _$UserInteractionEntity.toJson
+ - _$UserInteractionEntity.type
+ - _$UserInteractionEntity.vacancyId
+ - _UserInteractionEntity&Object&_$UserInteractionEntity.timestamp
+ - _UserInteractionEntity&Object&_$UserInteractionEntity.toJson
+ - _UserInteractionEntity&Object&_$UserInteractionEntity.type
+ - _UserInteractionEntity&Object&_$UserInteractionEntity.vacancyId
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class UserInteractionEntity with _$UserInteractionEntity {
+      ^^^^^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:84: Context: '_$UserInteractionEntity.timestamp' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+                                                                                   ^^^^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:26:24: Context: '_$UserInteractionEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:44: Context: '_$UserInteractionEntity.type' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+                                           ^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:13: Context: '_$UserInteractionEntity.vacancyId' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+            ^^^^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:84: Context: 'Object with _$UserInteractionEntity.timestamp' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+                                                                                   ^^^^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:26:24: Context: 'Object with _$UserInteractionEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:44: Context: 'Object with _$UserInteractionEntity.type' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+                                           ^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:13: Context: 'Object with _$UserInteractionEntity.vacancyId' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+            ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.dart:11:7: Error: The non-abstract class 'VacancyEntity' is missing implementations for these members:
+ - _$VacancyEntity.barbershopId
+ - _$VacancyEntity.barbershopName
+ - _$VacancyEntity.benefits
+ - _$VacancyEntity.commissionPercentage
+ - _$VacancyEntity.createdAt
+ - _$VacancyEntity.isActive
+ - _$VacancyEntity.locationCityState
+ - _$VacancyEntity.requirements
+ - _$VacancyEntity.title
+ - _$VacancyEntity.toJson
+ - _$VacancyEntity.type
+ - _$VacancyEntity.updatedAt
+ - _$VacancyEntity.vacancyId
+ - _$VacancyEntity.workHours
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class VacancyEntity with _$VacancyEntity {
+      ^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:18:35: Context: '_$VacancyEntity.barbershopId' is defined here.
+ String get vacancyId; String get barbershopId;// Dados Desnormalizados
+                                  ^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:13: Context: '_$VacancyEntity.barbershopName' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+            ^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:199: Context: '_$VacancyEntity.benefits' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:111: Context: '_$VacancyEntity.commissionPercentage' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:262: Context: '_$VacancyEntity.createdAt' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:218: Context: '_$VacancyEntity.isActive' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:40: Context: '_$VacancyEntity.locationCityState' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                       ^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:167: Context: '_$VacancyEntity.requirements' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:70: Context: '_$VacancyEntity.title' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                     ^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:27:24: Context: '_$VacancyEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:93: Context: '_$VacancyEntity.type' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:308: Context: '_$VacancyEntity.updatedAt' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:18:13: Context: '_$VacancyEntity.vacancyId' is defined here.
+ String get vacancyId; String get barbershopId;// Dados Desnormalizados
+            ^^^^^^^^^
+lib/src/domain/entities/vacancy_entity.freezed.dart:19:144: Context: '_$VacancyEntity.workHours' is defined here.
+ String get barbershopName; String get locationCityState; String get title; VacancyType get type; double? get commissionPercentage; String get workHours; String? get requirements; List<String>? get benefits; bool get isActive;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/application_entity.dart:11:7: Error: The non-abstract class 'ApplicationEntity' is missing implementations for these members:
+ - _$ApplicationEntity.applicationId
+ - _$ApplicationEntity.barberId
+ - _$ApplicationEntity.barbershopId
+ - _$ApplicationEntity.barbershopName
+ - _$ApplicationEntity.createdAt
+ - _$ApplicationEntity.status
+ - _$ApplicationEntity.toJson
+ - _$ApplicationEntity.updatedAt
+ - _$ApplicationEntity.vacancyId
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class ApplicationEntity with _$ApplicationEntity {
+      ^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:13: Context: '_$ApplicationEntity.applicationId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+            ^^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:61: Context: '_$ApplicationEntity.barberId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                                            ^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:82: Context: '_$ApplicationEntity.barbershopId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                                                                 ^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:13: Context: '_$ApplicationEntity.barbershopName' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+            ^^^^^^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:93: Context: '_$ApplicationEntity.createdAt' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:51: Context: '_$ApplicationEntity.status' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                  ^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:27:24: Context: '_$ApplicationEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:19:139: Context: '_$ApplicationEntity.updatedAt' is defined here.
+ String get barbershopName; ApplicationStatus get status;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime? get updatedAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/application_entity.freezed.dart:18:39: Context: '_$ApplicationEntity.vacancyId' is defined here.
+ String get applicationId; String get vacancyId; String get barberId; String get barbershopId;// Nome Desnormalizado
+                                      ^^^^^^^^^
+lib/src/domain/entities/notification_entity.dart:16:7: Error: The non-abstract class 'NotificationEntity' is missing implementations for these members:
+ - _$NotificationEntity.contextData
+ - _$NotificationEntity.createdAt
+ - _$NotificationEntity.id
+ - _$NotificationEntity.isRead
+ - _$NotificationEntity.message
+ - _$NotificationEntity.title
+ - _$NotificationEntity.toJson
+ - _$NotificationEntity.type
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class NotificationEntity with _$NotificationEntity {
+      ^^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:108: Context: '_$NotificationEntity.contextData' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:172: Context: '_$NotificationEntity.createdAt' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:13: Context: '_$NotificationEntity.id' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+            ^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:130: Context: '_$NotificationEntity.isRead' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                                          ^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:73: Context: '_$NotificationEntity.message' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                                        ^^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:55: Context: '_$NotificationEntity.title' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                                      ^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:26:24: Context: '_$NotificationEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/notification_entity.freezed.dart:18:38: Context: '_$NotificationEntity.type' is defined here.
+ String get id; NotificationType get type; String get title; String get message; Map<String, dynamic>? get contextData; bool get isRead;@TimestampConverter() DateTime get createdAt;
+                                     ^^^^
+lib/src/domain/entities/user_interaction_entity.dart:12:7: Error: The non-abstract class 'UserInteractionEntity' is missing implementations for these members:
+ - _$UserInteractionEntity.timestamp
+ - _$UserInteractionEntity.toJson
+ - _$UserInteractionEntity.type
+ - _$UserInteractionEntity.vacancyId
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class UserInteractionEntity with _$UserInteractionEntity {
+      ^^^^^^^^^^^^^^^^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:84: Context: '_$UserInteractionEntity.timestamp' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+                                                                                   ^^^^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:26:24: Context: '_$UserInteractionEntity.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:44: Context: '_$UserInteractionEntity.type' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+                                           ^^^^
+lib/src/domain/entities/user_interaction_entity.freezed.dart:18:13: Context: '_$UserInteractionEntity.vacancyId' is defined here.
+ String get vacancyId; InteractionType get type;@TimestampConverter() DateTime get timestamp;
+            ^^^^^^^^^
+lib/src/features/ai/controllers/chat_state.dart:8:7: Error: The non-abstract class 'ChatStateData' is missing implementations for these members:
+ - _$ChatStateData.hasMore
+ - _$ChatStateData.isLoadingMore
+ - _$ChatStateData.messages
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class ChatStateData with _$ChatStateData {
+      ^^^^^^^^^^^^^
+lib/src/features/ai/controllers/chat_state.freezed.dart:17:43: Context: '_$ChatStateData.hasMore' is defined here.
+ List<ChatMessage> get messages; bool get hasMore; bool get isLoadingMore;
+                                          ^^^^^^^
+lib/src/features/ai/controllers/chat_state.freezed.dart:17:61: Context: '_$ChatStateData.isLoadingMore' is defined here.
+ List<ChatMessage> get messages; bool get hasMore; bool get isLoadingMore;
+                                                            ^^^^^^^^^^^^^
+lib/src/features/ai/controllers/chat_state.freezed.dart:17:24: Context: '_$ChatStateData.messages' is defined here.
+ List<ChatMessage> get messages; bool get hasMore; bool get isLoadingMore;
+                       ^^^^^^^^
+lib/src/domain/entities/ai/chat_message.dart:14:7: Error: The non-abstract class 'ChatMessage' is missing implementations for these members:
+ - _$ChatMessage.content
+ - _$ChatMessage.feedback
+ - _$ChatMessage.id
+ - _$ChatMessage.isError
+ - _$ChatMessage.role
+ - _$ChatMessage.timestamp
+ - _$ChatMessage.toJson
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+
+class ChatMessage with _$ChatMessage {
+      ^^^^^^^^^^^
+lib/src/domain/entities/ai/chat_message.freezed.dart:18:50: Context: '_$ChatMessage.content' is defined here.
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+                                                 ^^^^^^^
+lib/src/domain/entities/ai/chat_message.freezed.dart:18:142: Context: '_$ChatMessage.feedback' is defined here.
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+                                                                                          ^^^^^^^^
+lib/src/domain/entities/ai/chat_message.freezed.dart:18:13: Context: '_$ChatMessage.id' is defined here.
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+            ^^
+lib/src/domain/entities/ai/chat_message.freezed.dart:18:113: Context: '_$ChatMessage.isError' is defined here.
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+                                                                                          ^^^^^^^
+lib/src/domain/entities/ai/chat_message.freezed.dart:18:33: Context: '_$ChatMessage.role' is defined here.
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+                                ^^^^
+lib/src/domain/entities/ai/chat_message.freezed.dart:18:93: Context: '_$ChatMessage.timestamp' is defined here.
+ String get id; MessageRole get role; String get content;@TimestampConverter() DateTime get timestamp; bool get isError; MessageFeedback get feedback;
+                                                                                          ^^^^^^^^^
+lib/src/domain/entities/ai/chat_message.freezed.dart:26:24: Context: '_$ChatMessage.toJson' is defined here.
+  Map<String, dynamic> toJson();
+                       ^^^^^^
+Target kernel_snapshot_program failed: Exception
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileFlutterBuildDebug'.
+> Process 'command 'C:\workspaces\fabiocdssilva69-prog\barbergo\flutter\bin\flutter.bat'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 15s
+Running Gradle task 'assembleDebug'...                             15,9s
+Gradle task assembleDebug failed with exit code 1

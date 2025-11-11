@@ -11,10 +11,7 @@ class VacancyRepository {
 
   /// Cria uma nova vaga na coleção "Vacancies" do Firestore.
   Future<void> createVacancy(VacancyEntity vacancy) async {
-    await _firestore
-        .collection('Vacancies')
-        .doc(vacancy.vacancyId)
-        .set(vacancy.toJson());
+    await _firestore.collection('Vacancies').doc(vacancy.vacancyId).set(vacancy.toMap());
   }
 
   /// Retorna uma stream com todas as vagas ativas para feed em tempo real.
@@ -27,7 +24,7 @@ class VacancyRepository {
         .snapshots()
         .map((snapshot) {
           return snapshot.docs.map((doc) {
-            return VacancyEntity.fromJson(doc.data());
+            return VacancyEntity.fromMap(doc.data());
           }).toList();
         });
   }
@@ -41,16 +38,14 @@ class VacancyRepository {
         .snapshots()
         .map((snapshot) {
           return snapshot.docs.map((doc) {
-            return VacancyEntity.fromJson(doc.data());
+            return VacancyEntity.fromMap(doc.data());
           }).toList();
         });
   }
 
   /// Atualiza o status de uma vaga (ativar/desativar).
   Future<void> updateVacancyStatus(String vacancyId, bool isActive) async {
-    await _firestore.collection('Vacancies').doc(vacancyId).update({
-      'isActive': isActive,
-    });
+    await _firestore.collection('Vacancies').doc(vacancyId).update({'isActive': isActive});
   }
 
   /// Busca uma vaga específica pelo ID.
@@ -61,7 +56,7 @@ class VacancyRepository {
       throw Exception('Vaga não encontrada com ID: $vacancyId');
     }
 
-    return VacancyEntity.fromJson(doc.data()!);
+    return VacancyEntity.fromMap(doc.data()!);
   }
 }
 
@@ -81,7 +76,5 @@ Stream<List<VacancyEntity>> activeVacancies(Ref ref) {
 /// StreamProvider que retorna as vagas de uma barbearia específica.
 @riverpod
 Stream<List<VacancyEntity>> barbershopVacancies(Ref ref, String barbershopId) {
-  return ref
-      .watch(vacancyRepositoryProvider)
-      .watchVacanciesByBarbershop(barbershopId);
+  return ref.watch(vacancyRepositoryProvider).watchVacanciesByBarbershop(barbershopId);
 }

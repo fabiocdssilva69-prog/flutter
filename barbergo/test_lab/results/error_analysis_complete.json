@@ -1,0 +1,314 @@
+{
+  "medium": [
+    {
+      "resolution": "Revertido para Freezed 3.2.0 + fix manual",
+      "status": "RESOLVIDO (por enquanto)",
+      "component": "Freezed Code Generation",
+      "impact": "BAIXO (resolvido) - Monitorar regenerações",
+      "details": [
+        "Erro: 'Entity is a supertype of itself'",
+        "Causa: Modificação manual de .freezed.dart com 'on Entity'",
+        "Solução: Usar Freezed 3.2.0 sem modificação manual",
+        "Risco: Pode retornar se regenerar código"
+      ],
+      "description": "Circular dependency 'supertype of itself' ocorreu antes",
+      "possibleCauses": [
+        "1. Freezed 3.3.0-dev tem bug de circular dependency",
+        "2. Modificações manuais em .freezed.dart causam loop",
+        "3. build_runner pode regenerar com bug"
+      ],
+      "severity": "MEDIUM",
+      "id": "CIRCULAR_DEPS_HISTORY"
+    },
+    {
+      "lastFailure": "Após fix_freezed_mixin_bug.ps1 → Exit Code: 1",
+      "pattern": "Intermitente - às vezes funciona, às vezes não",
+      "component": "Dart Code Generation",
+      "impact": "MÉDIO - Requer regeneração manual frequente",
+      "details": [
+        "Conflitos entre generators (freezed, json_serializable, riverpod)",
+        "Cache .dart_tool pode corromper",
+        "Requer --delete-conflicting-outputs frequentemente"
+      ],
+      "description": "dart run build_runner ocasionalmente falha",
+      "possibleCauses": [
+        "1. Múltiplos generators modificando mesmos arquivos",
+        "2. Cache do build_runner corrompido",
+        "3. Versões incompatíveis de generators",
+        "4. Modificações manuais em arquivos gerados"
+      ],
+      "severity": "MEDIUM",
+      "id": "BUILD_RUNNER_CONFLICTS"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "BUILD EM MÁQUINA DIFERENTE",
+      "id": 1,
+      "description": "Testar build em outro computador/OS",
+      "difficulty": "BAIXA",
+      "probability": "60% de sucesso",
+      "steps": [
+        "1. Commit e push código atual para Git",
+        "2. Clone em máquina Linux (WSL2 ou VM)",
+        "3. Tentar flutter run lá",
+        "4. Comparar configurações se funcionar"
+      ]
+    },
+    {
+      "name": "DOWNGRADE GRADLE/AGP",
+      "id": 2,
+      "description": "Voltar para versões mais antigas e estáveis",
+      "difficulty": "MÉDIA",
+      "probability": "50% de sucesso",
+      "steps": [
+        "1. Mudar AGP de 8.9.1 para 8.5.0",
+        "2. Mudar Gradle de 8.12 para 8.9",
+        "3. Rebuild cache limpo",
+        "4. Testar novamente"
+      ]
+    },
+    {
+      "name": "USAR EMULADOR EM VEZ DE DEVICE",
+      "id": 3,
+      "description": "Criar AVD (Android Virtual Device) no Android Studio",
+      "difficulty": "BAIXA",
+      "probability": "70% de sucesso",
+      "steps": [
+        "1. Abrir Android Studio",
+        "2. Tools > Device Manager",
+        "3. Criar novo emulador Pixel 6 (API 30)",
+        "4. flutter run -d emulator-5554"
+      ]
+    },
+    {
+      "name": "BUILD APK SEM RODAR",
+      "id": 4,
+      "description": "Gerar APK e instalar manualmente",
+      "difficulty": "BAIXA",
+      "probability": "40% de sucesso (mesmo erro Gradle)",
+      "steps": [
+        "1. flutter build apk --debug",
+        "2. Se funcionar, copiar APK gerado",
+        "3. Transferir para device via cabo/email",
+        "4. Instalar manualmente no celular"
+      ]
+    },
+    {
+      "name": "CRIAR PROJETO NOVO E MIGRAR",
+      "id": 5,
+      "description": "Criar projeto limpo e copiar código aos poucos",
+      "difficulty": "ALTA",
+      "probability": "80% de sucesso (mas trabalhoso)",
+      "steps": [
+        "1. flutter create barbergo_clean",
+        "2. Copiar pubspec.yaml e ajustar",
+        "3. Copiar código fonte lib/ aos poucos",
+        "4. Testar após cada cópia grande"
+      ]
+    },
+    {
+      "name": "USAR FIREBASE APP DISTRIBUTION",
+      "id": 6,
+      "description": "Buildar na nuvem via CI/CD",
+      "difficulty": "MÉDIA",
+      "probability": "65% de sucesso",
+      "steps": [
+        "1. Configurar GitHub Actions",
+        "2. Usar workflow que já existe (.github/workflows/validate.yml)",
+        "3. Adicionar step de build APK",
+        "4. Fazer push e deixar CI buildar",
+        "5. Download APK gerado"
+      ]
+    },
+    {
+      "name": "DEBUGAR GRADLE COM --info --debug",
+      "id": 7,
+      "description": "Capturar logs completos do Gradle",
+      "difficulty": "ALTA",
+      "probability": "30% de identificar causa raiz",
+      "steps": [
+        "1. cd android",
+        "2. .\\gradlew.bat assembleDebug --info --debug > gradle_log.txt",
+        "3. Analisar gradle_log.txt para encontrar erro específico",
+        "4. Buscar erro no Stack Overflow/GitHub Issues"
+      ]
+    },
+    {
+      "name": "DESATIVAR PLUGINS CONFLITANTES",
+      "id": 8,
+      "description": "Comentar plugins Firebase temporariamente",
+      "difficulty": "MÉDIA",
+      "probability": "40% de sucesso",
+      "steps": [
+        "1. Comentar firebase_* em pubspec.yaml",
+        "2. Comentar código que usa Firebase",
+        "3. flutter pub get",
+        "4. Tentar build novamente",
+        "5. Se funcionar, reativar plugins um por um"
+      ]
+    }
+  ],
+  "totalErrors": 5,
+  "low": [],
+  "timestamp": "2025-10-20 13:24:10",
+  "critical": [
+    {
+      "details": [
+        "Gradle task assembleDebug failed with exit code 1",
+        "Erro ocorre na fase de compilação Java/Kotlin",
+        "Stack trace extenso mas sem mensagem de erro específica",
+        "Possível conflito de dependências ou configuração Gradle"
+      ],
+      "impact": "BLOQUEANTE TOTAL - Impossível testar app no device Android",
+      "component": "Android Gradle Build",
+      "lastAttempt": "2025-10-20 após flutter clean",
+      "evidence": {
+        "commands": [
+          "flutter run -d uwbekb8hpf6lamts → FALHOU",
+          "cd android; .\\gradlew.bat assembleDebug → FALHOU",
+          "flutter clean → Executado mas não resolveu"
+        ],
+        "terminals": [
+          "Terminal exitCode: 1 (múltiplas vezes)",
+          "flutter run -d uwbekb8hpf6lamts → Exit Code: 1",
+          "BUILD FAILED in 1m 10s (última tentativa)"
+        ]
+      },
+      "description": "O build do APK falha consistentemente",
+      "possibleCauses": [
+        "1. Conflito de versão AGP (Android Gradle Plugin 8.9.1)",
+        "2. Configuração incorreta em build.gradle.kts",
+        "3. Dependências incompatíveis (Firebase, etc)",
+        "4. Problema com JDK 21 (OpenJDK 21.0.8)",
+        "5. Cache corrompido do Gradle",
+        "6. Conflito entre kotlin/java versions"
+      ],
+      "stackTrace": "BUILD FAILED in 1m 10s",
+      "severity": "CRITICAL",
+      "attempts": 5,
+      "id": "GRADLE_BUILD_FAIL"
+    },
+    {
+      "details": [
+        "Device: Redmi Note 8 Pro (uwbekb8hpf6lamts)",
+        "Android: 11 (API 30)",
+        "Comportamento: Conecta OK, mas desconecta durante build",
+        "ADB perde conexão sem mensagem de erro clara"
+      ],
+      "occurrences": 3,
+      "component": "USB/ADB Connection",
+      "impact": "BLOQUEANTE - Não completa instalação no device",
+      "pattern": "Desconecta após ~5-7 minutos de build Gradle",
+      "evidence": {
+        "afterBuild": "flutter devices → Device NOT FOUND",
+        "beforeBuild": "flutter devices → Redmi Note 8 Pro FOUND",
+        "terminals": "Exit Code: 1 por device não encontrado",
+        "duringBuild": "Build Gradle rodando (1-7 min)"
+      },
+      "description": "Redmi Note 8 Pro desconecta aleatoriamente durante build longo",
+      "possibleCauses": [
+        "1. Build Gradle muito demorado (>5min) causa timeout USB",
+        "2. Configurações de economia de energia do celular",
+        "3. Depuração USB desativa automaticamente",
+        "4. Cabo USB com falha intermitente",
+        "5. Driver USB do Windows instável",
+        "6. Porta USB do computador com problema"
+      ],
+      "severity": "CRITICAL",
+      "id": "DEVICE_DISCONNECT"
+    }
+  ],
+  "high": [
+    {
+      "severity": "HIGH",
+      "details": [
+        "flutter run -d chrome → Exit Code: 1",
+        "flutter run -d chrome --no-sound-null-safety → Exit Code: 1",
+        "Alternativa para evitar Android também bloqueada"
+      ],
+      "id": "WEB_BUILD_FAIL",
+      "impact": "BLOQUEIO PARCIAL - Alternativa de teste também falha",
+      "possibleCauses": [
+        "1. Dependências não compatíveis com Web",
+        "2. Código usa APIs nativas (Android/iOS only)",
+        "3. Firebase Web não configurado corretamente",
+        "4. Plugins incompatíveis com Web"
+      ],
+      "attempts": 2,
+      "description": "Tentativa de rodar no Chrome também falha",
+      "component": "Flutter Web"
+    }
+  ],
+  "corrections": {
+    "failed": 7,
+    "successful": 2,
+    "totalAttempts": 30,
+    "attempted": [
+      {
+        "result": "NÃO RESOLVEU",
+        "times": 3,
+        "action": "flutter clean"
+      },
+      {
+        "result": "NÃO RESOLVEU",
+        "times": 2,
+        "action": "Remover .gradle cache"
+      },
+      {
+        "result": "NÃO RESOLVEU",
+        "times": 2,
+        "action": "Remover android/app/build"
+      },
+      {
+        "result": "PARCIAL",
+        "times": 5,
+        "action": "flutter pub get"
+      },
+      {
+        "result": "FUNCIONA ÀS VEZES",
+        "times": 10,
+        "action": "dart run build_runner build"
+      },
+      {
+        "result": "RESOLVEU CIRCULAR DEPS",
+        "times": 2,
+        "action": "fix_freezed_mixin_bug.ps1"
+      },
+      {
+        "result": "RESOLVEU MIXIN BUG",
+        "times": 1,
+        "action": "Reverter para Freezed 3.2.0"
+      },
+      {
+        "result": "TEMPORÁRIO",
+        "times": 2,
+        "action": "adb kill-server"
+      },
+      {
+        "result": "TEMPORÁRIO",
+        "times": 3,
+        "action": "Reconectar device"
+      }
+    ]
+  },
+  "environment": {
+    "dart": "3.9.2",
+    "os": "Windows 10.0.26200",
+    "packages": {
+      "freezed": "3.2.0 (3.2.3 available)",
+      "outdated": 39,
+      "discontinued": 1
+    },
+    "gradle": "8.12",
+    "device": {
+      "android": "11 (API 30)",
+      "status": "INSTÁVEL (desconecta)",
+      "id": "uwbekb8hpf6lamts",
+      "model": "Redmi Note 8 Pro"
+    },
+    "flutter": "3.35.5",
+    "agp": "8.9.1",
+    "jdk": "OpenJDK 21.0.8"
+  }
+}

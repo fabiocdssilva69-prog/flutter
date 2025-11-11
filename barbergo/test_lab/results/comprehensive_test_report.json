@@ -1,0 +1,89 @@
+{
+  "duration": 339.8932664,
+  "phases": {
+    "compile": {
+      "total": 10,
+      "score": 80.0,
+      "passed": 8,
+      "failed": 2
+    },
+    "static": {
+      "total": 15,
+      "score": 80.0,
+      "passed": 12,
+      "failed": 3
+    },
+    "runtime": {
+      "total": 5,
+      "score": 60.0,
+      "passed": 3,
+      "failed": 2
+    }
+  },
+  "predictions": [
+    {
+      "Solution": "Manter script fix_freezed_mixin_bug.ps1",
+      "Issue": "Freezed 3.2.x mixin bug pode reaparecer",
+      "ID": 1,
+      "Risk": "HIGH"
+    },
+    {
+      "Solution": "Nunca adicionar 'on Entity' no mixin manualmente",
+      "Issue": "Circular dependency em entidades Freezed",
+      "ID": 2,
+      "Risk": "HIGH"
+    },
+    {
+      "Solution": "Criar índices via Console ou CLI",
+      "Issue": "Firebase Firestore índices faltando",
+      "ID": 3,
+      "Risk": "MEDIUM"
+    },
+    {
+      "Solution": "flutter clean + regenerar",
+      "Issue": "Hot reload quebra após mudanças em @freezed",
+      "ID": 4,
+      "Risk": "MEDIUM"
+    },
+    {
+      "Solution": "Otimizar assets, --split-per-abi",
+      "Issue": "APK > 50MB dificulta distribuição",
+      "ID": 5,
+      "Risk": "MEDIUM"
+    },
+    {
+      "Solution": "Rodar dart fix periodicamente",
+      "Issue": "Warnings do analyzer aumentando",
+      "ID": 6,
+      "Risk": "LOW"
+    },
+    {
+      "Solution": "flutter pub upgrade regularmente",
+      "Issue": "Dependências desatualizadas",
+      "ID": 7,
+      "Risk": "LOW"
+    },
+    {
+      "Solution": "Testar fromJson/toJson em todos casos",
+      "Issue": "Serialização JSON falhando em runtime",
+      "ID": 8,
+      "Risk": "MEDIUM"
+    },
+    {
+      "Solution": "Sempre --delete-conflicting-outputs",
+      "Issue": "Build_runner conflitos após pub upgrade",
+      "ID": 9,
+      "Risk": "HIGH"
+    },
+    {
+      "Solution": "Testar em múltiplos devices",
+      "Issue": "Device específico (Redmi) com bugs",
+      "ID": 10,
+      "Risk": "MEDIUM"
+    }
+  ],
+  "goalAchieved": true,
+  "finalScore": 76.7,
+  "goal": 75.0,
+  "timestamp": "2025-10-20 11:23:10"
+}

@@ -1,0 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'converters.dart';
+import 'enums.dart';
+
+part 'vacancy_entity.freezed.dart';
+part 'vacancy_entity.g.dart';
+
+@freezed
+class VacancyEntity with _$VacancyEntity {
+  const factory VacancyEntity({
+    required String vacancyId,
+    required String barbershopId,
+
+    // Dados Desnormalizados
+    required String barbershopName,
+    required String locationCityState,
+
+    required String title,
+    required VacancyType type,
+    double? commissionPercentage,
+    required String workHours,
+    String? requirements,
+    List<String>? benefits,
+
+    required bool isActive,
+    @TimestampConverter() required DateTime createdAt,
+    @TimestampConverter() DateTime? updatedAt,
+  }) = _VacancyEntity;
+
+  factory VacancyEntity.fromJson(Map<String, dynamic> json) =>
+      _$VacancyEntityFromJson(json);
+}

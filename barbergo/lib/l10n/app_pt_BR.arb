@@ -1,0 +1,128 @@
+{
+  "@@locale": "pt_BR",
+  "appTitle": "BarberGo",
+  "@appTitle": {
+    "description": "Nome do aplicativo"
+  },
+  
+  "loginTitle": "Entrar",
+  "@loginTitle": {
+    "description": "Título da tela de login"
+  },
+  "loginEmail": "E-mail",
+  "loginPassword": "Senha",
+  "loginButton": "Entrar",
+  "loginForgotPassword": "Esqueceu a senha?",
+  "loginNoAccount": "Não tem conta? Cadastre-se",
+  
+  "registerTitle": "Criar Conta",
+  "@registerTitle": {
+    "description": "Título da tela de registro"
+  },
+  "registerName": "Nome completo",
+  "registerEmail": "E-mail",
+  "registerPassword": "Senha",
+  "registerConfirmPassword": "Confirmar senha",
+  "registerPhone": "Telefone",
+  "registerCity": "Cidade",
+  "registerState": "Estado",
+  "registerAccountType": "Tipo de conta",
+  "registerBarber": "Barbeiro",
+  "registerBarbershop": "Barbearia",
+  "registerButton": "Criar Conta",
+  "registerHasAccount": "Já tem conta? Entre",
+  
+  "vacanciesTitle": "Vagas Disponíveis",
+  "@vacanciesTitle": {
+    "description": "Título da tela de vagas"
+  },
+  "vacanciesFilter": "Filtrar",
+  "vacanciesNoResults": "Nenhuma vaga encontrada",
+  "vacancyApply": "Candidatar",
+  "vacancyDetails": "Detalhes da Vaga",
+  "vacancyRequirements": "Requisitos",
+  "vacancyBenefits": "Benefícios",
+  "vacancySalary": "Salário",
+  "vacancyLocation": "Localização",
+  "vacancyType": "Tipo de Vaga",
+  "vacancyTypeCLT": "CLT",
+  "vacancyTypeFreelance": "Freelancer",
+  "vacancyTypeCommission": "Comissão",
+  
+  "myApplicationsTitle": "Minhas Candidaturas",
+  "@myApplicationsTitle": {
+    "description": "Título da tela de candidaturas"
+  },
+  "applicationStatusPending": "Pendente",
+  "applicationStatusAccepted": "Aceita",
+  "applicationStatusRejected": "Rejeitada",
+  "applicationAccept": "Aceitar",
+  "applicationReject": "Rejeitar",
+  "applicationOpenChat": "Abrir Chat",
+  
+  "profileTitle": "Perfil",
+  "@profileTitle": {
+    "description": "Título da tela de perfil"
+  },
+  "profileEdit": "Editar Perfil",
+  "profileLogout": "Sair",
+  "profileName": "Nome",
+  "profileEmail": "E-mail",
+  "profilePhone": "Telefone",
+  "profileLocation": "Localização",
+  "profileAccountType": "Tipo de Conta",
+  
+  "myVacanciesTitle": "Minhas Vagas",
+  "@myVacanciesTitle": {
+    "description": "Título da tela de vagas criadas"
+  },
+  "vacancyCreate": "Criar Vaga",
+  "vacancyEdit": "Editar Vaga",
+  "vacancyDelete": "Excluir Vaga",
+  "vacancyActive": "Ativa",
+  "vacancyInactive": "Inativa",
+  
+  "chatTitle": "Chat",
+  "@chatTitle": {
+    "description": "Título da tela de chat"
+  },
+  "chatTypeMessage": "Digite uma mensagem...",
+  "chatSend": "Enviar",
+  "chatNoMessages": "Nenhuma mensagem ainda",
+  
+  "inboxTitle": "Notificações",
+  "@inboxTitle": {
+    "description": "Título da tela de notificações"
+  },
+  "inboxNoNotifications": "Nenhuma notificação",
+  "inboxMarkAllRead": "Marcar todas como lidas",
+  
+  "errorGeneric": "Ocorreu um erro. Tente novamente.",
+  "@errorGeneric": {
+    "description": "Mensagem de erro genérica"
+  },
+  "errorNetwork": "Erro de conexão. Verifique sua internet.",
+  "errorAuth": "Email ou senha incorretos.",
+  "errorEmailInUse": "Este email já está em uso.",
+  "errorWeakPassword": "Senha muito fraca. Use pelo menos 6 caracteres.",
+  "errorInvalidEmail": "Email inválido.",
+  "errorUserNotFound": "Usuário não encontrado.",
+  "errorRequired": "Campo obrigatório",
+  
+  "commonSave": "Salvar",
+  "@commonSave": {
+    "description": "Botão genérico salvar"
+  },
+  "commonCancel": "Cancelar",
+  "commonDelete": "Excluir",
+  "commonEdit": "Editar",
+  "commonBack": "Voltar",
+  "commonOk": "OK",
+  "commonYes": "Sim",
+  "commonNo": "Não",
+  "commonLoading": "Carregando...",
+  "commonError": "Erro",
+  "commonSuccess": "Sucesso",
+  "commonConfirm": "Confirmar",
+  "commonSearch": "Pesquisar"
+}

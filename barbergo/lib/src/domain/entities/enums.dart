@@ -1,7 +1,13 @@
+import 'package:dart_mappable/dart_mappable.dart';
+
+part 'enums.mapper.dart';
+
 // Tipos de Conta
-enum AccountType { barber, barbershop }
+@MappableEnum()
+enum AccountType { customer, barber, barbershop }
 
 // Tipos de Vaga
+@MappableEnum()
 enum VacancyType {
   freelancer, // Autônomo
   clt, // Carteira Assinada (Fixo)
@@ -9,12 +15,10 @@ enum VacancyType {
 }
 
 // Status da Candidatura
+@MappableEnum()
 enum ApplicationStatus {
   pending, // Enviada, aguardando resposta
   accepted, // Aceita pela barbearia
   rejected, // Rejeitada pela barbearia
-  withdrawn, // Retirada pelo candidato
+  withdrawn, // Retirada pelo barbeiro
 }
-
-// Planos de assinatura
-enum SubscriptionTier { free, premium }

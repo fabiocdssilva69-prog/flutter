@@ -1,21 +1,31 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
-import 'converters.dart';
+import 'package:barbergo_app/src/core/infrastructure/mappable_hooks.dart';
 
-part 'review_entity.freezed.dart';
-part 'review_entity.g.dart';
+part 'review_entity.mapper.dart';
 
-@freezed
-abstract class ReviewEntity with _$ReviewEntity {
-  const factory ReviewEntity({
-    required String reviewId,
-    required String reviewerId,
-    required String targetId,
-    required int rating,
-    String? comment,
-    @TimestampConverter() required DateTime createdAt,
-  }) = _ReviewEntity;
+@MappableClass()
+class ReviewEntity with ReviewEntityMappable {
+  final String reviewId;
+  final String reviewerId;
+  final String targetId;
+  final int rating;
+  final String? comment;
 
-  factory ReviewEntity.fromJson(Map<String, dynamic> json) => _$ReviewEntityFromJson(json);
+  @MappableField(hook: TimestampHook())
+  final DateTime createdAt;
+
+  const ReviewEntity({
+    required this.reviewId,
+    required this.reviewerId,
+    required this.targetId,
+    required this.rating,
+    this.comment,
+    required this.createdAt,
+  });
+
+  // Factory constructors para compatibilidade com repositórios
+  static ReviewEntity fromMap(Map<String, dynamic> map) => ReviewEntityMapper.fromMap(map);
+
+  static ReviewEntity fromJson(String json) => ReviewEntityMapper.fromJson(json);
 }

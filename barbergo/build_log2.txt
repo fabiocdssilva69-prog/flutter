@@ -1,0 +1,25 @@
+Running Gradle task 'assembleRelease'...                        
+ParentContainsErrorRecordException: C:\workspaces\fabiocdssilva69-prog\barbergo\flutter\bin\internal\update_engine_version.ps1:73:1
+Line |
+  73 |  [System.IO.File]::WriteAllText("$flutterRoot/bin/cache/engine.stamp", .
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Exception calling "WriteAllText" with "3" argument(s): "A opera´┐¢´┐¢o solicitada n´┐¢o pode ser executada em um
+     | arquivo com uma se´┐¢´┐¢o mapeada pelo usu´┐¢rio aberta. :
+     | 'C:\workspaces\fabiocdssilva69-prog\barbergo\flutter\bin\cache\engine.stamp'."
+Error: Unable to determine engine version... 
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileFlutterBuildRelease'.
+> Process 'command 'C:\workspaces\fabiocdssilva69-prog\barbergo\flutter\bin\flutter.bat'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 34s
+Running Gradle task 'assembleRelease'...                           96,0s
+Gradle task assembleRelease failed with exit code 1

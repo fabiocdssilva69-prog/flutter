@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../providers/ai_service.dart';
 
 part 'barber_chatbot_controller.g.dart';
@@ -10,19 +11,13 @@ class BarberChatbotController extends _$BarberChatbotController {
   FutureOr<void> build() {}
 
   /// Envia mensagem ao chatbot e recebe resposta
-  Future<String> sendMessage({
-    required String message,
-    List<Map<String, String>>? conversationHistory,
-  }) async {
+  Future<String> sendMessage({required String message, List<Map<String, String>>? conversationHistory}) async {
     state = const AsyncLoading();
 
     try {
       final aiService = ref.read(aIServiceProvider.notifier);
 
-      final response = await aiService.chatAboutBarberArt(
-        userMessage: message,
-        conversationHistory: conversationHistory,
-      );
+      final response = await aiService.chatAboutBarberArt(question: message);
 
       state = const AsyncData(null);
       return response;
@@ -33,10 +28,7 @@ class BarberChatbotController extends _$BarberChatbotController {
   }
 
   /// Obtém dicas sobre técnicas específicas
-  Future<String> getTechniqueTips({
-    required String technique,
-    String? difficulty,
-  }) async {
+  Future<String> getTechniqueTips({required String technique, String? difficulty}) async {
     state = const AsyncLoading();
 
     try {
@@ -56,7 +48,7 @@ Inclua:
 - Dicas de profissional
 ''';
 
-      final response = await aiService.chatAboutBarberArt(userMessage: message);
+      final response = await aiService.chatAboutBarberArt(question: message);
 
       state = const AsyncData(null);
       return response;
@@ -87,13 +79,9 @@ Para cada tendência, forneça:
 Liste 6-8 tendências. Separe cada uma com "---".
 ''';
 
-      final response = await aiService.chatAboutBarberArt(userMessage: message);
+      final response = await aiService.chatAboutBarberArt(question: message);
 
-      final trends = response
-          .split('---')
-          .map((trend) => trend.trim())
-          .where((trend) => trend.isNotEmpty)
-          .toList();
+      final trends = response.split('---').map((trend) => trend.trim()).where((trend) => trend.isNotEmpty).toList();
 
       state = const AsyncData(null);
       return trends.isEmpty ? [response] : trends;
@@ -104,21 +92,13 @@ Liste 6-8 tendências. Separe cada uma com "---".
   }
 
   /// Recomenda produtos para situações específicas
-  Future<String> recommendProducts({
-    required String hairType,
-    required String desiredStyle,
-    String? concerns,
-  }) async {
+  Future<String> recommendProducts({required String hairType, required String desiredStyle, String? concerns}) async {
     state = const AsyncLoading();
 
     try {
       final aiService = ref.read(aIServiceProvider.notifier);
 
-      final response = await aiService.recommendProducts(
-        hairType: hairType,
-        style: desiredStyle,
-        concerns: concerns,
-      );
+      final response = await aiService.recommendProducts(hairType: hairType, desiredStyle: desiredStyle);
 
       state = const AsyncData(null);
       return response;
@@ -143,7 +123,7 @@ Seja educativo, interessante e conte histórias fascinantes.
 Inclua curiosidades quando relevante.
 ''';
 
-      final response = await aiService.chatAboutBarberArt(userMessage: message);
+      final response = await aiService.chatAboutBarberArt(question: message);
 
       state = const AsyncData(null);
       return response;
@@ -165,9 +145,7 @@ Inclua curiosidades quando relevante.
     try {
       final aiService = ref.read(aIServiceProvider.notifier);
 
-      final prefsText = preferences != null
-          ? '\nPreferências: $preferences'
-          : '';
+      final prefsText = preferences != null ? '\nPreferências: $preferences' : '';
 
       final message =
           '''
@@ -181,7 +159,7 @@ Sugira 3-4 opções diferentes explicando por que cada uma funciona bem.
 Inclua dicas de manutenção para cada opção.
 ''';
 
-      final response = await aiService.chatAboutBarberArt(userMessage: message);
+      final response = await aiService.chatAboutBarberArt(question: message);
 
       state = const AsyncData(null);
       return response;

@@ -14,17 +14,14 @@ class AITestScreen extends StatefulWidget {
 class _AITestScreenState extends State<AITestScreen> {
   String _geminiStatus = 'Aguardando teste...';
   String _openaiStatus = 'Aguardando teste...';
-  String _claudeStatus = 'Aguardando teste...';
+  String _perplexityStatus = 'Aguardando teste...';
   String _testResult = '';
   bool _isTesting = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('🧪 Teste de API Keys IA'),
-        backgroundColor: Colors.deepPurple,
-      ),
+      appBar: AppBar(title: const Text('🧪 Teste de API Keys IA'), backgroundColor: Colors.deepPurple),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -41,11 +38,7 @@ class _AITestScreenState extends State<AITestScreen> {
                     SizedBox(height: 8),
                     Text(
                       'Teste de Integração IA',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     SizedBox(height: 4),
                     Text(
@@ -72,7 +65,7 @@ class _AITestScreenState extends State<AITestScreen> {
 
             _buildStatusCard(
               title: '🔵 OpenAI API',
-              subtitle: 'GPT-4 Pro - Incluído',
+              subtitle: 'ChatGPT Plus/Pro - Incluído',
               status: _openaiStatus,
               color: Colors.blue,
             ),
@@ -80,10 +73,10 @@ class _AITestScreenState extends State<AITestScreen> {
             const SizedBox(height: 12),
 
             _buildStatusCard(
-              title: '🟣 Claude API',
-              subtitle: 'Anthropic - ~\$5/mês',
-              status: _claudeStatus,
-              color: Colors.purple,
+              title: '� Perplexity API',
+              subtitle: 'Perplexity Pro - Busca Web',
+              status: _perplexityStatus,
+              color: Colors.orange,
             ),
 
             const SizedBox(height: 24),
@@ -101,13 +94,7 @@ class _AITestScreenState extends State<AITestScreen> {
                         children: [
                           Icon(Icons.psychology, color: Colors.deepPurple),
                           SizedBox(width: 8),
-                          Text(
-                            'Resultado do Teste',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          Text('Resultado do Teste', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                         ],
                       ),
                       const SizedBox(height: 12),
@@ -179,17 +166,8 @@ class _AITestScreenState extends State<AITestScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                  ),
+                  Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(subtitle, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
                   const SizedBox(height: 4),
                   Text(
                     status,
@@ -242,17 +220,13 @@ class _AITestScreenState extends State<AITestScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✅ Gemini funcionando perfeitamente!'),
-            backgroundColor: Colors.green,
-          ),
+          const SnackBar(content: Text('✅ Gemini funcionando perfeitamente!'), backgroundColor: Colors.green),
         );
       }
     } catch (e) {
       setState(() {
         _geminiStatus = '❌ Erro';
-        _testResult =
-            'Erro ao testar Gemini:\n\n$e\n\nVerifique se a GEMINI_API_KEY está correta no arquivo .env';
+        _testResult = 'Erro ao testar Gemini:\n\n$e\n\nVerifique se a GEMINI_API_KEY está correta no arquivo .env';
         _isTesting = false;
       });
 
@@ -273,7 +247,7 @@ class _AITestScreenState extends State<AITestScreen> {
       _isTesting = true;
       _geminiStatus = '⏳ Testando...';
       _openaiStatus = '⏳ Testando...';
-      _claudeStatus = '⏳ Testando...';
+      _perplexityStatus = '⏳ Testando...';
       _testResult = '';
     });
 
@@ -283,16 +257,11 @@ class _AITestScreenState extends State<AITestScreen> {
       if (geminiKey.isEmpty || geminiKey == 'sua_key_aqui') {
         throw Exception('Key não configurada');
       }
-      final geminiModel = GenerativeModel(
-        model: 'gemini-1.5-flash',
-        apiKey: geminiKey,
-      );
+      final geminiModel = GenerativeModel(model: 'gemini-2.5-flash', apiKey: geminiKey);
       await geminiModel.generateContent([Content.text('teste')]);
       setState(() => _geminiStatus = '✅ Configurado!');
     } catch (e) {
-      setState(
-        () => _geminiStatus = '❌ Erro: ${e.toString().substring(0, 50)}...',
-      );
+      setState(() => _geminiStatus = '❌ Erro: ${e.toString().substring(0, 50)}...');
     }
 
     // Teste OpenAI
@@ -305,34 +274,36 @@ class _AITestScreenState extends State<AITestScreen> {
       await openaiClient.listModels();
       setState(() => _openaiStatus = '✅ Configurado!');
     } catch (e) {
-      setState(
-        () => _openaiStatus = '❌ Erro: ${e.toString().substring(0, 50)}...',
-      );
+      setState(() => _openaiStatus = '❌ Erro: ${e.toString().substring(0, 50)}...');
     }
 
-    // Teste Claude
+    // Teste Perplexity
     try {
-      final claudeKey = dotenv.env['ANTHROPIC_API_KEY'] ?? '';
-      if (claudeKey.isEmpty || claudeKey == 'sua_key_aqui') {
+      final perplexityKey = dotenv.env['PERPLEXITY_API_KEY'] ?? '';
+      if (perplexityKey.isEmpty || perplexityKey == 'sua_chave_perplexity_aqui') {
         throw Exception('Key não configurada');
       }
-      // Claude não tem método simples de verificação, apenas validamos se key existe
-      setState(() => _claudeStatus = '✅ Key configurada (não testada)');
-    } catch (e) {
-      setState(
-        () => _claudeStatus = '❌ Erro: ${e.toString().substring(0, 50)}...',
+      final perplexityClient = OpenAIClient(apiKey: perplexityKey, baseUrl: 'https://api.perplexity.ai');
+
+      // Teste real com uma pergunta simples
+      await perplexityClient.createChatCompletion(
+        request: CreateChatCompletionRequest(
+          model: ChatCompletionModel.modelId('sonar'),
+          messages: [ChatCompletionMessage.user(content: ChatCompletionUserMessageContent.string('teste'))],
+          maxTokens: 10,
+        ),
       );
+      setState(() => _perplexityStatus = '✅ Configurado!');
+    } catch (e) {
+      setState(() => _perplexityStatus = '❌ Erro: ${e.toString().substring(0, 50)}...');
     }
 
     // Resultado final
-    final allOk =
-        _geminiStatus.contains('✅') &&
-        _openaiStatus.contains('✅') &&
-        _claudeStatus.contains('✅');
+    final allOk = _geminiStatus.contains('✅') && _openaiStatus.contains('✅') && _perplexityStatus.contains('✅');
 
     setState(() {
       _testResult = allOk
-          ? '🎉 Todas as APIs estão configuradas corretamente!\n\nVocê pode usar:\n• Geração de Bio (Gemini)\n• Smart Matching (GPT-4)\n• Análise de Portfólio (Gemini Vision)\n• Geração de Contratos (Claude)'
+          ? '🎉 Todas as APIs estão configuradas corretamente!\n\nVocê pode usar:\n• Geração de Bio (Gemini)\n• Smart Matching (GPT-4)\n• Análise de Portfólio (Gemini Vision)\n• Busca de Tendências (Perplexity)'
           : '⚠️ Algumas APIs não estão configuradas.\n\nVerifique o arquivo .env e adicione as chaves que estão faltando.';
       _isTesting = false;
     });

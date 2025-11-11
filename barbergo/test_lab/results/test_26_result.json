@@ -1,0 +1,13 @@
+{
+  "test": 26,
+  "files_generated": [
+    "lib/src/domain/entities/user_interaction_entity.g.dart"
+  ],
+  "errors": 0,
+  "name": "built_value - 1 Entidade",
+  "recommendation": "⚠️ Funciona mas com problemas",
+  "success": false,
+  "max_score": 115,
+  "score": 65,
+  "duration": 90.4424162
+}

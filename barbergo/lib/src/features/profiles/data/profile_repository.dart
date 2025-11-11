@@ -10,18 +10,18 @@ class ProfileRepository {
   ProfileRepository(this._firestore);
   final FirebaseFirestore _firestore;
 
-  /// Cria ou atualiza o perfil do usuário na coleção "Profiles".
+  /// Cria ou atualiza o perfil do usuário na coleção "profiles".
   /// O ID do documento é o UID do usuário.
   Future<void> createProfile(ProfileEntity profile) async {
-    await _firestore.collection('Profiles').doc(profile.userId).set(profile.toJson());
+    await _firestore.collection('profiles').doc(profile.userId).set(profile.toMap());
   }
 
   /// Busca o perfil de um usuário pelo UID.
   /// Retorna null se o documento não existir.
   Future<ProfileEntity?> getProfile(String uid) async {
-    final doc = await _firestore.collection('Profiles').doc(uid).get();
+    final doc = await _firestore.collection('profiles').doc(uid).get();
     if (!doc.exists) return null;
-    return ProfileEntity.fromJson(doc.data()!);
+    return ProfileEntity.fromMap(doc.data()!);
   }
 
   /// Alias para getProfile para compatibilidade

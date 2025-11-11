@@ -1,0 +1,18 @@
+{
+  "project_info": {
+    "project_id": "barbergo-38c21",
+    "project_number": "872973233743"
+  },
+  "client": [
+    {
+      "android_client_info": {
+        "package_name": "com.example.barbergo_app"
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvuzpMOv4knpKO6JO8-H8NVCPUJ6zf9YA"
+        }
+      ]
+    }
+  ]
+}

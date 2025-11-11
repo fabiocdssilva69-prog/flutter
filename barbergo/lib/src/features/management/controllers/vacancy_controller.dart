@@ -12,16 +12,28 @@ part 'vacancy_controller.g.dart';
 // Provider que retorna stream de vagas da barbearia logada
 @riverpod
 Stream<List<VacancyEntity>> myVacanciesStream(Ref ref) {
-  final authUser = ref.watch(authStateChangesProvider).value;
+  // Usa ref.read para evitar rebuild loop
+  final authUser = ref.read(authRepositoryProvider).currentUser;
+
   if (authUser == null) {
-    return const Stream.empty();
+    return Stream.value([]); // Retorna lista vazia ao invés de Stream.empty()
   }
 
   final repository = ref.watch(vacancyRepositoryProvider);
-  return repository.watchVacanciesByBarbershop(authUser.uid);
-}
 
-// Provider que retorna stream de candidaturas para uma vaga específica
+  // Adiciona handler de erro para MapperException
+  return repository
+      .watchVacanciesByBarbershop(authUser.uid)
+      .handleError((error, stackTrace) {
+        print('❌ ERRO ao carregar vagas: $error');
+        print('📍 StackTrace: $stackTrace');
+      })
+      .map((vacancies) {
+        print('📦 Vagas carregadas: ${vacancies.length}');
+        return vacancies;
+      });
+} // Provider que retorna stream de candidaturas para uma vaga específica
+
 @riverpod
 Stream<List<ApplicationEntity>> applicationsForVacancyStream(Ref ref, String vacancyId) {
   final repository = ref.watch(applicationRepositoryProvider);
@@ -42,6 +54,7 @@ class ManagementController extends _$ManagementController {
     required String workHours,
     required String barbershopName,
     required String locationCityState,
+    Map<String, dynamic>? preciseLocation,
   }) async {
     final barbershopId = ref.read(authRepositoryProvider).currentUser?.uid;
 
@@ -62,6 +75,7 @@ class ManagementController extends _$ManagementController {
       commissionPercentage: commissionPercentage,
       workHours: workHours,
       locationCityState: locationCityState,
+      preciseLocation: preciseLocation ?? {}, // Usa localização precisa ou vazio
       isActive: true,
       createdAt: now,
       updatedAt: now,

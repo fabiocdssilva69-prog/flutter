@@ -1,0 +1,12 @@
+
+lib/src/domain/entities/profile_entity.dart:9:6: Error: Error when reading 'lib/src/domain/entities/profile_entity.g.dart': O sistema n├úo pode encontrar o arquivo especificado.
+lib/src/domain/entities/profile_entity.dart:8:6: Error: Can't use 'lib/src/domain/entities/profile_entity.freezed.dart' as a part, because it has no 'part of' declaration.
+lib/src/domain/entities/profile_entity.dart:9:6: Error: Can't use 'lib/src/domain/entities/profile_entity.g.dart' as a part, because it has no 'part of' declaration.
+lib/src/domain/entities/profile_entity.dart:12:26: Error: Type '_$ProfileEntity' not found.
+lib/src/domain/entities/profile_entity.dart:12:7: Error: The type '_$ProfileEntity' can't be mixed in.
+lib/src/domain/entities/profile_entity.dart:27:8: Error: Couldn't find constructor '_ProfileEntity'.
+lib/src/domain/entities/profile_entity.dart:27:8: Error: Redirection constructor target not found: '_ProfileEntity'
+lib/src/core/services/notification_service.dart:100:94: Error: A value of type 'Object?' can't be assigned to a variable of type 'Object'.
+lib/src/core/services/notification_service.dart:105:87: Error: A value of type 'Object?' can't be assigned to a variable of type 'Object'.
+lib/src/data/repositories/profile_repository.dart:24:35: Error: The method 'copyWith' isn't defined for the type 'ProfileEntity'.
+
