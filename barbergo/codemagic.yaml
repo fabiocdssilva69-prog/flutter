@@ -1,4 +1,47 @@
 workflows:
+
+  # ─── TESTE RÁPIDO (sem conta Apple paga) ───────────────────────────────────
+  # Builda IPA sem assinatura → instalar via Sideloadly no PC do testador
+  ios-testing:
+    name: iOS Testing Build (Sideloadly)
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Install CocoaPods
+        script: find . -name "Podfile" -execdir pod install \;
+
+      - name: Build IPA (sem assinatura)
+        script: |
+          flutter build ipa --no-codesign
+          # Empacota o .app em IPA manualmente
+          mkdir -p build/ios/ipa/Payload
+          cp -r build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app \
+                build/ios/ipa/Payload/
+          cd build/ios/ipa && zip -r BarberGO.ipa Payload/
+
+    artifacts:
+      - build/ios/ipa/BarberGO.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      email:
+        recipients:
+          - fabiocds.silva69@gmail.com
+          - brunobiguacu@gmail.com
+        notify:
+          success: true
+          failure: true
+
+  # ─── PRODUÇÃO (requer conta Apple Developer paga) ──────────────────────────
   ios-workflow:
     name: iOS Release Build
     instance_type: mac_mini_m2
