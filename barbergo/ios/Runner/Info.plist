@@ -5,7 +5,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Barbergo App</string>
+		<string>BarberGO</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -50,5 +50,15 @@
 		<string>Usamos sua localização para encontrar vagas próximas a você.</string>
 		<key>NSLocationAlwaysUsageDescription</key>
 		<string>Usamos sua localização para encontrar vagas próximas a você.</string>
+
+		<!-- Permissões para Camera e Microfone (Video/Voice Messages) -->
+		<key>NSCameraUsageDescription</key>
+		<string>Precisamos acessar sua câmera para gravar e enviar vídeos nas conversas.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Precisamos acessar seu microfone para gravar e enviar mensagens de voz e vídeo.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Precisamos acessar suas fotos para que você possa compartilhar imagens nas conversas.</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Precisamos salvar fotos na sua galeria.</string>
 	</dict>
 </plist>
