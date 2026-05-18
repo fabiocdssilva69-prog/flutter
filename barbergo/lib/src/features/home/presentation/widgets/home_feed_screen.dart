@@ -3206,7 +3206,7 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
     showDialog(context: context, barrierDismissible: false, builder: (context) => const Center(child: CircularProgressIndicator()));
 
     try {
-      final uid = ref.read(authStateChangesProvider).value?.uid ?? '';
+      final uid = FirebaseAuth.instance.currentUser?.uid ?? '';
       String? baseUrl;
       switch (productId) {
         case 'magicMatch3':  baseUrl = StripeConfig.paymentLinkMagicMatch3;  break;
