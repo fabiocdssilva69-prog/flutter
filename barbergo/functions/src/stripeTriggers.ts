@@ -74,6 +74,15 @@ export const stripeWebhook = functions.https.onRequest(async (req, res) => {
         await handleSubscriptionCanceled(event.data.object as Stripe.Subscription)
         break
 
+      case 'checkout.session.completed':
+        await handleCheckoutCompleted(event.data.object as Stripe.Checkout.Session)
+        break
+
+      // Boleto/PIX: pagamento confirmado assincronamente (após geração do boleto)
+      case 'checkout.session.async_payment_succeeded':
+        await handleCheckoutCompleted(event.data.object as Stripe.Checkout.Session)
+        break
+
       case 'invoice.payment_succeeded':
         await handlePaymentSucceeded(event.data.object as Stripe.Invoice)
         break
@@ -96,70 +105,145 @@ export const stripeWebhook = functions.https.onRequest(async (req, res) => {
 /**
  * Atualiza ou cria uma assinatura no Firestore
  */
+// Mapa de priceId → badge e benefícios
+const SILVER_PRICE_IDS = new Set([
+  'price_1ShGe4Pru6X3lyL9EYUlrwuz', // silver mensal
+  'price_1ShGe4Pru6X3lyL9z8DSuDMD', // silver anual
+])
+const GOLD_PRICE_IDS = new Set([
+  'price_1ShGe3Pru6X3lyL9tvExYkyc', // gold mensal
+  'price_1ShGe3Pru6X3lyL97BKkZ2yH', // gold anual
+])
+
+/**
+ * Encontra o usuário pelo stripeCustomerId ou pelo email do cliente Stripe
+ */
+async function findUserDoc(customerId: string, customerEmail?: string | null): Promise<FirebaseFirestore.DocumentSnapshot | null> {
+  // 1. Tenta pelo stripeCustomerId em perfis
+  let snap = await db.collection('perfis').where('stripeCustomerId', '==', customerId).limit(1).get()
+  if (!snap.empty) return snap.docs[0]
+
+  // 2. Fallback: busca pelo email em perfis
+  if (customerEmail) {
+    snap = await db.collection('perfis').where('email', '==', customerEmail).limit(1).get()
+    if (!snap.empty) {
+      await snap.docs[0].ref.update({ stripeCustomerId: customerId })
+      return snap.docs[0]
+    }
+
+    // 3. Fallback: busca em users pelo email, depois retorna o perfis correspondente
+    const userSnap = await db.collection('users').where('email', '==', customerEmail).limit(1).get()
+    if (!userSnap.empty) {
+      const userId = userSnap.docs[0].id
+      const profileDoc = await db.collection('perfis').doc(userId).get()
+      if (profileDoc.exists) {
+        await profileDoc.ref.update({ stripeCustomerId: customerId })
+        return profileDoc
+      }
+    }
+  }
+
+  console.error(`❌ User not found — customerId: ${customerId}, email: ${customerEmail}`)
+  return null
+}
+
 async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
   const customerId = subscription.customer as string
   const subscriptionId = subscription.id
+  const priceId = subscription.items.data[0]?.price.id ?? ''
+  const isActive = subscription.status === 'active'
 
   console.log(`📝 Updating subscription: ${subscriptionId} for customer: ${customerId}`)
 
-  // Busca o usuário pelo Stripe Customer ID
-  const profilesSnapshot = await db.collection('profiles').where('stripeCustomerId', '==', customerId).limit(1).get()
+  // Busca email do cliente no Stripe para fallback
+  const stripe = getStripe()
+  const stripeCustomer = await stripe.customers.retrieve(customerId) as Stripe.Customer
+  const customerEmail = stripeCustomer.email
 
-  if (profilesSnapshot.empty) {
-    console.error(`❌ No user found with stripeCustomerId: ${customerId}`)
-    return
-  }
+  const profileDoc = await findUserDoc(customerId, customerEmail)
+  if (!profileDoc) return
 
-  const profileDoc = profilesSnapshot.docs[0]
   const userId = profileDoc.id
 
-  // Determina os recursos premium com base no produto
-  const productId = subscription.items.data[0]?.price.product as string
-  const features = {
-    canSeeWhoLiked: true,
-    superLikesRemaining: -1, // -1 = ilimitado
+  const isPastDue = subscription.status === 'past_due'
+  const isEffectivelyActive = isActive || isPastDue // mantém badge durante grace period
+
+  // Determina badge baseado no priceId
+  let verificationBadge = 'none'
+  let badgeGrantedBy = 'subscription'
+  if (isEffectivelyActive && GOLD_PRICE_IDS.has(priceId)) {
+    verificationBadge = 'gold'
+  } else if (isEffectivelyActive && SILVER_PRICE_IDS.has(priceId)) {
+    verificationBadge = 'silver'
+  }
+
+  // Salva assinatura no Firestore
+  await db.collection('subscriptions').doc(subscriptionId).set({
+    userId,
+    stripeCustomerId: customerId,
+    stripeSubscriptionId: subscriptionId,
+    stripePriceId: priceId,
+    status: subscription.status,
+    currentPeriodStart: admin.firestore.Timestamp.fromDate(new Date((subscription as any).current_period_start * 1000)),
+    currentPeriodEnd: admin.firestore.Timestamp.fromDate(new Date((subscription as any).current_period_end * 1000)),
+    cancelAtPeriodEnd: (subscription as any).cancel_at_period_end,
+    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+  }, { merge: true })
+
+  const isGold = verificationBadge === 'gold'
+  const isSilver = verificationBadge === 'silver'
+  const periodEnd = (subscription as any).current_period_end
+  const badgeExpiresAt = periodEnd
+    ? admin.firestore.Timestamp.fromDate(new Date(periodEnd * 1000))
+    : null
+
+  // Grace period: 3 dias após pagamento atrasado antes de remover o selo
+  const GRACE_DAYS = 3
+  const badgeGraceUntil = isPastDue
+    ? admin.firestore.Timestamp.fromDate(new Date(Date.now() + GRACE_DAYS * 24 * 60 * 60 * 1000))
+    : null
+
+  // Benefícios por plano (conforme tela "Conquiste Seu Selo")
+  const benefitUpdate = isEffectivelyActive ? {
+    superLikesRemaining: isGold ? 15  : isSilver ? 10 : 1,
+    magicLikesRemaining: isGold ? 15  : isSilver ? 5  : 0,
+    replaysRemaining:    isGold ? -1  : isSilver ? 5  : 0, // Gold = ILIMITADO
+    boostsRemaining:     isGold ? 10  : isSilver ? 5  : 0,
+  } : {
+    // Cancelado/expirado — volta ao free
+    superLikesRemaining: 1,
+    magicLikesRemaining: 0,
+    replaysRemaining: 0,
     boostsRemaining: 0,
   }
 
-  // Se for uma assinatura, dá acesso a super likes ilimitados
-  if (subscription.items.data[0]?.price.recurring) {
-    features.superLikesRemaining = -1 // Ilimitado
-  }
-
-  // Atualiza a assinatura no Firestore
-  await db
-    .collection('subscriptions')
-    .doc(subscriptionId)
-    .set(
-      {
-        userId,
-        stripeCustomerId: customerId,
-        stripeSubscriptionId: subscriptionId,
-        stripePriceId: subscription.items.data[0]?.price.id,
-        stripeProductId: productId,
-        status: subscription.status,
-        currentPeriodStart: admin.firestore.Timestamp.fromDate(new Date((subscription as any).current_period_start * 1000)),
-        currentPeriodEnd: admin.firestore.Timestamp.fromDate(new Date((subscription as any).current_period_end * 1000)),
-        cancelAtPeriodEnd: (subscription as any).cancel_at_period_end,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      },
-      { merge: true },
-    )
-
-  // Atualiza o status premium no perfil do usuário
+  // Atualiza perfil — badge + isPremium + grace period + benefícios
   await profileDoc.ref.update({
-    isPremium: subscription.status === 'active',
-    ...features,
+    isPremium: isActive,           // true apenas quando active (não past_due)
+    hasActivePremium: isEffectivelyActive, // true durante grace period
+    stripeCustomerId: customerId,
+    verificationBadge,
+    badgeGrantedBy: isEffectivelyActive ? badgeGrantedBy : null,
+    badgeExpiresAt,
+    badgeGraceUntil,               // null quando active, data quando past_due, null quando cancelado
+    canSeeWhoLiked: isEffectivelyActive,
+    ...benefitUpdate,
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
   })
 
-  console.log(`✅ Subscription ${subscriptionId} updated for user ${userId}`)
+  if (isPastDue) {
+    console.log(`⏳ Subscription ${subscriptionId} past_due — grace period até ${badgeGraceUntil?.toDate().toISOString()}`)
+    await sendNotification(userId, {
+      title: '⚠️ Pagamento Atrasado',
+      body: `Seu pagamento está atrasado. Você tem ${GRACE_DAYS} dias antes de perder o selo.`,
+    })
+  }
 
-  // Envia notificação ao usuário
+  console.log(`✅ Subscription ${subscriptionId} → badge=${verificationBadge} for user ${userId}`)
+
   await sendNotification(userId, {
-    title: '🎉 Assinatura Premium Ativa!',
-    body: 'Aproveite todos os benefícios premium do BarberGO.',
+    title: isActive ? `🎉 Selo ${verificationBadge === 'gold' ? 'Gold' : 'Silver'} Ativo!` : '😢 Assinatura Cancelada',
+    body: isActive ? 'Aproveite todos os benefícios premium do BarberGO.' : 'Sua assinatura foi cancelada.',
   })
 }
 
@@ -172,39 +256,177 @@ async function handleSubscriptionCanceled(subscription: Stripe.Subscription) {
 
   console.log(`🚫 Canceling subscription: ${subscriptionId}`)
 
-  // Busca o usuário pelo Stripe Customer ID
-  const profilesSnapshot = await db.collection('profiles').where('stripeCustomerId', '==', customerId).limit(1).get()
+  const stripe = getStripe()
+  const stripeCustomer = await stripe.customers.retrieve(customerId) as Stripe.Customer
+  const profileDoc = await findUserDoc(customerId, stripeCustomer.email)
+  if (!profileDoc) return
 
-  if (profilesSnapshot.empty) {
-    console.error(`❌ No user found with stripeCustomerId: ${customerId}`)
-    return
-  }
-
-  const profileDoc = profilesSnapshot.docs[0]
   const userId = profileDoc.id
 
-  // Atualiza a assinatura
   await db.collection('subscriptions').doc(subscriptionId).update({
     status: 'canceled',
     canceledAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
   })
 
-  // Remove o status premium do perfil
+  // Remove badge de assinatura e isPremium — volta ao free
   await profileDoc.ref.update({
     isPremium: false,
+    hasActivePremium: false,
+    verificationBadge: 'none',
+    badgeGrantedBy: null,
+    badgeExpiresAt: null,
     canSeeWhoLiked: false,
-    superLikesRemaining: 0,
+    superLikesRemaining: 1,
+    magicLikesRemaining: 0,
+    replaysRemaining: 0,
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
   })
 
-  console.log(`✅ Subscription ${subscriptionId} canceled for user ${userId}`)
+  console.log(`✅ Subscription canceled — badge removido para user ${userId}`)
 
-  // Envia notificação ao usuário
   await sendNotification(userId, {
     title: '😢 Assinatura Cancelada',
-    body: 'Sua assinatura premium foi cancelada. Esperamos você de volta!',
+    body: 'Sua assinatura foi cancelada. Esperamos você de volta!',
   })
+}
+
+/**
+ * Processa checkout de pagamento único (boosts e super likes)
+ */
+async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
+  const customerId = session.customer as string
+  const mode = session.mode
+
+  console.log(`💳 Checkout completed: ${session.id} (mode: ${mode}, payment_status: ${session.payment_status})`)
+
+  // Ignora se for assinatura (já processado por outros eventos)
+  if (mode !== 'payment') {
+    console.log(`ℹ️ Checkout mode is ${mode}, skipping (handled by subscription events)`)
+    return
+  }
+
+  // Boleto/PIX são assíncronos — só processa quando realmente pago
+  if (session.payment_status !== 'paid') {
+    console.log(`⏳ Payment not yet confirmed (${session.payment_status}) — aguardando async_payment_succeeded`)
+    return
+  }
+
+  // Tenta identificar usuário por: client_reference_id, stripeCustomerId, ou email
+  let profileDoc: FirebaseFirestore.DocumentSnapshot | null = null
+
+  // Opção 1: client_reference_id = Firebase UID (configurado no Stripe Dashboard)
+  const clientRef = session.client_reference_id
+  if (clientRef) {
+    const doc = await db.collection('perfis').doc(clientRef).get()
+    if (doc.exists) profileDoc = doc
+  }
+
+  // Opção 2: stripeCustomerId ou email fallback
+  if (!profileDoc && customerId) {
+    const email = session.customer_details?.email
+    profileDoc = await findUserDoc(customerId, email)
+  }
+
+  if (!profileDoc) {
+    console.error('❌ User not found for checkout session')
+    return
+  }
+  const userId = profileDoc.id
+
+  // Recupera os line items do checkout
+  const stripe = getStripe()
+  const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 100 })
+
+  if (!lineItems.data || lineItems.data.length === 0) {
+    console.warn('⚠️ No line items found in checkout session')
+    return
+  }
+
+  let totalBoosts = 0
+  let totalSuperLikes = 0
+  let totalMagicMatches = 0
+  let totalReplays = 0
+
+  // Processa cada item comprado
+  for (const item of lineItems.data) {
+    const priceId = item.price?.id
+    if (!priceId) continue
+
+    const consumable = getConsumableFromPriceId(priceId)
+    if (consumable) {
+      totalBoosts += consumable.boosts
+      totalSuperLikes += consumable.superLikes
+      totalMagicMatches += consumable.magicMatches
+      totalReplays += consumable.replays
+      console.log(`📦 Item: ${priceId} → Boosts:${consumable.boosts} SL:${consumable.superLikes} MM:${consumable.magicMatches} R:${consumable.replays}`)
+    }
+  }
+
+  const hasAny = totalBoosts > 0 || totalSuperLikes > 0 || totalMagicMatches > 0 || totalReplays > 0
+
+  if (hasAny) {
+    const updates: Record<string, admin.firestore.FieldValue | admin.firestore.Timestamp> = {
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    }
+
+    if (totalBoosts > 0)       updates.boostsRemaining       = admin.firestore.FieldValue.increment(totalBoosts)
+    if (totalSuperLikes > 0)   updates.superLikesRemaining   = admin.firestore.FieldValue.increment(totalSuperLikes)
+    if (totalMagicMatches > 0) updates.magicLikesRemaining   = admin.firestore.FieldValue.increment(totalMagicMatches)
+    if (totalReplays > 0)      updates.replaysRemaining      = admin.firestore.FieldValue.increment(totalReplays)
+
+    await profileDoc.ref.update(updates)
+
+    console.log(`✅ Consumables added for ${userId}: Boosts+${totalBoosts} SL+${totalSuperLikes} MM+${totalMagicMatches} R+${totalReplays}`)
+
+    const items = []
+    if (totalBoosts > 0)       items.push(`${totalBoosts} Boosts`)
+    if (totalSuperLikes > 0)   items.push(`${totalSuperLikes} Super Likes`)
+    if (totalMagicMatches > 0) items.push(`${totalMagicMatches} Magic Matches`)
+    if (totalReplays > 0)      items.push(`${totalReplays} Replays`)
+
+    await sendNotification(userId, {
+      title: '🎉 Compra Realizada!',
+      body: `Você recebeu: ${items.join(', ')}`,
+    })
+  }
+}
+
+/**
+ * Mapeia Price ID para quantidade de consumíveis
+ */
+interface ConsumableFull {
+  boosts: number
+  superLikes: number
+  magicMatches: number
+  replays: number
+}
+
+function getConsumableFromPriceId(priceId: string): ConsumableFull | null {
+  const consumables: Record<string, ConsumableFull> = {
+    // Boosts
+    'price_1ShGe2Pru6X3lyL9rNLIbjDx': { boosts: 5,  superLikes: 0,  magicMatches: 0, replays: 0 },
+    'price_1ShGe3Pru6X3lyL9B0MVE8Fv': { boosts: 10, superLikes: 0,  magicMatches: 0, replays: 0 },
+    'price_1Si6drPru6X3lyL9ibzPA4sa': { boosts: 10, superLikes: 0,  magicMatches: 0, replays: 0 }, // 10 Boosts (v2)
+    'price_1ShGe2Pru6X3lyL90Rb0xJMD': { boosts: 20, superLikes: 0,  magicMatches: 0, replays: 0 },
+
+    // Super Likes
+    'price_1ShGe1Pru6X3lyL9uyCNuWqL': { boosts: 0, superLikes: 10, magicMatches: 0, replays: 0 },
+    'price_1ShGe2Pru6X3lyL9kwLldKir': { boosts: 0, superLikes: 20, magicMatches: 0, replays: 0 },
+    'price_1ShGe2Pru6X3lyL9w9mlMEGO': { boosts: 0, superLikes: 50, magicMatches: 0, replays: 0 },
+
+    // Magic Matches
+    'price_1SiG6gPru6X3lyL97lcmsJyz': { boosts: 0, superLikes: 0, magicMatches: 3,  replays: 0 },
+    'price_1SiGA3Pru6X3lyL9B44FEjiP': { boosts: 0, superLikes: 0, magicMatches: 10, replays: 0 },
+    'price_1SiGAnPru6X3lyL9BCVP7QpF': { boosts: 0, superLikes: 0, magicMatches: 25, replays: 0 },
+
+    // Replays
+    'price_1SiGBKPru6X3lyL9pICCh4vo': { boosts: 0, superLikes: 0, magicMatches: 0, replays: 10 },
+    'price_1SiGBrPru6X3lyL98xhCYUDS': { boosts: 0, superLikes: 0, magicMatches: 0, replays: 20 },
+    'price_1SiGCTPru6X3lyL96zJfPmTT': { boosts: 0, superLikes: 0, magicMatches: 0, replays: 50 },
+  }
+
+  return consumables[priceId] || null
 }
 
 /**
@@ -237,14 +459,12 @@ async function handlePaymentFailed(invoice: Stripe.Invoice) {
 
   console.log(`❌ Payment failed for subscription: ${subscriptionId}`)
 
-  // Busca o usuário pelo Stripe Customer ID
-  const profilesSnapshot = await db.collection('profiles').where('stripeCustomerId', '==', customerId).limit(1).get()
+  const stripe = getStripe()
+  const stripeCustomer = await stripe.customers.retrieve(customerId) as Stripe.Customer
+  const profileDoc = await findUserDoc(customerId, stripeCustomer.email)
 
-  if (!profilesSnapshot.empty) {
-    const userId = profilesSnapshot.docs[0].id
-
-    // Envia notificação ao usuário
-    await sendNotification(userId, {
+  if (profileDoc) {
+    await sendNotification(profileDoc.id, {
       title: '⚠️ Falha no Pagamento',
       body: 'Não conseguimos processar seu pagamento. Por favor, atualize seu método de pagamento.',
     })
@@ -308,7 +528,7 @@ export const checkExpiredSubscriptions = functions.pubsub
       })
 
       // Remove status premium do usuário
-      const profileRef = db.collection('profiles').doc(subscription.userId);
+      const profileRef = db.collection('perfis').doc(subscription.userId);
       userUpdates.push(
         profileRef.update({
           isPremium: false,
@@ -364,6 +584,75 @@ export const resetDailyLimits = functions.pubsub
   })
 
 /**
+ * Roda diariamente às 2h (horário Brasília) e remove selos de perfis
+ * cujo grace period de pagamento atrasado expirou.
+ *
+ * Fluxo: past_due → badgeGraceUntil = now+3d → esta função remove após 3 dias
+ */
+export const removeExpiredGracePeriodBadges = functions.pubsub
+  .schedule('0 2 * * *')
+  .timeZone('America/Sao_Paulo')
+  .onRun(async () => {
+    const now = admin.firestore.Timestamp.now()
+    console.log(`🔍 Verificando grace periods expirados em ${now.toDate().toISOString()}`)
+
+    // Busca perfis com grace period expirado (badgeGraceUntil < now)
+    const query = await db.collection('perfis')
+      .where('badgeGraceUntil', '<=', now)
+      .where('isPremium', '==', false) // assinatura não está mais ativa
+      .get()
+
+    if (query.empty) {
+      console.log('✅ Nenhum grace period expirado')
+      return null
+    }
+
+    console.log(`⚠️ ${query.size} perfis com grace period expirado`)
+
+    const batch = db.batch()
+    const notifyUsers: string[] = []
+
+    for (const doc of query.docs) {
+      const data = doc.data()
+      const badge = data.verificationBadge
+
+      // Só remove se ainda tiver badge (evita dupla execução)
+      if (badge && badge !== 'none') {
+        batch.update(doc.ref, {
+          verificationBadge: 'none',
+          badgeGrantedBy: null,
+          badgeExpiresAt: null,
+          badgeGraceUntil: null,
+          hasActivePremium: false,
+          canSeeWhoLiked: false,
+          superLikesRemaining: 1,
+          magicLikesRemaining: 0,
+          replaysRemaining: 0,
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        })
+        notifyUsers.push(doc.id)
+        console.log(`🗑️ Removendo selo ${badge} do usuário ${doc.id}`)
+      } else {
+        // Grace period expirou mas já não tem badge — só limpa o campo
+        batch.update(doc.ref, { badgeGraceUntil: null })
+      }
+    }
+
+    await batch.commit()
+
+    // Notifica usuários removidos
+    for (const userId of notifyUsers) {
+      await sendNotification(userId, {
+        title: '😢 Selo Removido',
+        body: 'Seu pagamento não foi regularizado e o selo premium foi removido. Renove sua assinatura para recuperá-lo.',
+      })
+    }
+
+    console.log(`✅ Grace period: ${notifyUsers.length} selos removidos`)
+    return null
+  })
+
+/**
  * Função auxiliar para enviar notificações push via FCM
  */
 async function sendNotification(
@@ -375,7 +664,7 @@ async function sendNotification(
 ): Promise<void> {
   try {
     // Busca o FCM token do usuário
-    const profileDoc = await db.collection('profiles').doc(userId).get()
+    const profileDoc = await db.collection('perfis').doc(userId).get()
     const fcmToken = profileDoc.data()?.fcmToken
 
     if (!fcmToken) {
