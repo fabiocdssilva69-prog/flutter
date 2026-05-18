@@ -405,7 +405,8 @@ interface ConsumableFull {
 function getConsumableFromPriceId(priceId: string): ConsumableFull | null {
   const consumables: Record<string, ConsumableFull> = {
     // Boosts
-    'price_1ShGe2Pru6X3lyL9rNLIbjDx': { boosts: 5,  superLikes: 0,  magicMatches: 0, replays: 0 },
+    'price_1TYWCSPru6X3lyL99IbkwdWd': { boosts: 5,  superLikes: 0,  magicMatches: 0, replays: 0 }, // R$ 4,90 (atual)
+    'price_1ShGe2Pru6X3lyL9rNLIbjDx': { boosts: 5,  superLikes: 0,  magicMatches: 0, replays: 0 }, // R$ 9,90 (arquivado)
     'price_1ShGe3Pru6X3lyL9B0MVE8Fv': { boosts: 10, superLikes: 0,  magicMatches: 0, replays: 0 },
     'price_1Si6drPru6X3lyL9ibzPA4sa': { boosts: 10, superLikes: 0,  magicMatches: 0, replays: 0 }, // 10 Boosts (v2)
     'price_1ShGe2Pru6X3lyL90Rb0xJMD': { boosts: 20, superLikes: 0,  magicMatches: 0, replays: 0 },

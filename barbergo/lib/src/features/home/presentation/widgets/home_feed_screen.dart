@@ -3128,7 +3128,7 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            _buildPurchaseOption('5 Boosts', 'R\$ 9,90', () => _handleBoostPurchase('boosts5')),
+            _buildPurchaseOption('5 Boosts', 'R\$ 4,90', () => _handleBoostPurchase('boosts5')),
             const SizedBox(height: 12),
             _buildPurchaseOption('10 Boosts', 'R\$ 9,90', () => _handleBoostPurchase('boosts10')),
             const SizedBox(height: 12),
