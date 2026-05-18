@@ -44,8 +44,10 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
   @override
   void initState() {
     super.initState();
-    final tutShuffle = List<Map<String, String>>.from(_allTutorialVideos)..shuffle();
-    _selectedTutorialVideos = tutShuffle.toList(); // mostra todos
+    // Nobru sempre primeiro, resto embaralhado
+    final nobruVideos = _allTutorialVideos.where((v) => v['author']?.toUpperCase().contains('NOBRU') == true).toList();
+    final otherVideos = _allTutorialVideos.where((v) => v['author']?.toUpperCase().contains('NOBRU') != true).toList()..shuffle();
+    _selectedTutorialVideos = [...nobruVideos, ...otherVideos];
     final shopShuffle = List<Map<String, String>>.from(_allShopVideos)..shuffle();
     _selectedShopVideos = shopShuffle.take(5).toList();
 
