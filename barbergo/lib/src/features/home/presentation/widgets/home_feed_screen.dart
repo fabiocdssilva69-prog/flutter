@@ -45,7 +45,7 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
   void initState() {
     super.initState();
     final tutShuffle = List<Map<String, String>>.from(_allTutorialVideos)..shuffle();
-    _selectedTutorialVideos = tutShuffle.take(5).toList();
+    _selectedTutorialVideos = tutShuffle.toList(); // mostra todos
     final shopShuffle = List<Map<String, String>>.from(_allShopVideos)..shuffle();
     _selectedShopVideos = shopShuffle.take(5).toList();
 
