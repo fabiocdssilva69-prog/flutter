@@ -23,6 +23,9 @@ workflows:
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
+      - name: Disable Swift Package Manager
+        script: flutter config --no-enable-swift-package-manager
+
       - name: Build IPA (sem assinatura)
         script: |
           flutter build ipa --no-codesign
