@@ -44,3 +44,9 @@ firebase_app_id_file.json
 lib/src/core/config/api_keys.dart
 # Biome binary
 biome.exe
+
+# Old Flutter SDK copies (not needed)
+flutter_backup_old_sdk/
+flutter_new_backup_old_sdk/
+flutter/
+flutter_new/

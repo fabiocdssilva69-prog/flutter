@@ -16,6 +16,10 @@ workflows:
       - name: Get Flutter packages
         script: flutter pub get
 
+      - name: Inject GoogleService-Info.plist
+        script: |
+          echo $CM_GOOGLESERVICE_INFO_PLIST | base64 --decode > ios/Runner/GoogleService-Info.plist
+
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
