@@ -772,7 +772,8 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> with WidgetsBindingOb
     print('↩️ [Replay] Iniciando...');
 
     final effectiveReplayCount = _localReplayCount ?? ref.read(userConsumablesProvider).value?.replays ?? 0;
-    if (!mounted || effectiveReplayCount <= 0) {
+    final isUnlimitedReplay = effectiveReplayCount == -1;
+    if (!mounted || (!isUnlimitedReplay && effectiveReplayCount <= 0)) {
       _showPurchaseDialog(context, isPurchasingBoosts: false, isReplay: true);
       return;
     }
@@ -820,7 +821,8 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> with WidgetsBindingOb
 
       // 3. Decrementar localmente + mostrar overlay laranja
       if (mounted) {
-        setState(() => _localReplayCount = (_localReplayCount ?? 1) - 1);
+        // -1 = ilimitado (Gold) — não decrementa
+        if (_localReplayCount != -1) setState(() => _localReplayCount = (_localReplayCount ?? 1) - 1);
         _showReplayOverlay.value = true;
         await Future.delayed(const Duration(milliseconds: 600));
         _showReplayOverlay.value = false;

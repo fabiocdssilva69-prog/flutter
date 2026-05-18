@@ -35,7 +35,7 @@ class MotivationalMessagesProvider extends _$MotivationalMessagesProvider {
       // Log para verificar o pool completo de mensagens
       print('✅ Total de mensagens ATIVAS no Firebase: ${snapshot.docs.length}');
 
-      // Converter documentos para entidades
+      // Converter e filtrar apenas mensagens COM autor
       final messages = snapshot.docs.map((doc) {
         final data = doc.data();
         return MotivationalMessage(
@@ -48,20 +48,19 @@ class MotivationalMessagesProvider extends _$MotivationalMessagesProvider {
           createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
           isActive: data['isActive'] as bool? ?? true,
         );
-      }).toList();
+      }).where((m) => m.authorName != null && m.authorName!.isNotEmpty).toList();
 
-      print('📝 Mensagens convertidas: ${messages.length}');
+      print('📝 Mensagens com autor: ${messages.length}');
+      if (messages.isEmpty) return _getRandomFallback(lastMessageId);
 
-      // Filtrar: apenas mensagens COM autor E que não sejam a última mostrada
-      final availableMessages = messages
-          .where((m) => m.authorName != null && m.authorName!.isNotEmpty && m.messageId != lastMessageId)
-          .toList();
+      // Filtrar mensagens que não sejam a última mostrada
+      final availableMessages = messages.where((m) => m.messageId != lastMessageId).toList();
 
-      print('🎲 Mensagens disponíveis para sorteio (após filtro): ${availableMessages.length}');
+      print('🎲 Mensagens disponíveis: ${availableMessages.length}');
 
       if (availableMessages.isEmpty) {
-        // Se todas foram mostradas, resetar e escolher qualquer uma
-        print('🔄 Pool resetado - todas as mensagens disponíveis novamente');
+        // Reset do pool — pega de mensagens com autor
+        print('🔄 Pool resetado');
         final random = Random();
         final selectedMessage = messages[random.nextInt(messages.length)];
         print(
