@@ -401,25 +401,28 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
   ];
 
   Widget _buildTutorialVideos() {
-    return SizedBox(
-      height: 200,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        itemCount: _selectedTutorialVideos.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 12),
-        itemBuilder: (_, i) {
-          final v = _selectedTutorialVideos[i];
-          return _buildVideoCard(
-            v['title']!,
-            Icons.play_circle_outline,
-            v['emoji']!,
-            author: v['author'],
-            duration: v['duration'],
-            videoUrl: v['url'],
-          );
-        },
+    return CarouselSlider.builder(
+      itemCount: _selectedTutorialVideos.length,
+      options: CarouselOptions(
+        height: 200,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 4),
+        autoPlayAnimationDuration: const Duration(milliseconds: 600),
+        enlargeCenterPage: true,
+        viewportFraction: 0.75,
+        enableInfiniteScroll: true,
       ),
+      itemBuilder: (_, i, __) {
+        final v = _selectedTutorialVideos[i];
+        return _buildVideoCard(
+          v['title']!,
+          Icons.play_circle_outline,
+          v['emoji']!,
+          author: v['author'],
+          duration: v['duration'],
+          videoUrl: v['url'],
+        );
+      },
     );
   }
 
@@ -4442,26 +4445,20 @@ Aguardo retorno! 💈✨
       Navigator.of(context, rootNavigator: true).pop(); // Fecha o loading
 
       if (checkoutUrl != null && checkoutUrl.isNotEmpty) {
-        final uri = Uri.parse(checkoutUrl);
+        final uid2 = FirebaseAuth.instance.currentUser?.uid ?? '';
+        final url2 = uid2.isNotEmpty ? '$checkoutUrl?client_reference_id=$uid2' : checkoutUrl;
+        final uri = Uri.parse(url2);
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
         } else {
-          if (mounted) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('❌ Não foi possível abrir o checkout')));
-          }
+          if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('❌ Não foi possível abrir o checkout')));
         }
       } else {
-        if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('❌ Erro ao criar sessão de pagamento')));
-        }
+        if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('❌ Erro ao criar sessão de pagamento')));
       }
     } catch (e) {
       if (mounted) {
-        Navigator.of(context, rootNavigator: true).pop(); // Fecha o loading
+        Navigator.of(context, rootNavigator: true).pop();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('❌ Erro: $e')));
       }
     }
@@ -4514,26 +4511,20 @@ Aguardo retorno! 💈✨
       Navigator.of(context, rootNavigator: true).pop(); // Fecha o loading
 
       if (checkoutUrl != null && checkoutUrl.isNotEmpty) {
-        final uri = Uri.parse(checkoutUrl);
+        final uid2 = FirebaseAuth.instance.currentUser?.uid ?? '';
+        final url2 = uid2.isNotEmpty ? '$checkoutUrl?client_reference_id=$uid2' : checkoutUrl;
+        final uri = Uri.parse(url2);
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
         } else {
-          if (mounted) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('❌ Não foi possível abrir o checkout')));
-          }
+          if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('❌ Não foi possível abrir o checkout')));
         }
       } else {
-        if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('❌ Erro ao criar sessão de pagamento')));
-        }
+        if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('❌ Erro ao criar sessão de pagamento')));
       }
     } catch (e) {
       if (mounted) {
-        Navigator.of(context, rootNavigator: true).pop(); // Fecha o loading
+        Navigator.of(context, rootNavigator: true).pop();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('❌ Erro: $e')));
       }
     }
