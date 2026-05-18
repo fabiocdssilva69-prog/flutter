@@ -309,54 +309,69 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     return
   }
 
-  // Tenta identificar usuário por: client_reference_id, stripeCustomerId, ou email
+  // client_reference_id formato: "uid_productId" (ex: "abc123_boosts5")
+  const clientRef = session.client_reference_id || ''
+  const parts = clientRef.split('_')
+  const uid = parts.length >= 2 ? parts.slice(0, parts.length - 1).join('_') : clientRef
+  const productId = parts.length >= 2 ? parts[parts.length - 1] : ''
+
+  console.log(`🔑 client_reference_id: "${clientRef}" → uid="${uid}" productId="${productId}"`)
+
+  // Identifica consumível pelo productId (sem chamar API Stripe)
+  const consumableFromRef = getConsumableFromProductId(productId)
+
   let profileDoc: FirebaseFirestore.DocumentSnapshot | null = null
 
-  // Opção 1: client_reference_id = Firebase UID (configurado no Stripe Dashboard)
-  const clientRef = session.client_reference_id
-  if (clientRef) {
-    const doc = await db.collection('perfis').doc(clientRef).get()
+  // Busca perfil pelo UID direto
+  if (uid) {
+    const doc = await db.collection('perfis').doc(uid).get()
     if (doc.exists) profileDoc = doc
   }
 
-  // Opção 2: stripeCustomerId ou email fallback
+  // Fallback: busca por email/customerId
   if (!profileDoc && customerId) {
     const email = session.customer_details?.email
     profileDoc = await findUserDoc(customerId, email)
   }
 
   if (!profileDoc) {
-    console.error('❌ User not found for checkout session')
+    console.error(`❌ User not found — uid="${uid}" customerId="${customerId}"`)
     return
   }
   const userId = profileDoc.id
-
-  // Recupera os line items do checkout
-  const stripe = getStripe()
-  const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 100 })
-
-  if (!lineItems.data || lineItems.data.length === 0) {
-    console.warn('⚠️ No line items found in checkout session')
-    return
-  }
 
   let totalBoosts = 0
   let totalSuperLikes = 0
   let totalMagicMatches = 0
   let totalReplays = 0
 
-  // Processa cada item comprado
-  for (const item of lineItems.data) {
-    const priceId = item.price?.id
-    if (!priceId) continue
-
-    const consumable = getConsumableFromPriceId(priceId)
-    if (consumable) {
-      totalBoosts += consumable.boosts
-      totalSuperLikes += consumable.superLikes
-      totalMagicMatches += consumable.magicMatches
-      totalReplays += consumable.replays
-      console.log(`📦 Item: ${priceId} → Boosts:${consumable.boosts} SL:${consumable.superLikes} MM:${consumable.magicMatches} R:${consumable.replays}`)
+  if (consumableFromRef) {
+    // Produto identificado pelo client_reference_id — não precisa chamar API Stripe
+    totalBoosts = consumableFromRef.boosts
+    totalSuperLikes = consumableFromRef.superLikes
+    totalMagicMatches = consumableFromRef.magicMatches
+    totalReplays = consumableFromRef.replays
+    console.log(`📦 Produto via ref: ${productId} → B:${totalBoosts} SL:${totalSuperLikes} MM:${totalMagicMatches} R:${totalReplays}`)
+  } else {
+    // Fallback: tenta listLineItems (requer chave live)
+    console.log(`⚠️ ProductId "${productId}" não reconhecido, tentando listLineItems...`)
+    try {
+      const stripe = getStripe()
+      const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 100 })
+      for (const item of lineItems.data) {
+        const priceId = item.price?.id
+        if (!priceId) continue
+        const consumable = getConsumableFromPriceId(priceId)
+        if (consumable) {
+          totalBoosts += consumable.boosts
+          totalSuperLikes += consumable.superLikes
+          totalMagicMatches += consumable.magicMatches
+          totalReplays += consumable.replays
+        }
+      }
+    } catch (e) {
+      console.error('❌ listLineItems falhou:', e)
+      return
     }
   }
 
@@ -397,6 +412,27 @@ interface ConsumableFull {
   superLikes: number
   magicMatches: number
   replays: number
+}
+
+/**
+ * Mapeia productId (do client_reference_id) para consumíveis — sem chamar API Stripe
+ */
+function getConsumableFromProductId(productId: string): ConsumableFull | null {
+  const map: Record<string, ConsumableFull> = {
+    'boosts5':       { boosts: 5,  superLikes: 0,  magicMatches: 0, replays: 0 },
+    'boosts10':      { boosts: 10, superLikes: 0,  magicMatches: 0, replays: 0 },
+    'boosts20':      { boosts: 20, superLikes: 0,  magicMatches: 0, replays: 0 },
+    'superLikes10':  { boosts: 0,  superLikes: 10, magicMatches: 0, replays: 0 },
+    'superLikes20':  { boosts: 0,  superLikes: 20, magicMatches: 0, replays: 0 },
+    'superLikes50':  { boosts: 0,  superLikes: 50, magicMatches: 0, replays: 0 },
+    'magicMatch3':   { boosts: 0,  superLikes: 0,  magicMatches: 3, replays: 0 },
+    'magicMatch10':  { boosts: 0,  superLikes: 0,  magicMatches: 10, replays: 0 },
+    'magicMatch25':  { boosts: 0,  superLikes: 0,  magicMatches: 25, replays: 0 },
+    'replay10':      { boosts: 0,  superLikes: 0,  magicMatches: 0, replays: 10 },
+    'replay20':      { boosts: 0,  superLikes: 0,  magicMatches: 0, replays: 20 },
+    'replay50':      { boosts: 0,  superLikes: 0,  magicMatches: 0, replays: 50 },
+  }
+  return map[productId] || null
 }
 
 function getConsumableFromPriceId(priceId: string): ConsumableFull | null {

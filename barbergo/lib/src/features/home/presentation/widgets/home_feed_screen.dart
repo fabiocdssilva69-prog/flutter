@@ -3221,7 +3221,7 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
       Navigator.of(context, rootNavigator: true).pop();
 
       if (baseUrl != null) {
-        final url = uid.isNotEmpty ? '$baseUrl?client_reference_id=$uid' : baseUrl;
+        final url = uid.isNotEmpty ? '$baseUrl?client_reference_id=${uid}_$productId' : baseUrl;
         final uri = Uri.parse(url);
         if (await canLaunchUrl(uri)) await launchUrl(uri, mode: LaunchMode.externalApplication);
       }
@@ -4395,7 +4395,9 @@ Aguardo retorno! 💈✨
 
       if (checkoutUrl != null && checkoutUrl.isNotEmpty) {
         final uid = FirebaseAuth.instance.currentUser?.uid ?? '';
-        final url = uid.isNotEmpty ? '$checkoutUrl?client_reference_id=$uid' : checkoutUrl;
+        // uid_productId no client_reference_id — webhook identifica user e produto sem chamar API Stripe
+        final ref2 = uid.isNotEmpty ? '${uid}_$productId' : productId;
+        final url = '$checkoutUrl?client_reference_id=$ref2';
         final uri = Uri.parse(url);
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -4446,7 +4448,7 @@ Aguardo retorno! 💈✨
 
       if (checkoutUrl != null && checkoutUrl.isNotEmpty) {
         final uid2 = FirebaseAuth.instance.currentUser?.uid ?? '';
-        final url2 = uid2.isNotEmpty ? '$checkoutUrl?client_reference_id=$uid2' : checkoutUrl;
+        final url2 = uid2.isNotEmpty ? '$checkoutUrl?client_reference_id=${uid2}_$productId' : checkoutUrl;
         final uri = Uri.parse(url2);
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -4512,7 +4514,7 @@ Aguardo retorno! 💈✨
 
       if (checkoutUrl != null && checkoutUrl.isNotEmpty) {
         final uid2 = FirebaseAuth.instance.currentUser?.uid ?? '';
-        final url2 = uid2.isNotEmpty ? '$checkoutUrl?client_reference_id=$uid2' : checkoutUrl;
+        final url2 = uid2.isNotEmpty ? '$checkoutUrl?client_reference_id=${uid2}_$productId' : checkoutUrl;
         final uri = Uri.parse(url2);
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
