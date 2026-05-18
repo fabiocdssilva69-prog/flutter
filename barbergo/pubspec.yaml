@@ -2,8 +2,8 @@ name: barbergo_app
 description: "BarberGO - Conectando Barbeiros e Barbearias."
 publish_to: 'none'
 
-# Define a versão inicial para o Beta
-version: 1.0.0+1
+# Define a versão Beta para Play Store
+version: 1.0.0+2
 
 environment:
   sdk: ^3.8.0
@@ -38,6 +38,7 @@ dependencies:
   firebase_remote_config: ^6.1.0
   rxdart: ^0.28.0
   firebase_messaging: ^16.0.3
+  flutter_local_notifications: ^18.0.1
   dart_mappable: ^4.6.1
   geolocator: ^14.0.2
   geoflutterfire_plus: ^0.0.33
@@ -53,13 +54,20 @@ dependencies:
   google_maps_flutter: ^2.13.1
   lottie: ^3.3.2
   http: ^1.5.0
-  table_calendar: ^3.2.0
   purchases_flutter: ^9.9.1
   reorderables: ^0.6.0
   url_launcher: ^6.3.2
+  share_plus: ^10.1.4
   shared_preferences: ^2.2.3
+  device_info_plus: ^12.3.0
   qr_flutter: ^4.1.0              # QR Code para PIX
   fl_chart: ^0.68.0               # Gráficos BI Dashboard
+  camera: ^0.11.0+2               # Camera for video recording
+  video_player: ^2.9.2            # Video playback
+  record: 6.1.2                  # Audio recording
+  audioplayers: ^6.1.0            # Audio playback
+  file_picker: ^10.3.7
+  carousel_slider: ^5.1.1
   # speech_to_text: ^6.6.0          # Voz para texto (acessibilidade) - COMENTADO: incompatibilidade Android
   # flutter_tts: ^3.8.0             # Texto para voz (acessibilidade) - COMENTADO: dependência do speech_to_text
 
@@ -82,9 +90,23 @@ dev_dependencies:
 
 flutter:
   generate: true
+  uses-material-design: true
   assets:
     - .env
     - assets/icons/app_icon.png
+    # 🏅 Badges Premium
+    - assets/icons/gold_badge_new.png
+    - assets/icons/silver_badge_new.png
+    # 🎨 Ícones Premium - Sistema de Iconografia Customizado
+    - assets/icons/navigation/
+    - assets/icons/actions/
+    - assets/icons/menu/
+    # 🎯 Botões de Swipe Customizados
+    - assets/images/swipe_buttons/
+    - assets/icons/forms/
+    - assets/icons/match/
+    # 🖼️ Backgrounds Premium
+    - assets/backgrounds/
 
 # Configuração dos Ícones do Aplicativo
 flutter_launcher_icons:
