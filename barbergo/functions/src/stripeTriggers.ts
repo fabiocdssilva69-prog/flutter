@@ -15,19 +15,16 @@ import Stripe from 'stripe'
 
 // V2 Migration: Lazy initialization do Stripe para evitar erros no CLI
 // O Stripe só será inicializado quando a function for executada no Cloud
-let stripeInstance: Stripe | null = null
-
 function getStripe(): Stripe {
-  if (!stripeInstance) {
-    const apiKey = process.env.STRIPE_SECRET_KEY || ''
-    if (!apiKey) {
-      throw new Error('STRIPE_SECRET_KEY não configurada no .env')
-    }
-    stripeInstance = new Stripe(apiKey, {
-      apiVersion: '2025-10-29.clover',
-    })
+  const apiKey = process.env.STRIPE_SECRET_KEY || ''
+  if (!apiKey) {
+    throw new Error('STRIPE_SECRET_KEY não configurada')
   }
-  return stripeInstance
+  const isLive = apiKey.startsWith('sk_live_')
+  console.log(`🔑 Stripe key mode: ${isLive ? 'LIVE ✅' : 'TEST ❌'} (${apiKey.substring(0, 12)}...)`)
+  return new Stripe(apiKey, {
+    apiVersion: '2025-10-29.clover',
+  })
 }
 
 const db = admin.firestore()
