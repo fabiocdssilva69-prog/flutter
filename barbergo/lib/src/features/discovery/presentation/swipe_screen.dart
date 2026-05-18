@@ -1572,13 +1572,14 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> with WidgetsBindingOb
                           final consumablesAsync = ref.watch(userConsumablesProvider);
                           // ↩️ Usar contador local se disponível, senão usar do Firebase
                           final replayCount = _localReplayCount ?? consumablesAsync.value?.replays ?? 0;
-                          final hasReplays = replayCount > 0;
-                          // 🔥 CORREÇÃO: Replay funciona mesmo sem swipes na sessão (busca do Firebase)
+                          final isUnlimited = replayCount == -1;
+                          final hasReplays = isUnlimited || replayCount > 0;
                           final canReplay = hasReplays;
+                          final replayLabel = isUnlimited ? '∞' : '$replayCount';
 
                           return Tooltip(
                             message: hasReplays
-                                ? '↩️ Replay ($replayCount) - Desfazer último like/dislike'
+                                ? '↩️ Replay ($replayLabel) - Desfazer último like/dislike'
                                 : 'Sem Replays disponíveis',
                             child: InkWell(
                               onTap: () async {

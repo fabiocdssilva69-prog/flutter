@@ -177,6 +177,18 @@ async function handleSubscriptionCheckout(session) {
       await batch.commit();
 
       console.log(`✅ Subscription ativada para ${uid}: badge=${badge}`);
+
+      // Notificação de boas-vindas ao plano
+      const planName = isGold ? 'Gold 🏆' : 'Silver 🥈';
+      await sendNotification(uid, {
+        notification: {
+          title: `🎉 Bem-vindo ao Selo ${planName}!`,
+          body: isGold
+            ? '🚀 Você agora tem acesso ilimitado às IAs do BarberGO! Bio inteligente, análise de portfólio, coach de carreira e muito mais. Corre aproveitar!'
+            : '✨ Seu Selo Silver está ativo! Super Likes, Magic Matches e Replays liberados. Vai lá explorar!',
+        },
+        data: { type: 'subscription_activated', badge },
+      });
     }
   } catch (e) {
     console.error('❌ Erro ao buscar subscription:', e.message);
