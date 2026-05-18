@@ -64,8 +64,8 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
       
       case 'checkout.session.completed':
         if (event.data.object.mode === 'subscription') {
-          // Salva stripeCustomerId no perfil para lookup posterior
-          await linkCustomerToUser(event.data.object);
+          // Processa assinatura imediatamente — temos client_reference_id=uid aqui
+          await handleSubscriptionCheckout(event.data.object);
         } else {
           await handleConsumableCheckout(event.data.object);
         }
@@ -126,6 +126,61 @@ async function findUserByCustomerId(customerId) {
     console.warn('⚠️ Erro ao buscar customer no Stripe:', e.message);
   }
   return null;
+}
+
+async function handleSubscriptionCheckout(session) {
+  const clientRef = session.client_reference_id || '';
+  const customerId = session.customer;
+  const uid = clientRef.includes('_') ? clientRef.split('_').slice(0, -1).join('_') : clientRef;
+
+  console.log(`📋 Subscription checkout: uid="${uid}" customerId="${customerId}"`);
+  if (!uid) { console.error('❌ uid não encontrado no client_reference_id'); return; }
+
+  // Salva mapping customerId → uid
+  await db.collection('perfis').doc(uid).update({ stripeCustomerId: customerId }).catch(() => {});
+
+  // Busca subscription ativa deste customer no Stripe para pegar priceId
+  try {
+    const subs = await stripe.subscriptions.list({ customer: customerId, status: 'active', limit: 1 });
+    if (subs.data.length > 0) {
+      const sub = subs.data[0];
+      const priceId = sub.items.data[0]?.price?.id ?? '';
+      const isGold = GOLD_PRICE_IDS.has(priceId);
+      const isSilver = SILVER_PRICE_IDS.has(priceId);
+      const badge = isGold ? 'gold' : isSilver ? 'silver' : 'none';
+      const periodEnd = sub.current_period_end;
+      const badgeExpiresAt = periodEnd ? admin.firestore.Timestamp.fromMillis(periodEnd * 1000) : null;
+
+      const benefits = {
+        superLikesRemaining: isGold ? 15 : isSilver ? 10 : 1,
+        magicLikesRemaining: isGold ? 15 : isSilver ? 5 : 0,
+        replaysRemaining:    isGold ? -1 : isSilver ? 5 : 0,
+        boostsRemaining:     isGold ? 10 : isSilver ? 5 : 0,
+      };
+
+      await db.collection('perfis').doc(uid).update({
+        isPremium: true, hasActivePremium: true, stripeCustomerId: customerId,
+        verificationBadge: badge, badgeExpiresAt, badgeGrantedBy: 'subscription',
+        canSeeWhoLiked: true, ...benefits,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      // Limpa assinaturas antigas — mantém só a atual
+      const oldSubs = await db.collection('subscriptions').where('userId', '==', uid).get();
+      const batch = db.batch();
+      oldSubs.docs.forEach(d => { if (d.id !== sub.id) batch.delete(d.ref); });
+      batch.set(db.collection('subscriptions').doc(sub.id), {
+        userId: uid, stripeCustomerId: customerId, stripeSubscriptionId: sub.id,
+        stripePriceId: priceId, status: 'active', badge, badgeExpiresAt,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
+      await batch.commit();
+
+      console.log(`✅ Subscription ativada para ${uid}: badge=${badge}`);
+    }
+  } catch (e) {
+    console.error('❌ Erro ao buscar subscription:', e.message);
+  }
 }
 
 async function linkCustomerToUser(session) {
