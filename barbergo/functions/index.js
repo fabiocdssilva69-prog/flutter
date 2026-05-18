@@ -62,9 +62,13 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
         await handlePaymentFailed(event.data.object);
         break;
       
-      // NOVO: Processar compras de consumíveis via Payment Links
       case 'checkout.session.completed':
-        await handleConsumableCheckout(event.data.object);
+        if (event.data.object.mode === 'subscription') {
+          // Salva stripeCustomerId no perfil para lookup posterior
+          await linkCustomerToUser(event.data.object);
+        } else {
+          await handleConsumableCheckout(event.data.object);
+        }
         break;
       
       case 'payment_intent.succeeded':
@@ -90,58 +94,110 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
 // HANDLER: SUBSCRIPTION UPDATE
 // ============================================
 
+// Mapeamento de priceId → plano
+const GOLD_PRICE_IDS = new Set([
+  'price_1ShGe3Pru6X3lyL9tvExYkyc', // Gold Mensal
+  'price_1ShGe3Pru6X3lyL97BKkZ2yH', // Gold Anual
+  'price_1ShGe3Pru6X3lyL9uZueF1Ot', // Gold alt
+]);
+const SILVER_PRICE_IDS = new Set([
+  'price_1ShGe4Pru6X3lyL9EYUlrwuz', // Silver Mensal
+  'price_1ShGe4Pru6X3lyL9z8DSuDMD', // Silver Anual
+  'price_1ShGe4Pru6X3lyL9Oe2uwLmz', // Silver alt
+]);
+
+async function findUserByCustomerId(customerId) {
+  // 1. Busca em perfis por stripeCustomerId
+  let snap = await db.collection('perfis').where('stripeCustomerId', '==', customerId).limit(1).get();
+  if (!snap.empty) return snap.docs[0];
+
+  // 2. Busca email do cliente no Stripe e procura em perfis
+  try {
+    const customer = await stripe.customers.retrieve(customerId);
+    if (customer.email) {
+      snap = await db.collection('perfis').where('email', '==', customer.email).limit(1).get();
+      if (!snap.empty) {
+        // Salva stripeCustomerId para próximas consultas
+        await snap.docs[0].ref.update({ stripeCustomerId: customerId });
+        return snap.docs[0];
+      }
+    }
+  } catch (e) {
+    console.warn('⚠️ Erro ao buscar customer no Stripe:', e.message);
+  }
+  return null;
+}
+
+async function linkCustomerToUser(session) {
+  const clientRef = session.client_reference_id;
+  const customerId = session.customer;
+  if (!clientRef || !customerId) return;
+  const uid = clientRef.includes('_') ? clientRef.split('_').slice(0, -1).join('_') : clientRef;
+  if (!uid) return;
+  await db.collection('perfis').doc(uid).update({ stripeCustomerId: customerId }).catch(() => {});
+  console.log(`🔗 Linked customer ${customerId} → user ${uid}`);
+}
+
 async function handleSubscriptionUpdate(subscription) {
   const customerId = subscription.customer;
-  
-  console.log('📝 Handling subscription update for customer:', customerId);
-  
-  // Buscar userId pelo stripeCustomerId
-  const userQuery = await db.collection('subscriptions')
-    .where('stripeCustomerId', '==', customerId)
-    .limit(1)
-    .get();
-  
-  if (userQuery.empty) {
+  const priceId = subscription.items.data[0]?.price?.id ?? '';
+  const isActive = subscription.status === 'active';
+  const isPastDue = subscription.status === 'past_due';
+  const isEffective = isActive || isPastDue;
+
+  console.log(`📝 Subscription update: customer=${customerId} priceId=${priceId} status=${subscription.status}`);
+
+  const profileDoc = await findUserByCustomerId(customerId);
+  if (!profileDoc) {
     console.error('❌ User not found for customer:', customerId);
     return;
   }
-  
-  const userId = userQuery.docs[0].id;
-  const plan = subscription.items.data[0].price.recurring.interval; // monthly ou yearly
-  const isActive = subscription.status === 'active';
-  
-  // Atualizar subscription
-  await db.collection('subscriptions').doc(userId).set({
-    userId: userId,
-    plan: plan,
-    status: subscription.status,
-    startedAt: admin.firestore.Timestamp.fromMillis(subscription.current_period_start * 1000),
-    expiresAt: admin.firestore.Timestamp.fromMillis(subscription.current_period_end * 1000),
-    autoRenew: !subscription.cancel_at_period_end,
-    canceledAt: null,
-    stripeCustomerId: customerId,
-    stripeSubscriptionId: subscription.id,
-    paymentMethod: 'stripe',
-    features: {
-      superLikesRemaining: isActive ? -1 : 0, // -1 = ilimitado
-      boostsRemaining: isActive ? 1 : 0, // 1 por mês
-      canSeeWhoLiked: isActive,
-      hasAdvancedFilters: isActive
-    },
-    metadata: {
-      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      version: admin.firestore.FieldValue.increment(1)
-    }
-  }, { merge: true });
-  
-  // Atualizar flag premium no profile
+  const userId = profileDoc.id;
+
+  // Determina plano
+  let badge = 'none';
+  if (isEffective && GOLD_PRICE_IDS.has(priceId)) badge = 'gold';
+  else if (isEffective && SILVER_PRICE_IDS.has(priceId)) badge = 'silver';
+
+  const isGold = badge === 'gold';
+  const isSilver = badge === 'silver';
+  const periodEnd = subscription.current_period_end;
+  const badgeExpiresAt = periodEnd ? admin.firestore.Timestamp.fromMillis(periodEnd * 1000) : null;
+
+  // Consumíveis por plano
+  const benefits = isEffective ? {
+    superLikesRemaining: isGold ? 15 : isSilver ? 10 : 1,
+    magicLikesRemaining: isGold ? 15 : isSilver ? 5 : 0,
+    replaysRemaining:    isGold ? -1 : isSilver ? 5 : 0,
+    boostsRemaining:     isGold ? 10 : isSilver ? 5 : 0,
+  } : { superLikesRemaining: 1, magicLikesRemaining: 0, replaysRemaining: 0, boostsRemaining: 0 };
+
+  // Atualiza perfil com badge + consumíveis
   await db.collection('perfis').doc(userId).update({
     isPremium: isActive,
-    premiumSince: isActive ? admin.firestore.Timestamp.fromMillis(subscription.current_period_start * 1000) : null,
-    subscriptionTier: isActive ? 'premium' : 'free'
+    hasActivePremium: isEffective,
+    stripeCustomerId: customerId,
+    verificationBadge: badge,
+    badgeExpiresAt,
+    badgeGrantedBy: isEffective ? 'subscription' : null,
+    canSeeWhoLiked: isEffective,
+    ...benefits,
+    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
   });
-  
-  console.log(`✅ Subscription updated for user: ${userId} (status: ${subscription.status})`);
+
+  // Limpa assinaturas antigas e salva só a atual
+  const oldSubs = await db.collection('subscriptions').where('userId', '==', userId).get();
+  const batch = db.batch();
+  oldSubs.docs.forEach(d => { if (d.id !== subscription.id) batch.delete(d.ref); });
+  batch.set(db.collection('subscriptions').doc(subscription.id), {
+    userId, stripeCustomerId: customerId, stripeSubscriptionId: subscription.id,
+    stripePriceId: priceId, status: subscription.status,
+    currentPeriodEnd: badgeExpiresAt, badge,
+    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+  }, { merge: true });
+  await batch.commit();
+
+  console.log(`✅ Subscription updated for ${userId}: badge=${badge} status=${subscription.status}`);
 }
 
 // ============================================
