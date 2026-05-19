@@ -45,6 +45,12 @@
 		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
+		<!-- Background modes para Firebase Messaging + Background Fetch -->
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>fetch</string>
+			<string>remote-notification</string>
+		</array>
 		<!-- Permissões de Geolocalização (Sprint 24) -->
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>Usamos sua localização para encontrar vagas próximas a você.</string>
